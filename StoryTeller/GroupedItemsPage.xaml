@@ -88,8 +88,6 @@
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
-            <Button Content="Add" Grid.Column="1" HorizontalAlignment="Left" Margin="22,102,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Button_Click"/>
-            <Button Content="Remove" Grid.Column="1" HorizontalAlignment="Left" Margin="109,102,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.489,0.474" Click="Button_Click_1"/>
             <Button Content="Preview" Grid.Column="1" HorizontalAlignment="Left" Margin="224,102,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Button_Click_2"/>
             <TextBlock x:Name="outputText" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="16"/>
         </Grid>

@@ -88,9 +88,7 @@
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
-            <Button x:ConnectionId='1' Content="Add" Grid.Column="1" HorizontalAlignment="Left" Margin="22,102,0,0" Grid.Row="1" VerticalAlignment="Top"                     />
-            <Button x:ConnectionId='2' Content="Remove" Grid.Column="1" HorizontalAlignment="Left" Margin="109,102,0,0" Grid.Row="1" VerticalAlignment="Top" RenderTransformOrigin="0.489,0.474"                       />
-            <Button x:ConnectionId='3' Content="Preview" Grid.Column="1" HorizontalAlignment="Left" Margin="224,102,0,0" Grid.Row="1" VerticalAlignment="Top"                       />
+            <Button x:ConnectionId='1' Content="Preview" Grid.Column="1" HorizontalAlignment="Left" Margin="224,102,0,0" Grid.Row="1" VerticalAlignment="Top"                       />
             <TextBlock x:Name="outputText" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="16"/>
         </Grid>
     </Grid>
