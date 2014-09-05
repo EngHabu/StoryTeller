@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/UpgradeLog.htm
+/StoryTeller/bin/Debug/AppX/microsoft.system.package.metadata
+/StoryTeller/bin
+/StoryTeller.Library/bin
+/StoryTeller.Library2
+/StoryTeller.v12.suo
