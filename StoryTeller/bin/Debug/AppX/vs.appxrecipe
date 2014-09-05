@@ -26,7 +26,7 @@
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\Mohammed\Documents\GitHub\StoryTeller\StoryTeller\bin\Debug\StoryTeller.exe">
       <PackagePath>StoryTeller.exe</PackagePath>
-      <Modified>2014-09-03T19:44:28.189</Modified>
+      <Modified>2014-09-04T18:50:49.309</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mohammed\Documents\GitHub\StoryTeller\StoryTeller\DataModel\SampleData.json">
       <PackagePath>DataModel\SampleData.json</PackagePath>
@@ -70,7 +70,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mohammed\Documents\GitHub\StoryTeller\StoryTeller\bin\Debug\GroupedItemsPage.xbf">
       <PackagePath>GroupedItemsPage.xbf</PackagePath>
-      <Modified>2014-09-03T19:44:27.681</Modified>
+      <Modified>2014-09-03T19:59:45.380</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Mohammed\Documents\GitHub\StoryTeller\StoryTeller\bin\Debug\GroupDetailPage.xbf">
       <PackagePath>GroupDetailPage.xbf</PackagePath>

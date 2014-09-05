@@ -88,7 +88,7 @@
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
-            <Button x:ConnectionId='1' Content="Preview" Grid.Column="1" HorizontalAlignment="Left" Margin="224,102,0,0" Grid.Row="1" VerticalAlignment="Top"                       />
+            <Button x:ConnectionId='1' Content="Preview" Grid.Column="1" HorizontalAlignment="Left" Margin="7,112,0,0" Grid.Row="1" VerticalAlignment="Top"                       />
             <TextBlock x:Name="outputText" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="16"/>
         </Grid>
     </Grid>

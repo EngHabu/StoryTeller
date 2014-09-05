@@ -61,7 +61,8 @@ namespace StoryTeller
         private void libraryPanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             TextBlock textBlock = libraryPanel.SelectedItem as TextBlock;
-            storylinePanel.Items.Add(new TextBlock { Text = textBlock.Text, FontSize = textBlock.FontSize });
+            TextBlock sceneBlock = new TextBlock { Text = textBlock.Text, FontSize = textBlock.FontSize };        
+            storylinePanel.Items.Add(sceneBlock);
         }
 
 
