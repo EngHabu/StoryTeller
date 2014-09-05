@@ -49,13 +49,19 @@ namespace StoryTeller
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
-            this.libraryPanel.PointerPressed += libraryPanel_PointerPressed;
+            libraryPanel.DoubleTapped +=libraryPanel_DoubleTapped;
+            storylinePanel.DoubleTapped += storylinePanel_DoubleTapped;
         }
 
-        void libraryPanel_PointerPressed(object sender, PointerRoutedEventArgs e)
+        void storylinePanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
+            storylinePanel.Items.Remove(storylinePanel.SelectedItem);
+        }
 
-            
+        private void libraryPanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            TextBlock textBlock = libraryPanel.SelectedItem as TextBlock;
+            storylinePanel.Items.Add(new TextBlock { Text = textBlock.Text, FontSize = textBlock.FontSize });
         }
 
 
@@ -130,17 +136,6 @@ namespace StoryTeller
         }
 
         #endregion
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            TextBlock textBlock = libraryPanel.SelectedItem as TextBlock;
-            storylinePanel.Items.Add(new TextBlock { Text = textBlock.Text, FontSize=textBlock.FontSize});
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            storylinePanel.Items.Remove(storylinePanel.SelectedItem);
-        }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
