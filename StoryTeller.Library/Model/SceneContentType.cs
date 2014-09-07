@@ -8,7 +8,6 @@ namespace StoryTeller.Library.Model
     public enum SceneContentType
     {
         None,
-        Interactive,
-        Pointer
+
     }
 }

@@ -9,8 +9,9 @@ namespace StoryTeller.Library.Model
     public interface IScene
     {
         string Id { get; set; }
-        public SceneType Type { get; set; }
+        SceneType Type { get; set; }
         ISceneContent Content { get; set; }
         IScene FollowingScene { get; set; }
+        bool IsBonusScene { get; set; }
     }
 }

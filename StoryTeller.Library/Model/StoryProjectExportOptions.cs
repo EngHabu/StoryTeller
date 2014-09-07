@@ -5,11 +5,7 @@ using System.Text;
 
 namespace StoryTeller.Library.Model
 {
-    public enum SceneType
+    public sealed class StoryProjectExportOptions
     {
-        None,
-        Regular,
-        Interactive,
-        Pointer
     }
 }

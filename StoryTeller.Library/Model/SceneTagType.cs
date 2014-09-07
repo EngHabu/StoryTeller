@@ -5,11 +5,11 @@ using System.Text;
 
 namespace StoryTeller.Library.Model
 {
-    public enum SceneType
+    public enum SceneTagType
     {
         None,
-        Regular,
-        Interactive,
-        Pointer
+        Location,
+        Character,
+        Custom,
     }
 }

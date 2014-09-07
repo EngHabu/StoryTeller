@@ -104,13 +104,21 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\ILibraryItem.cs" />
     <Compile Include="Model\InteractiveScene.cs" />
     <Compile Include="Model\IScene.cs" />
     <Compile Include="Model\ISceneContent.cs" />
+    <Compile Include="Model\Library.cs" />
+    <Compile Include="Model\LibraryItem.cs" />
     <Compile Include="Model\PointerScene.cs" />
     <Compile Include="Model\Scene.cs" />
     <Compile Include="Model\SceneContentType.cs" />
+    <Compile Include="Model\SceneTag.cs" />
+    <Compile Include="Model\SceneTagType.cs" />
     <Compile Include="Model\SceneType.cs" />
+    <Compile Include="Model\Story.cs" />
+    <Compile Include="Model\StoryProject.cs" />
+    <Compile Include="Model\StoryProjectExportOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

@@ -7,7 +7,8 @@ namespace StoryTeller.Library.Model
 {
     public interface ISceneContent
     {
-        public SceneContentType Type { get; set; }
-        public object Content { get; set; }
+        SceneContentType Type { get; set; }
+        object Content { get; set; }
+        IEnumerable<SceneTag> Tags { get; set; }
     }
 }

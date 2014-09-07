@@ -8,5 +8,15 @@ namespace StoryTeller.Library.Model
 {
     public sealed class PointerScene : Scene
     {
+        public override SceneType Type
+        {
+            get
+            {
+                return SceneType.Pointer;
+            }
+            set
+            {
+            }
+        } 
     }
 }

@@ -8,7 +8,20 @@ namespace StoryTeller.Library.Model
 {
     public abstract class Scene : IScene
     {
-        public string Id
+        private LibraryItem _libraryItem;
+        private string _libraryItemId;
+
+        public Scene()
+        {
+        }
+
+        public Scene(LibraryItem libraryItem)
+        {
+            _libraryItem = libraryItem;
+            _libraryItemId = libraryItem.Id;
+        }
+
+        public virtual string Id
         {
             get
             {
@@ -20,7 +33,7 @@ namespace StoryTeller.Library.Model
             }
         }
 
-        public SceneType Type
+        public virtual SceneType Type
         {
             get
             {
@@ -36,7 +49,17 @@ namespace StoryTeller.Library.Model
         {
             get
             {
-                throw new NotImplementedException();
+                if (null == _libraryItem)
+                {
+                    _libraryItem = Library.GetItem(_libraryItemId);
+                }
+
+                if (null != _libraryItem)
+                {
+                    return _libraryItem.SceneContent;
+                }
+
+                return null;
             }
             set
             {
@@ -45,6 +68,19 @@ namespace StoryTeller.Library.Model
         }
 
         public IScene FollowingScene
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+        public bool IsBonusScene
         {
             get
             {
