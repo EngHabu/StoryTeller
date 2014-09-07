@@ -8,11 +8,15 @@ namespace StoryTeller.DataModel.Model
 {
     public sealed class Library
     {
+        public Library ()
+        {
+            Items = new List<LibraryItem>();
+        }
         public IEnumerable<LibraryItem> Items { get; set; }
 
         internal static LibraryItem GetItem(string _libraryItemId)
         {
             throw new NotImplementedException();
-        }
+        }      
     }
 }

@@ -9,8 +9,8 @@
     <ProjectGuid>{4E4C1A71-B03A-4469-8EF8-4445155136E0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StoryTeller.Library</RootNamespace>
-    <AssemblyName>StoryTeller.Library</AssemblyName>
+    <RootNamespace>StoryTeller.DataModel</RootNamespace>
+    <AssemblyName>StoryTeller.DataModel</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <MinimumVisualStudioVersion>12</MinimumVisualStudioVersion>
@@ -119,6 +119,7 @@
     <Compile Include="Model\Story.cs" />
     <Compile Include="Model\StoryProject.cs" />
     <Compile Include="Model\StoryProjectExportOptions.cs" />
+    <Compile Include="Model\TempSceneContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

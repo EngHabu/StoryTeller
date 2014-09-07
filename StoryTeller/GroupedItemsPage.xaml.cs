@@ -15,6 +15,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Windows;
 using StoryTeller.DataModel.Model;
+using Windows.Storage.Pickers;
+using Windows.Storage;
+using StoryTeller.Controls;
 
 // The Grouped Items Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234231
 
@@ -26,7 +29,9 @@ namespace StoryTeller
     public sealed partial class GroupedItemsPage : Page
     {
         private NavigationHelper navigationHelper;
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private ObservableDictionary defaultViewModel = new ObservableDictionary();       
+        private LibraryViewModel libraryViewModel = new LibraryViewModel();
+        private ProjectViewModel projectViewModel = new ProjectViewModel();
 
         /// <summary>
         /// NavigationHelper is used on each page to aid in navigation and 
@@ -50,22 +55,28 @@ namespace StoryTeller
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
-            Library library = new Library();
-            this.DataContext = new LibraryViewModel(new Library());
+            libraryViewModel.Library = new Library();
+            projectViewModel.Library = libraryViewModel;
+
+            StoryViewModel storyModel = new StoryViewModel();
+            storyModel.Story = new Story();
+            projectViewModel.Story = storyModel;
+            
+            this.DataContext = projectViewModel;
+
             libraryPanel.DoubleTapped +=libraryPanel_DoubleTapped;
-            storylinePanel.DoubleTapped += storylinePanel_DoubleTapped;
         }
 
         void storylinePanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            storylinePanel.Items.Remove(storylinePanel.SelectedItem);
+            
         }
 
         private void libraryPanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            TextBlock textBlock = libraryPanel.SelectedItem as TextBlock;
-            TextBlock sceneBlock = new TextBlock { Text = textBlock.Text, FontSize = textBlock.FontSize };        
-            storylinePanel.Items.Add(sceneBlock);
+            LibraryItem libraryItem = libraryPanel.SelectedItem as LibraryItem;
+            IScene scene = new Scene(libraryItem);
+            projectViewModel.Story.AddScene(scene);
         }
 
 
@@ -144,10 +155,22 @@ namespace StoryTeller
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             outputText.Text = "";
-            foreach (TextBlock storyScene in storylinePanel.Items)
-            {
-                outputText.Text += storyScene.Text + " ";
-            }
+            
+        }
+
+        async private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            FileOpenPicker picker = new FileOpenPicker();
+            picker.FileTypeFilter.Add(".txt");
+            IReadOnlyList<StorageFile> files = await picker.PickMultipleFilesAsync();
+            List<LibraryItem> libraryItems = new List<LibraryItem>();
+            foreach(StorageFile file in files) {                
+                LibraryItem libraryItem = new LibraryItem();
+                libraryItem.Id = file.Name;
+                libraryItem.SceneContent = new TempSceneContent();                
+                libraryItem.SceneContent.Content = await FileIO.ReadTextAsync(file);
+                libraryViewModel.Items.Add(libraryItem);           
+            }            
         }
     }
 }

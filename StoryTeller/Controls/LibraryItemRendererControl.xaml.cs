@@ -22,6 +22,12 @@ namespace StoryTeller.Controls
         public LibraryItemRendererControl()
         {
             this.InitializeComponent();
+            SceneId.DoubleTapped += SceneId_DoubleTapped;
         }
-    }
+
+        void SceneId_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            
+        }
+    }    
 }

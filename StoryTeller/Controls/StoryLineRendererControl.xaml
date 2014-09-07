@@ -10,6 +10,23 @@
     d:DesignWidth="400">
     
     <Grid>
-
+        <ListBox x:Name="storylinePanel" ItemsSource="{Binding StoryLines}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <ListBox ItemsSource="{Binding}" DoubleTapped="ListBox_DoubleTapped">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding CurrentScene.Content.Content}"></TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>                            
+                        </ListBox.ItemsPanel>
+                    </ListBox>
+                </DataTemplate>
+            </ListBox.ItemTemplate>            
+        </ListBox>
     </Grid>
 </UserControl>

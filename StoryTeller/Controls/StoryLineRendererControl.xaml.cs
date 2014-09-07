@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StoryTeller.DataModel.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,5 +24,11 @@ namespace StoryTeller.Controls
         {
             this.InitializeComponent();
         }
+
+        private void ListBox_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            
+        }
+
     }
 }

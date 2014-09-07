@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StoryTeller.DataModel.Model
 {
-    public abstract class Scene : IScene
+    public class Scene : IScene
     {
         private LibraryItem _libraryItem;
         private string _libraryItemId;
@@ -69,14 +69,7 @@ namespace StoryTeller.DataModel.Model
 
         public IScene FollowingScene
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get; set;
         }
 
 
