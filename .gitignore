@@ -3,8 +3,9 @@
 ################################################################################
 
 /UpgradeLog.htm
-/StoryTeller/bin/Debug/AppX/microsoft.system.package.metadata
 /StoryTeller/bin
+/StoryTeller/obj
 /StoryTeller.Library/bin
+/StoryTeller.Library/obj
 /StoryTeller.Library2
 /StoryTeller.v12.suo
