@@ -65,15 +65,9 @@
                 <ColumnDefinition Width="200"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ListBox x:Name="libraryPanel" Grid.Column="0" Background="#FF483A4D" Margin="0,1,0,-1">
-                <ListBox.Items>
-                    <TextBlock TextWrapping="Wrap" Text="TextBlock1" FontSize="20"/>
-                    <TextBlock TextWrapping="Wrap" Text="TextBlock2" FontSize="20"/>
-                    <TextBlock TextWrapping="Wrap" Text="TextBlock3" FontSize="20"/>
-                    <TextBlock TextWrapping="Wrap" Text="TextBlock4" FontSize="20"/>
-                    <TextBlock TextWrapping="Wrap" Text="TextBlock5" FontSize="20"/>
-                </ListBox.Items>
-            </ListBox>
+            <GridView x:Name="libraryPanel" Grid.Column="0" Background="#FF483A4D" Margin="0,1,0,-1" DataContext="{Binding Source=LibrryViewModel}">
+                
+            </GridView>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="400"/>

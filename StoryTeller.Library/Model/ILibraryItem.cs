@@ -1,5 +1,5 @@
 ﻿using System;
-namespace StoryTeller.Library.Model
+namespace StoryTeller.DataModel.Model
 {
     public interface ILibraryItem
     {
