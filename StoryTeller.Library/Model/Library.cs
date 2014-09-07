@@ -10,7 +10,7 @@ namespace StoryTeller.Library.Model
     {
         public IEnumerable<LibraryItem> Items { get; set; }
 
-        internal static LibraryItem GetItem(string _libraryItemId)
+        internal static LibraryItem GetItem(string libraryItemId)
         {
             throw new NotImplementedException();
         }

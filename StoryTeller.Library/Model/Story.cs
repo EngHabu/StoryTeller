@@ -8,6 +8,7 @@ namespace StoryTeller.Library.Model
 {
     public sealed class Story
     {
+        public string Title { get; set; }
         public IScene StartScene { get; set; }
         public IEnumerable<IScene> BonusScenes { get; set; }
     }

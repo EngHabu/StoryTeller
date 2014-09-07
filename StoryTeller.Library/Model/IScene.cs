@@ -11,7 +11,7 @@ namespace StoryTeller.Library.Model
         string Id { get; set; }
         SceneType Type { get; set; }
         ISceneContent Content { get; set; }
-        IScene FollowingScene { get; set; }
+        Scene FollowingScene { get; set; }
         bool IsBonusScene { get; set; }
     }
 }

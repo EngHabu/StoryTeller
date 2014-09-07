@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 
 namespace StoryTeller.Library.Model
 {
-    public abstract class Scene : IScene
+    public class Scene : IScene
     {
         private LibraryItem _libraryItem;
         private string _libraryItemId;
 
         public Scene()
         {
+            Id = Guid.NewGuid().ToString();
         }
 
         public Scene(LibraryItem libraryItem)
+            : this()
         {
             _libraryItem = libraryItem;
             _libraryItemId = libraryItem.Id;
@@ -23,21 +25,15 @@ namespace StoryTeller.Library.Model
 
         public virtual string Id
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public virtual SceneType Type
         {
             get
             {
-                throw new NotImplementedException();
+                return SceneType.Regular;
             }
             set
             {
@@ -67,29 +63,17 @@ namespace StoryTeller.Library.Model
             }
         }
 
-        public IScene FollowingScene
+        public Scene FollowingScene
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
 
         public bool IsBonusScene
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
     }
 }

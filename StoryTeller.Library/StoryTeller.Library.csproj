@@ -119,6 +119,7 @@
     <Compile Include="Model\Story.cs" />
     <Compile Include="Model\StoryProject.cs" />
     <Compile Include="Model\StoryProjectExportOptions.cs" />
+    <Compile Include="Model\TextSceneContent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
