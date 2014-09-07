@@ -109,6 +109,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Controls\EditorRendererControl.xaml.cs">
       <DependentUpon>EditorRendererControl.xaml</DependentUpon>
     </Compile>
@@ -121,6 +122,8 @@
     <Compile Include="Controls\StoryLineRendererControl.xaml.cs">
       <DependentUpon>StoryLineRendererControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\StringToRtf.cs" />
+    <Compile Include="DataModel\ProjectDataSource.cs" />
     <Compile Include="GroupedItemsPage.xaml.cs">
       <DependentUpon>GroupedItemsPage.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,9 @@
     <Compile Include="ItemDetailPage.xaml.cs">
       <DependentUpon>ItemDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\StoryViewer.xaml.cs">
+      <DependentUpon>StoryViewer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LibraryViewModel.cs" />
     <Compile Include="ProjectViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -138,6 +144,7 @@
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
+    <Compile Include="ViewModel\StoryViewModel.cs" />
     <Compile Include="SceneViewModel.cs" />
     <Compile Include="SceneViewModelPad.cs" />
     <Compile Include="StoryLineViewModel.cs" />
@@ -192,6 +199,10 @@
     <Page Include="ItemDetailPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\StoryViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -14,7 +14,7 @@ namespace StoryTeller.DataModel.Model
         }
         public IEnumerable<LibraryItem> Items { get; set; }
 
-        internal static LibraryItem GetItem(string _libraryItemId)
+        internal static LibraryItem GetItem(string libraryItemId)
         {
             throw new NotImplementedException();
         }      

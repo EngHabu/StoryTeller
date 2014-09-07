@@ -13,9 +13,11 @@ namespace StoryTeller.DataModel.Model
 
         public Scene()
         {
+            Id = Guid.NewGuid().ToString();
         }
 
         public Scene(LibraryItem libraryItem)
+            : this()
         {
             _libraryItem = libraryItem;
             _libraryItemId = libraryItem.Id;
@@ -23,21 +25,15 @@ namespace StoryTeller.DataModel.Model
 
         public virtual string Id
         {
-            get
-            {
-                throw new NotImplementedException();
+            get;
+            set;
             }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
 
         public virtual SceneType Type
         {
             get
             {
-                throw new NotImplementedException();
+                return SceneType.Regular;
             }
             set
             {
@@ -67,22 +63,17 @@ namespace StoryTeller.DataModel.Model
             }
         }
 
-        public IScene FollowingScene
+        public Scene FollowingScene
         {
-            get; set;
+            get;
+            set;
         }
 
 
         public bool IsBonusScene
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
     }
 }

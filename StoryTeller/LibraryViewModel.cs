@@ -16,7 +16,7 @@ namespace StoryTeller
             get;
             set;
         }
-                
+
 
         public ObservableCollection<LibraryItem> Items
         {
@@ -29,7 +29,7 @@ namespace StoryTeller
                 }
                 return _libraryItems;
             }
-        }
+            }
 
         void _libraryItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {

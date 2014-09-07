@@ -1,4 +1,6 @@
-﻿using System;
+﻿using StoryTeller.DataModel;
+using StoryTeller.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,6 +24,11 @@ namespace StoryTeller.Controls
         public PreviewRendererControl()
         {
             this.InitializeComponent();
+        }
+
+        void TextBlock_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        {
+            TextBlock textBlock = sender as TextBlock;
         }
     }
 }

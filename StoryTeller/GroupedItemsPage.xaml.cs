@@ -29,7 +29,7 @@ namespace StoryTeller
     public sealed partial class GroupedItemsPage : Page
     {
         private NavigationHelper navigationHelper;
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();       
+        private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private LibraryViewModel libraryViewModel = new LibraryViewModel();
         private ProjectViewModel projectViewModel = new ProjectViewModel();
 
@@ -159,7 +159,7 @@ namespace StoryTeller
         }
 
         async private void Button_Click(object sender, RoutedEventArgs e)
-        {
+            {
             FileOpenPicker picker = new FileOpenPicker();
             picker.FileTypeFilter.Add(".txt");
             IReadOnlyList<StorageFile> files = await picker.PickMultipleFilesAsync();
@@ -170,7 +170,7 @@ namespace StoryTeller
                 libraryItem.SceneContent = new TempSceneContent();                
                 libraryItem.SceneContent.Content = await FileIO.ReadTextAsync(file);
                 libraryViewModel.Items.Add(libraryItem);           
-            }            
+            }
         }
     }
 }
