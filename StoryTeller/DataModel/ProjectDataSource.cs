@@ -29,8 +29,8 @@ namespace StoryTeller.DataModel
 
         private Story CreateStoryProject(Library lib)
         {
-            Scene startScene = CreateScene(lib);
-            Scene currentScene = startScene;
+            IScene startScene = CreateScene(lib);
+            IScene currentScene = startScene;
             for (int i = 0; i < 10; i++)
             {
                 currentScene = currentScene.FollowingScene = CreateScene(lib);
@@ -43,7 +43,7 @@ namespace StoryTeller.DataModel
             };
         }
 
-        private Scene CreateScene(Library lib)
+        private IScene CreateScene(Library lib)
         {
             List<LibraryItem> items = new List<LibraryItem>(lib.Items);
             LibraryItem item = items[new Random().Next(0, items.Count)];

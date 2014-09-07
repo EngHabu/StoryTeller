@@ -5,9 +5,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace StoryTeller
+namespace StoryTeller.ViewModel
 {
-    class StoryViewModel
+    public class StoryViewModel
     {
         private DataModel.Model.Story _story;
         private IScene _currentScene;

@@ -63,7 +63,7 @@ namespace StoryTeller.DataModel.Model
             }
         }
 
-        public Scene FollowingScene
+        public IScene FollowingScene
         {
             get;
             set;

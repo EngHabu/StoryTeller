@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace StoryTeller
+namespace StoryTeller.ViewModel
 {
-    class SceneViewModelPad : SceneViewModel
+    public class SceneViewModelPad : SceneViewModel
     {
         public SceneViewModelPad()
             : base(null)

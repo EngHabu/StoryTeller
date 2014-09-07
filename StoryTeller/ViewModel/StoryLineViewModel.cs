@@ -4,9 +4,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace StoryTeller
+namespace StoryTeller.ViewModel
 {
-    class StoryLineViewModel : ObservableCollection<SceneViewModel>
+    public class StoryLineViewModel : ObservableCollection<SceneViewModel>
     {
         private string lineID;
 

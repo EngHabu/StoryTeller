@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using StoryTeller.DataModel.Model;
 using System.Collections.ObjectModel;
 
-namespace StoryTeller
+namespace StoryTeller.ViewModel
 {
     public class LibraryViewModel
     {

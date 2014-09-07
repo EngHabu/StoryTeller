@@ -18,6 +18,7 @@ using StoryTeller.DataModel.Model;
 using Windows.Storage.Pickers;
 using Windows.Storage;
 using StoryTeller.Controls;
+using StoryTeller.ViewModel;
 
 // The Grouped Items Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234231
 
@@ -58,8 +59,7 @@ namespace StoryTeller
             libraryViewModel.Library = new Library();
             projectViewModel.Library = libraryViewModel;
 
-            StoryViewModel storyModel = new StoryViewModel();
-            storyModel.Story = new Story();
+            StoryViewModel storyModel = new StoryViewModel(new Story());
             projectViewModel.Story = storyModel;
             
             this.DataContext = projectViewModel;
@@ -167,7 +167,7 @@ namespace StoryTeller
             foreach(StorageFile file in files) {                
                 LibraryItem libraryItem = new LibraryItem();
                 libraryItem.Id = file.Name;
-                libraryItem.SceneContent = new TempSceneContent();                
+                libraryItem.SceneContent = new TextSceneContent();                
                 libraryItem.SceneContent.Content = await FileIO.ReadTextAsync(file);
                 libraryViewModel.Items.Add(libraryItem);           
             }

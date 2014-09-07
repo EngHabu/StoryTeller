@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StoryTeller
+namespace StoryTeller.ViewModel
 {
-    class ProjectViewModel
+    public class ProjectViewModel
     {
         public StoryViewModel Story {get; set;}
         public LibraryViewModel Library { get; set; }

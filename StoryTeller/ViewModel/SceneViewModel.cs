@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace StoryTeller
+namespace StoryTeller.ViewModel
 {
-    class SceneViewModel
+    public class SceneViewModel
     {
 
         public IScene CurrentScene { get; set; }

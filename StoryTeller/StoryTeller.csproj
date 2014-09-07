@@ -133,21 +133,21 @@
     <Compile Include="ItemDetailPage.xaml.cs">
       <DependentUpon>ItemDetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LibraryViewModel.cs" />
+    <Compile Include="ViewModel\LibraryViewModel.cs" />
     <Compile Include="Pages\StoryViewer.xaml.cs">
       <DependentUpon>StoryViewer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ProjectViewModel.cs" />
+    <Compile Include="ViewModel\ProjectViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataModel\SampleDataSource.cs" />
     <Compile Include="Common\SuspensionManager.cs" />
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
-    <Compile Include="SceneViewModel.cs" />
-    <Compile Include="SceneViewModelPad.cs" />
-    <Compile Include="StoryLineViewModel.cs" />
-    <Compile Include="StoryViewModel.cs" />
+    <Compile Include="ViewModel\SceneViewModel.cs" />
+    <Compile Include="ViewModel\SceneViewModelPad.cs" />
+    <Compile Include="ViewModel\StoryLineViewModel.cs" />
+    <Compile Include="ViewModel\StoryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -214,9 +214,7 @@
       <Name>StoryTeller.DataModel</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
