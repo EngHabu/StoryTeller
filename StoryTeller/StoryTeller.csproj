@@ -204,9 +204,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\StoryTeller.Library\StoryTeller.Library.csproj">
+    <ProjectReference Include="..\StoryTeller.Library\StoryTeller.DataModel.csproj">
       <Project>{4e4c1a71-b03a-4469-8ef8-4445155136e0}</Project>
-      <Name>StoryTeller.Library</Name>
+      <Name>StoryTeller.DataModel</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

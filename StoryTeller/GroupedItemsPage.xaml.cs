@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Windows;
+using StoryTeller.DataModel.Model;
 
 // The Grouped Items Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234231
 
@@ -49,6 +50,8 @@ namespace StoryTeller
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
+            Library library = new Library();
+            this.DataContext = new LibraryViewModel(new Library());
             libraryPanel.DoubleTapped +=libraryPanel_DoubleTapped;
             storylinePanel.DoubleTapped += storylinePanel_DoubleTapped;
         }
