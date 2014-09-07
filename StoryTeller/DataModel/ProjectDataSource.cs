@@ -1,4 +1,4 @@
-﻿using StoryTeller.Library.Model;
+﻿using StoryTeller.DataModel.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace StoryTeller.DataModel
 
         private StoryProject CreateStoryProject()
         {
-            Library.Model.Library lib = CreateLibrary();
+            Library lib = CreateLibrary();
             return new StoryProject
             {
                 Library = lib,
@@ -27,7 +27,7 @@ namespace StoryTeller.DataModel
             };
         }
 
-        private Story CreateStoryProject(Library.Model.Library lib)
+        private Story CreateStoryProject(Library lib)
         {
             Scene startScene = CreateScene(lib);
             Scene currentScene = startScene;
@@ -43,7 +43,7 @@ namespace StoryTeller.DataModel
             };
         }
 
-        private Scene CreateScene(Library.Model.Library lib)
+        private Scene CreateScene(Library lib)
         {
             List<LibraryItem> items = new List<LibraryItem>(lib.Items);
             LibraryItem item = items[new Random().Next(0, items.Count)];
@@ -56,7 +56,7 @@ namespace StoryTeller.DataModel
             return scene;
         }
 
-        private Library.Model.Library CreateLibrary()
+        private Library CreateLibrary()
         {
             List<LibraryItem> items = new List<LibraryItem>();
             for (int i = 0; i < 10; i++)
@@ -64,7 +64,7 @@ namespace StoryTeller.DataModel
                 items.Add(CreateLibraryItem());
             }
 
-            Library.Model.Library lib = new Library.Model.Library
+            Library lib = new Library
             {
                 Items = items
             };

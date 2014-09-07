@@ -1,4 +1,4 @@
-﻿using StoryTeller.Library.Model;
+﻿using StoryTeller.DataModel.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,7 +39,7 @@ namespace StoryTeller.ViewModel
             Scenes = ComputeFirstStory(Story);
         }
 
-        private ObservableCollection<IScene> ComputeFirstStory(Library.Model.Story Story)
+        private ObservableCollection<IScene> ComputeFirstStory(Story Story)
         {
             List<IScene> scenes = new List<IScene>();
             for (IScene current = Story.StartScene; current != null; current = current.FollowingScene)

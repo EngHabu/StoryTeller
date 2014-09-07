@@ -80,7 +80,7 @@ namespace StoryTeller.Pages
         /// session. The state will be null the first time a page is visited.</param>
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            //StoryTeller.Library.Model.StoryProject project = StoryTeller.DataModel.ProjectDataSource.Project;
+            //StoryTeller.DataModel.Model.StoryProject project = StoryTeller.DataModel.ProjectDataSource.Project;
             //System.Runtime.Serialization.Json.DataContractJsonSerializer s = new System.Runtime.Serialization.Json.DataContractJsonSerializer(project.GetType());
             //FileSavePicker saveDialog = new FileSavePicker();
             //saveDialog.FileTypeChoices.Add(new KeyValuePair<string, IList<string>>("Json", new List<string>(new string[] { ".json" })));
