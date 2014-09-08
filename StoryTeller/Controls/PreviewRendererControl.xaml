@@ -38,7 +38,7 @@
 
             <FlipView.ItemTemplate>
                 <DataTemplate>
-                    <ScrollViewer HorizontalScrollMode="Auto" VerticalScrollMode="Auto">
+                    <ScrollViewer HorizontalScrollMode="Auto" VerticalScrollMode="Disabled">
                         <common:RichTextColumns x:Name="richTextColumns" 
                                 RichTextContent="{Binding Path=Content.Content, Converter={StaticResource StringToRtf}}">
                             <common:RichTextColumns.ColumnTemplate>

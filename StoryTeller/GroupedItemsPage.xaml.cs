@@ -69,7 +69,6 @@ namespace StoryTeller
 
         void storylinePanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            
         }
 
         private void libraryPanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)

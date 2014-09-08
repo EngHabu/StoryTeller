@@ -71,8 +71,7 @@ namespace StoryTeller.ViewModel
             IScene currentScene = startScene;
 
             StoryLineViewModel lineScenes = new StoryLineViewModel(lineID, this);
-            lineScenes.CollectionChanged += lineScenes_CollectionChanged;
-
+                                   
             storylines.Add(lineScenes);
 
             for (int i = 0; i < depth; i++)
@@ -92,13 +91,18 @@ namespace StoryTeller.ViewModel
                         childID++;
                         ConstructStoryLines(possibleStartScene, GetLineID(lineID, childID), padding, storylines);
                     }
+
+                    break;
                 }
                 else
                 {
                     lineScenes.Add(new SceneViewModel(currentScene));
                     padding++;
+                    currentScene = currentScene.FollowingScene;
                 }
-            }
+            }            
+
+            lineScenes.CollectionChanged += lineScenes_CollectionChanged;
         }
 
         private static string GetLineID(string major, int minor)
@@ -118,6 +122,7 @@ namespace StoryTeller.ViewModel
             {
                 currentScene = currentScene.FollowingScene;
             }
+
             currentScene.FollowingScene = (e.NewItems[0] as SceneViewModel).CurrentScene;
         }
 
