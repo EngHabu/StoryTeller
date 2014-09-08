@@ -60,7 +60,7 @@
             <TextBlock x:Name="pageTitle" Text="{StaticResource AppName}" Style="{StaticResource HeaderTextBlockStyle}" Grid.Column="1" Grid.Row="0" 
                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Bottom" Margin="0,0,30,40"/>
         </Grid>
-        
+
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200"/>
@@ -75,7 +75,7 @@
                 <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,1,0,-1" ItemsSource="{Binding Library.Items}">
                     <GridView.ItemTemplate>
                         <DataTemplate>
-                            <controls:LibraryItemRendererControl>                                
+                            <controls:LibraryItemRendererControl>
                             </controls:LibraryItemRendererControl>
                         </DataTemplate>
                     </GridView.ItemTemplate>
@@ -86,12 +86,19 @@
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0">
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <controls:PreviewRendererControl Grid.Row="0" DataContext="{Binding Story}" />
+                    <Button Content="Preview" Grid.Row="1"  HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
+                </Grid>
+                <!--<StackPanel Grid.Row="0">
                     <TextBlock x:Name="outputText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="48" Height="250"/>
-                    <Button Content="Preview" HorizontalAlignment="Left" Margin="7,112,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
-                </StackPanel>
+                </StackPanel>-->
                 <controls:StoryLineRendererControl DataContext="{Binding Story}" Grid.Row="1">
-                    
+
                 </controls:StoryLineRendererControl>
             </Grid>
         </Grid>

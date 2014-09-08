@@ -69,7 +69,6 @@ namespace StoryTeller
 
         void storylinePanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            
         }
 
         private void libraryPanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -154,7 +153,7 @@ namespace StoryTeller
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            outputText.Text = "";
+            //outputText.Text = "";
             
         }
 

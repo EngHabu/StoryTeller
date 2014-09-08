@@ -9,6 +9,7 @@ namespace StoryTeller.DataModel
 {
     public class ProjectDataSource
     {
+        private int _sceneNumberIncrement = 0;
         public static StoryProject Project
         {
             get
@@ -86,7 +87,10 @@ namespace StoryTeller.DataModel
         {
             return new TextSceneContent()
             {
-                Content = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tristique ligula in ligula bibendum fermentum. Aenean auctor dui augue. Praesent molestie orci sit amet rhoncus elementum. Morbi auctor augue sed sodales maximus. Ut ornare gravida ultricies. Suspendisse dolor erat, tincidunt sit amet mattis vel, fermentum a diam. Aenean auctor nec arcu dapibus bibendum. Sed vitae diam mi. Morbi lacinia luctus sem vitae commodo.
+                Content = @"Scene #" + (_sceneNumberIncrement++).ToString() + @"
+
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tristique ligula in ligula bibendum fermentum. Aenean auctor dui augue. Praesent molestie orci sit amet rhoncus elementum. Morbi auctor augue sed sodales maximus. Ut ornare gravida ultricies. Suspendisse dolor erat, tincidunt sit amet mattis vel, fermentum a diam. Aenean auctor nec arcu dapibus bibendum. Sed vitae diam mi. Morbi lacinia luctus sem vitae commodo.
 
 Cras auctor laoreet tellus et varius. Integer vel faucibus turpis, et mattis dui. Nullam nec mi quam. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Maecenas aliquam dui vel arcu euismod dictum. Nullam fringilla, sapien vel interdum tempus, felis sapien porttitor tellus, in euismod lacus felis ut ante. In blandit nibh felis, quis faucibus orci volutpat vel. Ut blandit tempus orci, a mattis ipsum sodales ut. Etiam sed lectus a quam commodo convallis quis vel augue. Quisque in lectus nibh. Etiam enim sem, placerat sit amet justo sed, pretium posuere mauris. Vivamus lacinia fringilla lectus. Nunc consectetur et nisi sit amet convallis. Vivamus lacinia, justo quis auctor sodales, nisl enim blandit turpis, sit amet laoreet mi lacus sed elit. Sed aliquet id nisl vehicula imperdiet.
 
@@ -186,7 +190,9 @@ Integer quis dolor sed tellus rutrum sagittis id et elit. Aenean bibendum orci a
 
 Cras id finibus urna. Proin ac augue ultricies, ullamcorper urna sit amet, porta nisl. Vestibulum laoreet velit sapien, eu ultrices diam feugiat a. Aenean at sodales mi. Aliquam lobortis molestie convallis. Suspendisse potenti. Quisque laoreet arcu leo, quis hendrerit purus consectetur vel. Donec tempus tempus lectus et finibus.
 
-Generated 50 paragraphs, 4476 words, 30117 bytes of Lorem Ipsum",
+Generated 50 paragraphs, 4476 words, 30117 bytes of Lorem Ipsum
+
+#END",
             };
         }
     }
