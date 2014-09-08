@@ -43,7 +43,8 @@ namespace StoryTeller.ViewModel
             return new ObservableCollection<IScene>(scenes);
         }
 
-        public Story Story {
+        public Story Story
+        {
             get
             {
                 return _story;
@@ -52,46 +53,52 @@ namespace StoryTeller.ViewModel
             {
                 _story = value;
                 StoryLines = ConstructStoryLines();
+                CurrentStoryline = StoryLines.First();
             }
         }
 
-        public ObservableCollection<ObservableCollection<SceneViewModel>> StoryLines { get; set; }
+        public ObservableCollection<StoryLineViewModel> StoryLines { get; set; }
 
-        private ObservableCollection<ObservableCollection<SceneViewModel>> ConstructStoryLines()
+        private ObservableCollection<StoryLineViewModel> ConstructStoryLines()
         {
-            ObservableCollection<ObservableCollection<SceneViewModel>> storylines = new ObservableCollection<ObservableCollection<SceneViewModel>>();
-            ConstructStoryLines(Story.StartScene,"1", 0, storylines);
+            ObservableCollection<StoryLineViewModel> storylines = new ObservableCollection<StoryLineViewModel>();
+            ConstructStoryLines(Story.StartScene, "1", 0, storylines);
             return storylines;
         }
 
-        private void ConstructStoryLines(IScene startScene, string lineID, int depth, ObservableCollection<ObservableCollection<SceneViewModel>> storylines)
+        private void ConstructStoryLines(IScene startScene, string lineID, int depth, ObservableCollection<StoryLineViewModel> storylines)
         {
             IScene currentScene = startScene;
 
-            StoryLineViewModel lineScenes = new StoryLineViewModel(lineID);
+            StoryLineViewModel lineScenes = new StoryLineViewModel(lineID, this);
             lineScenes.CollectionChanged += lineScenes_CollectionChanged;
-                                   
+
             storylines.Add(lineScenes);
 
-            for (int i = 0; i < depth; i++) {
+            for (int i = 0; i < depth; i++)
+            {
                 lineScenes.Add(new SceneViewModelPad());
             }
 
             int padding = depth;
-            while (currentScene != null) {
-                if (currentScene is InteractiveScene) {
+            while (currentScene != null)
+            {
+                if (currentScene is InteractiveScene)
+                {
                     InteractiveScene interactiveScene = currentScene as InteractiveScene;
                     int childID = 0;
-                    foreach (IScene possibleStartScene in interactiveScene.PossibleScenes) {
+                    foreach (IScene possibleStartScene in interactiveScene.PossibleScenes)
+                    {
                         childID++;
                         ConstructStoryLines(possibleStartScene, GetLineID(lineID, childID), padding, storylines);
                     }
                 }
-                else {
+                else
+                {
                     lineScenes.Add(new SceneViewModel(currentScene));
                     padding++;
                 }
-            }            
+            }
         }
 
         private static string GetLineID(string major, int minor)
@@ -101,12 +108,14 @@ namespace StoryTeller.ViewModel
 
         void lineScenes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (Story.StartScene == null) {
+            if (Story.StartScene == null)
+            {
                 Story.StartScene = (e.NewItems[0] as SceneViewModel).CurrentScene;
                 return;
             }
-            IScene currentScene = Story.StartScene;            
-            while (currentScene.FollowingScene != null) {
+            IScene currentScene = CurrentStoryline.First().CurrentScene;
+            while (currentScene.FollowingScene != null)
+            {
                 currentScene = currentScene.FollowingScene;
             }
             currentScene.FollowingScene = (e.NewItems[0] as SceneViewModel).CurrentScene;
@@ -114,8 +123,44 @@ namespace StoryTeller.ViewModel
 
         internal void AddScene(IScene scene)
         {
-            ObservableCollection<SceneViewModel> storyline = StoryLines.First();
-            storyline.Add(new SceneViewModel(scene));
+            CurrentStoryline.Add(new SceneViewModel(scene));
+        }
+
+        internal void SelectStoryline(StoryLineViewModel storyline)
+        {
+            CurrentStoryline = storyline;
+            List<IScene> scenes = new List<IScene>();
+            foreach (SceneViewModel sceneModel in storyline)
+            {
+                {
+                    scenes.Add(sceneModel.CurrentScene);
+                }
+
+                if (scenes.Count > 0)
+                {
+                    CurrentScene = scenes[0];
+                    Scenes = new ObservableCollection<IScene>(scenes);
+                }
+            }
+        }
+
+        public StoryLineViewModel CurrentStoryline { get; set; }
+
+        internal void AddStoryline(StoryLineViewModel storyline)
+        {
+            if (storyline.Count > 0)
+            {
+                SceneViewModel lastScene = storyline.Last();
+
+                InteractiveScene interactiveScene;
+                if (lastScene.CurrentScene is InteractiveScene) {
+                    interactiveScene = lastScene.CurrentScene as InteractiveScene;
+                }
+                else {
+                    interactiveScene = new InteractiveScene();
+                    storyline.Add(new SceneViewModel(interactiveScene));
+                }                                
+            }
         }
     }
 }

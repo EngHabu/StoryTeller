@@ -119,6 +119,9 @@
     <Compile Include="Controls\PreviewRendererControl.xaml.cs">
       <DependentUpon>PreviewRendererControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SingleStoryLineRendererControl.xaml.cs">
+      <DependentUpon>SingleStoryLineRendererControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StoryLineRendererControl.xaml.cs">
       <DependentUpon>StoryLineRendererControl.xaml</DependentUpon>
     </Compile>
@@ -180,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PreviewRendererControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SingleStoryLineRendererControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
