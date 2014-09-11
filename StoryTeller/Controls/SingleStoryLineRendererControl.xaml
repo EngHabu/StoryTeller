@@ -11,15 +11,15 @@
     Height="40">
     
     <StackPanel Orientation="Horizontal">
-        <StackPanel Orientation="Horizontal" Background="Aquamarine">
-            <Button x:Name="selectStoryline" Content="S" Click="selectStoryline_Click"></Button>
-            <Button x:Name="addStoryline" Content="A" Click="addStoryline_Click"></Button>
-            <Button x:Name="deleteStoryline" Content="D"></Button>
+        <StackPanel Orientation="Horizontal" Background="Aquamarine" Tapped="selectStoryline_Tapped">
+            <StackPanel x:Name="selectStoryline" Tapped="selectStoryline_Tapped" Width="20"></StackPanel>
+            <Button x:Name="addStoryline" Content="+" Click="addStoryline_Click"></Button>
+            <Button x:Name="deleteStoryline" Content="x"></Button>
         </StackPanel>
         <ListBox ItemsSource="{Binding}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding CurrentScene.Content.Content}"></TextBlock>
+                    <TextBlock Width="150" Text="{Binding CurrentScene.Content.Content}"></TextBlock>
                 </DataTemplate>
             </ListBox.ItemTemplate>
             <ListBox.ItemsPanel>

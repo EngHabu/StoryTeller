@@ -171,5 +171,10 @@ namespace StoryTeller
                 libraryViewModel.Items.Add(libraryItem);           
             }
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            projectViewModel.Story.Story = projectViewModel.Story.Story;
+        }
     }
 }

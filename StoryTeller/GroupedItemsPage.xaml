@@ -92,7 +92,10 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <controls:PreviewRendererControl Grid.Row="0" DataContext="{Binding Story}" />
-                    <Button Content="Preview" Grid.Row="1"  HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1">
+                    <Button Content="Preview"  HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
+                    <Button Content="Reload" HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+                    </StackPanel>
                 </Grid>
                 <!--<StackPanel Grid.Row="0">
                     <TextBlock x:Name="outputText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="48" Height="250"/>

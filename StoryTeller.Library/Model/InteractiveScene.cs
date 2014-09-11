@@ -8,6 +8,8 @@ namespace StoryTeller.DataModel.Model
 {
     public sealed class InteractiveScene : Scene
     {
-        public IEnumerable<IScene> PossibleScenes { get; set; }
+        public InteractiveScene(LibraryItem libraryItem) : base(libraryItem) { }
+
+        public IList<IScene> PossibleScenes { get; set; }
     }
 }
