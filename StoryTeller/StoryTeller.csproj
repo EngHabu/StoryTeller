@@ -109,6 +109,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\RichTextColumns2.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Controls\EditorRendererControl.xaml.cs">
       <DependentUpon>EditorRendererControl.xaml</DependentUpon>
@@ -123,6 +124,7 @@
       <DependentUpon>StoryLineRendererControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converter\StringToRtf.cs" />
+    <Compile Include="Converter\XamlToRichTextBlockCollection.cs" />
     <Compile Include="DataModel\ProjectDataSource.cs" />
     <Compile Include="GroupedItemsPage.xaml.cs">
       <DependentUpon>GroupedItemsPage.xaml</DependentUpon>
@@ -147,6 +149,7 @@
     <Compile Include="ViewModel\SceneViewModel.cs" />
     <Compile Include="ViewModel\SceneViewModelPad.cs" />
     <Compile Include="ViewModel\StoryLineViewModel.cs" />
+    <Compile Include="ViewModel\StoryReaderViewModel.cs" />
     <Compile Include="ViewModel\StoryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

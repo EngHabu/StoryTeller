@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Text;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Markup;
 
 namespace StoryTeller.Converter
@@ -26,6 +27,28 @@ namespace StoryTeller.Converter
             return @"<Paragraph TextIndent=""20"">" 
                 + plainText.Replace(Environment.NewLine, @"</Paragraph><Paragraph TextIndent=""20"">") 
                 + "</Paragraph>";
+        }
+
+        public static BlockCollection PlainTextToBlockCollection(string plainText)
+        {
+            string innerText = PlainTextToXaml(plainText);
+            return XamlReader.Load("<BlockCollection  xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>"
+                + innerText
+                + "</BlockCollection>") as BlockCollection;
+        }
+
+        public static IEnumerable<Block> PlainTextToBlocks(string plainText)
+        {
+            RichTextBlock richTextBlock = new StringToRtf().Convert(plainText, null, null, null) as RichTextBlock;
+            List<Block> result = new List<Block>();
+            while(richTextBlock.Blocks.Count > 0)
+            {
+                Block block = richTextBlock.Blocks.First();
+                richTextBlock.Blocks.Remove(block);
+                result.Add(block);
+            }
+
+            return result.AsEnumerable();        
         }
 
         public object Convert(object value, Type targetType, object parameter, string language)

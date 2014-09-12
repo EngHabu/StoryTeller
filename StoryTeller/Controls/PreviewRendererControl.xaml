@@ -14,6 +14,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <converter:StringToRtf x:Key="StringToRtf" />
+            <converter:XamlToRichTextBlockCollection x:Key="XamlToRichTextBlockCollection" />
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -22,7 +23,7 @@
             <ColumnDefinition Width="1*" />
             <!--<ColumnDefinition Width="1*" />-->
         </Grid.ColumnDefinitions>
-        <FlipView
+        <!--<FlipView
             x:Name="flipView"
             AutomationProperties.AutomationId="ItemsFlipView"
             AutomationProperties.Name="Item Details"
@@ -37,10 +38,119 @@
             </FlipView.ItemContainerStyle>
 
             <FlipView.ItemTemplate>
+                <DataTemplate>-->
+        <!--<FlipView ItemsSource="{Binding Path=Scenes, Converter={StaticResource XamlToRichTextBlockCollection}}">
+            <FlipView.ItemTemplate>
                 <DataTemplate>
-                    <ScrollViewer HorizontalScrollMode="Auto" VerticalScrollMode="Disabled">
+                    <ContentPresenter Content="{Binding}" />
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>-->
+        <!--<ScrollViewer x:Name="ScrollingHost"
+                      HorizontalAlignment="Left" VerticalAlignment="Center" 
+                      VerticalScrollBarVisibility="Disabled" 
+                      HorizontalScrollBarVisibility="Auto" 
+                      VerticalScrollMode="Disabled" 
+                      HorizontalScrollMode="Auto"
+                      ZoomMode="Disabled"
+                      HorizontalSnapPointsType="Mandatory">-->
+        <!--VerticalSnapPointsType="None"
+                                          HorizontalSnapPointsType="MandatorySingle"
+                                          HorizontalScrollMode="Enabled"
+                                          HorizontalScrollBarVisibility="Auto"
+                                          VerticalScrollMode="Disabled"
+                                          VerticalScrollBarVisibility="Hidden"
+                                          IsHorizontalRailEnabled="True"
+                                          IsVerticalRailEnabled="False"
+                                          IsHorizontalScrollChainingEnabled="True"
+                                          IsVerticalScrollChainingEnabled="True"
+                                          IsDeferredScrollingEnabled="False"
+                                          BringIntoViewOnFocusChange="True"
+                                          ZoomMode="Disabled"
+                                          TabNavigation="Once"
+                                          IsTabStop="False" 
+                                          AutomationProperties.AccessibilityView="Raw">-->
+        <!--<ScrollViewer HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible" VerticalScrollMode="Disabled" 
+                      HorizontalSnapPointsType="Mandatory">
+        </ScrollViewer>-->
+        <ItemsControl ItemsSource="{Binding Path=Scenes, Converter={StaticResource XamlToRichTextBlockCollection}}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!--<VirtualizingStackPanel AreScrollSnapPointsRegular="True" Orientation="Horizontal" />-->
+                    <!--<StackPanel Orientation="Horizontal" />-->
+                    <common:RichTextColumns2 Scenes="{Binding Scenes}">
+                        <common:RichTextColumns2.InitialColumnTemplate>
+                            <DataTemplate>
+                                <RichTextBlock TextWrapping="Wrap" Padding="20" Width="750" Height="700" CharacterSpacing="100" LineHeight="20" MaxLines="31" 
+                                               FontSize="14" FontFamily="Times New Roman">
+                                </RichTextBlock>
+                            </DataTemplate>
+                        </common:RichTextColumns2.InitialColumnTemplate>
+                        <common:RichTextColumns2.ColumnTemplate>
+                            <DataTemplate>
+                                <RichTextBlockOverflow Width="750" Margin="50,0,0,0" MaxLines="31"/>
+                            </DataTemplate>
+                        </common:RichTextColumns2.ColumnTemplate>
+                    </common:RichTextColumns2>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <common:RichTextColumns>
+                    
+                </common:RichTextColumns>
+            </ItemsControl.ItemTemplate>
+        <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer HorizontalSnapPointsType="Mandatory">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+        </ItemsControl>
+        <!--</ScrollViewer>-->
+        <!--<FlipView
+            x:Name="flipView"
+            AutomationProperties.AutomationId="ItemsFlipView"
+            AutomationProperties.Name="Item Details"
+            TabIndex="1"
+            Grid.RowSpan="2"
+            ItemsSource="{Binding Scenes}">
+
+            <FlipView.ItemContainerStyle>
+                <Style TargetType="FlipViewItem">
+                    <Setter Property="Margin" Value="0,137,0,0"/>
+                </Style>
+            </FlipView.ItemContainerStyle>-->
+        <!--<FlipView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <common:RichTextColumns x:Name="richTextColumns" 
+                                                FlowDirection="LeftToRight"
+                                                RichTextContent="{Binding Path=Content.Content, Converter={StaticResource StringToRtf}}">
+                        <common:RichTextColumns.ColumnTemplate>
+                            <DataTemplate>
+                                <RichTextBlockOverflow Width="750" Margin="50,0,0,0" MaxLines="31"/>
+                            </DataTemplate>
+                        </common:RichTextColumns.ColumnTemplate>
+                    </common:RichTextColumns>
+                </ItemsPanelTemplate>
+            </FlipView.ItemsPanel>-->
+
+        <!--<FlipView.ItemTemplate>
+                <DataTemplate>-->
+        <!--<FlipView x:Name="FlipView" ItemsSource="{Binding Path=Scenes, Converter={StaticResource XamlToRichTextBlockCollection}}">
+            <FlipView.ItemTemplate>
+                <DataTemplate>
+                    <ContentPresenter Content="{Binding}"></ContentPresenter>
+                </DataTemplate>
+            </FlipView.ItemTemplate>
+        </FlipView>-->
+        <!--<ScrollViewer HorizontalScrollMode="Auto" 
+                                  VerticalScrollMode="Disabled" 
+                                  VerticalScrollBarVisibility="Hidden" 
+                                  HorizontalScrollBarVisibility="Visible">
                         <common:RichTextColumns x:Name="richTextColumns" 
-                                RichTextContent="{Binding Path=Content.Content, Converter={StaticResource StringToRtf}}">
+                                                FlowDirection="LeftToRight"
+                                                RichTextContent="{Binding Path=Content.Content, Converter={StaticResource StringToRtf}}">
                             <common:RichTextColumns.ColumnTemplate>
                                 <DataTemplate>
                                     <RichTextBlockOverflow Width="750" Margin="50,0,0,0" MaxLines="31"/>
@@ -50,7 +160,7 @@
                     </ScrollViewer>
                 </DataTemplate>
             </FlipView.ItemTemplate>
-        </FlipView>
+        </FlipView>-->
         <!--<RichTextBlock Grid.Column="0" TextWrapping="Wrap" Padding="20"
                        CharacterSpacing="100" LineHeight="20" MaxLines="31" FontSize="14" FontFamily="Times New Roman" 
                        DataContextChanged="TextBlock_DataContextChanged"
