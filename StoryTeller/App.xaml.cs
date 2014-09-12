@@ -91,7 +91,11 @@ namespace StoryTeller
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
+#if StoryTellerViewer
                 rootFrame.Navigate(typeof(StoryTeller.Pages.StoryViewer), e.Arguments);
+#else
+                rootFrame.Navigate(typeof(GroupedItemsPage), e.Arguments);
+#endif
             }
             // Ensure the current window is active
             Window.Current.Activate();

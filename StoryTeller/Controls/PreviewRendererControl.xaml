@@ -73,12 +73,13 @@
         <!--<ScrollViewer HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible" VerticalScrollMode="Disabled" 
                       HorizontalSnapPointsType="Mandatory">
         </ScrollViewer>-->
-        <ItemsControl ItemsSource="{Binding Path=Scenes, Converter={StaticResource XamlToRichTextBlockCollection}}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <!--<VirtualizingStackPanel AreScrollSnapPointsRegular="True" Orientation="Horizontal" />-->
-                    <!--<StackPanel Orientation="Horizontal" />-->
-                    <common:RichTextColumns2 Scenes="{Binding Scenes}">
+        <Border BorderBrush="DarkGray" BorderThickness="2" Margin="20" Background="White">
+            <ItemsControl ItemsSource="{Binding Path=Scenes, Converter={StaticResource XamlToRichTextBlockCollection}}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel AreScrollSnapPointsRegular="True" Orientation="Horizontal" />
+                        <!--<StackPanel Orientation="Horizontal" />-->
+                        <!--<common:RichTextColumns2 Scenes="{Binding Scenes}">
                         <common:RichTextColumns2.InitialColumnTemplate>
                             <DataTemplate>
                                 <RichTextBlock TextWrapping="Wrap" Padding="20" Width="750" Height="700" CharacterSpacing="100" LineHeight="20" MaxLines="31" 
@@ -91,22 +92,23 @@
                                 <RichTextBlockOverflow Width="750" Margin="50,0,0,0" MaxLines="31"/>
                             </DataTemplate>
                         </common:RichTextColumns2.ColumnTemplate>
-                    </common:RichTextColumns2>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
+                    </common:RichTextColumns2>-->
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <!--<ItemsControl.ItemTemplate>
                 <common:RichTextColumns>
                     
                 </common:RichTextColumns>
-            </ItemsControl.ItemTemplate>
-        <ItemsControl.Template>
-                <ControlTemplate>
-                    <ScrollViewer HorizontalSnapPointsType="Mandatory">
-                        <ItemsPresenter />
-                    </ScrollViewer>
-                </ControlTemplate>
-            </ItemsControl.Template>
-        </ItemsControl>
+            </ItemsControl.ItemTemplate>-->
+                <ItemsControl.Template>
+                    <ControlTemplate>
+                        <ScrollViewer HorizontalSnapPointsType="Mandatory">
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ItemsControl.Template>
+            </ItemsControl>
+        </Border>
         <!--</ScrollViewer>-->
         <!--<FlipView
             x:Name="flipView"
