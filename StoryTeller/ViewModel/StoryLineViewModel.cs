@@ -8,12 +8,17 @@ namespace StoryTeller.ViewModel
 {
     public class StoryLineViewModel : ObservableCollection<SceneViewModel>
     {
-        private string lineID;
+        private StoryViewModel storyViewModel;
+        private StoryLineViewModel _parent;
 
-        public StoryLineViewModel(string lineID)
+        public StoryLineViewModel(StoryViewModel parent, StoryLineViewModel parentStoryline)
         {
-            // TODO: Complete member initialization
-            this.lineID = lineID;
+            this.storyViewModel = parent;
+            _parent = parentStoryline;
         }
+
+        public StoryViewModel StoryModel { get { return storyViewModel; } }
+
+        public StoryLineViewModel Parent { get { return _parent; } }
     }
 }

@@ -23,6 +23,15 @@ namespace StoryTeller.DataModel.Model
             _libraryItemId = libraryItem.Id;
         }
 
+        public LibraryItem LibraryItem { 
+            get {
+                if (_libraryItem == null) {
+                    _libraryItem = Library.GetItem(_libraryItemId);
+                }
+                return _libraryItem;
+            } 
+        }
+
         public virtual string Id
         {
             get;

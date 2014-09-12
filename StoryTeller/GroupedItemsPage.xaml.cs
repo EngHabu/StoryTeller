@@ -153,7 +153,7 @@ namespace StoryTeller
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            //outputText.Text = "";
+            
             
         }
 
@@ -170,6 +170,11 @@ namespace StoryTeller
                 libraryItem.SceneContent.Content = await FileIO.ReadTextAsync(file);
                 libraryViewModel.Items.Add(libraryItem);           
             }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            projectViewModel.Story.Story = projectViewModel.Story.Story;
         }
     }
 }

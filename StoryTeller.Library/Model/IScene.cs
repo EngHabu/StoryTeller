@@ -13,5 +13,6 @@ namespace StoryTeller.DataModel.Model
         ISceneContent Content { get; set; }
         IScene FollowingScene { get; set; }
         bool IsBonusScene { get; set; }
+        LibraryItem LibraryItem { get; }
     }
 }

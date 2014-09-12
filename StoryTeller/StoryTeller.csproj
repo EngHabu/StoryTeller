@@ -120,9 +120,13 @@
     <Compile Include="Controls\PreviewRendererControl.xaml.cs">
       <DependentUpon>PreviewRendererControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SingleStoryLineRendererControl.xaml.cs">
+      <DependentUpon>SingleStoryLineRendererControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StoryLineRendererControl.xaml.cs">
       <DependentUpon>StoryLineRendererControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\StringToSnippet.cs" />
     <Compile Include="Converter\StringToRtf.cs" />
     <Compile Include="Converter\XamlToRichTextBlockCollection.cs" />
     <Compile Include="DataModel\ProjectDataSource.cs" />
@@ -148,6 +152,11 @@
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="ViewModel\SceneViewModel.cs" />
     <Compile Include="ViewModel\SceneViewModelPad.cs" />
+    <Compile Include="ViewModel\StoryBuilder.cs" />
+    <Compile Include="ViewModel\IStorylinePositioner.cs" />
+    <Compile Include="ViewModel\StorylineAdder.cs" />
+    <Compile Include="ViewModel\StorylineBuilder.cs" />
+    <Compile Include="ViewModel\StorylineInserter.cs" />
     <Compile Include="ViewModel\StoryLineViewModel.cs" />
     <Compile Include="ViewModel\StoryReaderViewModel.cs" />
     <Compile Include="ViewModel\StoryViewModel.cs" />
@@ -183,6 +192,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PreviewRendererControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SingleStoryLineRendererControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
