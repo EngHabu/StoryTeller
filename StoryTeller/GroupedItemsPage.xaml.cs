@@ -64,9 +64,7 @@ namespace StoryTeller
             
             this.DataContext = projectViewModel;
 
-            libraryPanel.DoubleTapped +=libraryPanel_DoubleTapped;
-
-            //LoadDefaultFiles();
+            libraryPanel.DoubleTapped += libraryPanel_DoubleTapped;
         }
 
         void storylinePanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -161,10 +159,12 @@ namespace StoryTeller
 
         async private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //await LoadFilesFromStorage();
             await LoadDefaultFiles();
         }
-
+        async private void ButtonLoad_Click(object sender, RoutedEventArgs e)
+        {
+            await LoadFilesFromStorage();
+        }
         private async System.Threading.Tasks.Task LoadFilesFromStorage()
         {
             FolderPicker folderPicker = new FolderPicker();
@@ -210,9 +210,9 @@ namespace StoryTeller
             {
                 LibraryItem libraryItem = new LibraryItem();
                 libraryItem.Id = file.Name;
-                libraryItem.SceneContent = new TextSceneContent();
+                libraryItem.SceneContent = new TextSceneContent();                
                 libraryItem.SceneContent.Content = await FileIO.ReadTextAsync(file);
-                libraryViewModel.Items.Add(libraryItem);
+                libraryViewModel.Items.Add(libraryItem);           
             }
         }
 

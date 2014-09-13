@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
 namespace StoryTeller.ViewModel
 {
-    public class StoryViewModel
+    public class StoryViewModel : INotifyPropertyChanged
     {
         private DataModel.Model.Story _story;
         private IScene _currentScene;
@@ -67,13 +68,21 @@ namespace StoryTeller.ViewModel
         
         internal void AddScene(IScene scene)
         {
-            if (CurrentStoryline == null) {
+            if (CurrentStoryline == null)
+            {
                 return;
             }
-            if (CurrentStoryline.Count > 0 && CurrentStoryline.Last().CurrentScene is InteractiveScene) {
+
+            if (CurrentStoryline.Count > 0 && CurrentStoryline.Last().CurrentScene is InteractiveScene)
+            {
                 return;
             }
-            CurrentStoryline.Add(new SceneViewModel(scene));
+
+            SceneViewModel sceneViewModel = new SceneViewModel(scene);
+            CurrentStoryline.Add(sceneViewModel);
+            Scenes.Add(scene);
+            //Scenes = _builder.StorylineBuilder.GetScenes(CurrentStoryline);
+            OnPropertyChanged("Scenes");
         }
 
         internal void SelectStoryline(StoryLineViewModel storyline)
@@ -93,17 +102,20 @@ namespace StoryTeller.ViewModel
                 SceneViewModel lastScene = storyline.Last();
 
                 InteractiveScene interactiveScene;
-                if (lastScene.CurrentScene is InteractiveScene) {
+                if (lastScene.CurrentScene is InteractiveScene)
+                {
                     interactiveScene = lastScene.CurrentScene as InteractiveScene;
                 }
-                else {
+                else
+                {
                     interactiveScene = new InteractiveScene(lastScene.CurrentScene.LibraryItem);
                     storyline.Remove(lastScene);
                     storyline.Add(new SceneViewModel(interactiveScene));
                 }
 
                 int index = FindStoryLineIndex(storyline);
-                if (index > -1) {
+                if (index > -1)
+                {
                     IStorylinePositioner positioner = new StorylineInserter(StoryLines, index);
                     _builder.ConstructStoryLines(this, storyline, null, storyline.Count, positioner);
                     SelectStoryline(StoryLines[index + 1]);
@@ -113,7 +125,7 @@ namespace StoryTeller.ViewModel
 
         private int FindStoryLineIndex(StoryLineViewModel storyline)
         {
-            for (int i = 0; i < StoryLines.Count; i++ )
+            for (int i = 0; i < StoryLines.Count; i++)
             {
                 if (StoryLines[i] == storyline)
                 {
@@ -121,6 +133,15 @@ namespace StoryTeller.ViewModel
                 }
             }
             return -1;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyChanged)
+        {
+            if (null == propertyChanged)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyChanged));
+            }
         }
     }
 }
