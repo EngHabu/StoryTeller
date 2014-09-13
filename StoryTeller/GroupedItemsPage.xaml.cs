@@ -61,10 +61,10 @@ namespace StoryTeller
 
             StoryViewModel storyModel = new StoryViewModel(new Story());
             projectViewModel.Story = storyModel;
-            
+
             this.DataContext = projectViewModel;
 
-            libraryPanel.DoubleTapped +=libraryPanel_DoubleTapped;
+            libraryPanel.DoubleTapped += libraryPanel_DoubleTapped;
         }
 
         void storylinePanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -153,28 +153,34 @@ namespace StoryTeller
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            
-            
+
+
         }
 
         async private void Button_Click(object sender, RoutedEventArgs e)
-            {
+        {
             FileOpenPicker picker = new FileOpenPicker();
             picker.FileTypeFilter.Add(".txt");
             IReadOnlyList<StorageFile> files = await picker.PickMultipleFilesAsync();
             List<LibraryItem> libraryItems = new List<LibraryItem>();
-            foreach(StorageFile file in files) {                
+            foreach (StorageFile file in files)
+            {
                 LibraryItem libraryItem = new LibraryItem();
                 libraryItem.Id = file.Name;
-                libraryItem.SceneContent = new TextSceneContent();                
+                libraryItem.SceneContent = new TextSceneContent();
                 libraryItem.SceneContent.Content = await FileIO.ReadTextAsync(file);
-                libraryViewModel.Items.Add(libraryItem);           
+                libraryViewModel.Items.Add(libraryItem);
             }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             projectViewModel.Story.Story = projectViewModel.Story.Story;
+        }
+
+        private void PreviewRendererControl_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
         }
     }
 }

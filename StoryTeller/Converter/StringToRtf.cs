@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.UI.Text;
 using Windows.UI.Xaml.Controls;
@@ -24,9 +25,16 @@ namespace StoryTeller.Converter
 
         public static string PlainTextToXaml(string plainText)
         {
-            return @"<Paragraph TextIndent=""20"">" 
-                + plainText.Replace(Environment.NewLine, @"</Paragraph><Paragraph TextIndent=""20"">") 
+            return @"<Paragraph TextIndent=""20"">"
+                + ConvertLinksToXamlString(plainText).Replace(Environment.NewLine, @"</Paragraph><Paragraph TextIndent=""20"">")
                 + "</Paragraph>";
+        }
+
+        private static string ConvertLinksToXamlString(string plainText)
+        {
+            plainText = Regex.Replace(plainText, @"(\{(?<SceneId>[^}]*):(?<LinkText>[^}]*)\})",
+                @"<Hyperlink NavigateUri=""$2""><Run Text=""$3""/></Hyperlink>");
+            return plainText;
         }
 
         public static BlockCollection PlainTextToBlockCollection(string plainText)
@@ -39,26 +47,57 @@ namespace StoryTeller.Converter
 
         public static IEnumerable<Block> PlainTextToBlocks(string plainText)
         {
-            RichTextBlock richTextBlock = new StringToRtf().Convert(plainText, null, null, null) as RichTextBlock;
+            RichTextBlock richTextBlock = PlainTextToRichTextBlock(plainText);
             List<Block> result = new List<Block>();
-            while(richTextBlock.Blocks.Count > 0)
+            while (richTextBlock.Blocks.Count > 0)
             {
                 Block block = richTextBlock.Blocks.First();
                 richTextBlock.Blocks.Remove(block);
                 result.Add(block);
             }
 
-            return result.AsEnumerable();        
+            return result.AsEnumerable();
+        }
+
+        public static RichTextBlock PlainTextToRichTextBlock(string plainText)
+        {
+            RichTextBlock blocksObj = XamlReader.Load(
+                @"<RichTextBlock TextWrapping=""Wrap"" Padding=""20"" Width=""750"" Height=""700"" CharacterSpacing=""100"" LineHeight=""20"" MaxLines=""31"" FontSize=""14"" FontFamily=""Times New Roman"" xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>"
+                + PlainTextToXaml(plainText)
+                + "</RichTextBlock>") as RichTextBlock;
+
+            return blocksObj;
+        }
+
+        public static void FixHyperLinks(RichTextBlock rtbBlock, Action<Hyperlink, HyperlinkClickEventArgs> clickAction)
+        {
+            foreach (Block block in rtbBlock.Blocks)
+            {
+                Paragraph paragraph = block as Paragraph;
+                if (null != paragraph)
+                {
+                    foreach (Inline inline in paragraph.Inlines)
+                    {
+                        Hyperlink link = inline as Hyperlink;
+                        if (null != link)
+                        {
+                            link.Click += new Windows.Foundation.TypedEventHandler<Hyperlink, HyperlinkClickEventArgs>(clickAction);
+                        }
+                    }
+                }
+            }
+        }
+
+        static void link_Click(Hyperlink sender, HyperlinkClickEventArgs args)
+        {
         }
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             string rtfText = (string)value;
-            object blocksObj = XamlReader.Load(
-                @"<RichTextBlock TextWrapping=""Wrap"" Padding=""20"" Width=""750"" Height=""700"" CharacterSpacing=""100"" LineHeight=""20"" MaxLines=""31"" FontSize=""14"" FontFamily=""Times New Roman"" xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>"
-                + PlainTextToXaml(rtfText)
-                + "</RichTextBlock>");
-            return (RichTextBlock)blocksObj;
+            RichTextBlock blocksObj = PlainTextToRichTextBlock(rtfText);
+            FixHyperLinks(blocksObj, link_Click);
+            return blocksObj;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

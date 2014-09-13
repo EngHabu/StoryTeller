@@ -10,6 +10,8 @@ namespace StoryTeller.DataModel
     public class ProjectDataSource
     {
         private int _sceneNumberIncrement = 0;
+        private const int LibraryItemsCount = 10;
+        private const int ScenesCount = 10;
         public static StoryProject Project
         {
             get
@@ -32,7 +34,7 @@ namespace StoryTeller.DataModel
         {
             IScene startScene = CreateScene(lib);
             IScene currentScene = startScene;
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < ScenesCount; i++)
             {
                 currentScene = currentScene.FollowingScene = CreateScene(lib);
             }
@@ -60,7 +62,7 @@ namespace StoryTeller.DataModel
         private Library CreateLibrary()
         {
             List<LibraryItem> items = new List<LibraryItem>();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < LibraryItemsCount; i++)
             {
                 items.Add(CreateLibraryItem());
             }
@@ -85,10 +87,16 @@ namespace StoryTeller.DataModel
 
         private ISceneContent CreateSceneContent()
         {
+            string links = "";
+            for (int i = 0; i < LibraryItemsCount; i++)
+            {
+                links += string.Format("{{{0}:Scene#{0}}}, ", i.ToString());
+            }
+            
             return new TextSceneContent()
             {
                 Content = @"Scene #" + (_sceneNumberIncrement++).ToString() + @"
-
+" + links + @"
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent tristique ligula in ligula bibendum fermentum. Aenean auctor dui augue. Praesent molestie orci sit amet rhoncus elementum. Morbi auctor augue sed sodales maximus. Ut ornare gravida ultricies. Suspendisse dolor erat, tincidunt sit amet mattis vel, fermentum a diam. Aenean auctor nec arcu dapibus bibendum. Sed vitae diam mi. Morbi lacinia luctus sem vitae commodo.
 
