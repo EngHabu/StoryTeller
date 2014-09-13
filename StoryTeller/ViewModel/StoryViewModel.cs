@@ -14,6 +14,7 @@ namespace StoryTeller.ViewModel
         ObservableCollection<IScene> _scenes;
 
         private StoryBuilder _builder = new StoryBuilder();
+        private StoryLineViewModel _currentStoryline;
 
         public IScene CurrentScene
         {
@@ -49,10 +50,21 @@ namespace StoryTeller.ViewModel
             }
         }
 
-        public StoryLineViewModel CurrentStoryline { get; set; }
+        public StoryLineViewModel CurrentStoryline 
+        {
+            get { return _currentStoryline; }
+            set { _currentStoryline = value; }
+        }
 
         public ObservableCollection<StoryLineViewModel> StoryLines { get; set; }
 
+        internal void Clear()
+        {
+            _story.StartScene = null;
+            StoryLines = _builder.ConstructStoryLines(this);
+            CurrentStoryline = StoryLines.First();
+        }
+        
         internal void AddScene(IScene scene)
         {
             if (CurrentStoryline == null) {
@@ -94,6 +106,7 @@ namespace StoryTeller.ViewModel
                 if (index > -1) {
                     IStorylinePositioner positioner = new StorylineInserter(StoryLines, index);
                     _builder.ConstructStoryLines(this, storyline, null, storyline.Count, positioner);
+                    SelectStoryline(StoryLines[index + 1]);
                 }
             }
         }

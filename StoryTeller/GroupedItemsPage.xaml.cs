@@ -65,6 +65,8 @@ namespace StoryTeller
             this.DataContext = projectViewModel;
 
             libraryPanel.DoubleTapped +=libraryPanel_DoubleTapped;
+
+            //LoadDefaultFiles();
         }
 
         void storylinePanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -158,23 +160,70 @@ namespace StoryTeller
         }
 
         async private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            //await LoadFilesFromStorage();
+            await LoadDefaultFiles();
+        }
+
+        private async System.Threading.Tasks.Task LoadFilesFromStorage()
+        {
+            FolderPicker folderPicker = new FolderPicker();
+            folderPicker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
+            folderPicker.FileTypeFilter.Add(".txt");
+            StorageFolder folder = await folderPicker.PickSingleFolderAsync();
+            
+            
+            //FileOpenPicker picker = new FileOpenPicker();
+            //picker.FileTypeFilter.Add(".txt");
+
+            IReadOnlyList<StorageFile> files = await folder.GetFilesAsync();  //await picker.PickMultipleFilesAsync();
+            await LoadFiles(FilterFiles(files));
+        }
+
+        private async System.Threading.Tasks.Task LoadDefaultFiles()
+        {
+            StorageFolder folder = await Windows.Storage.KnownFolders.PicturesLibrary.GetFolderAsync("StoryTeller");
+            if (folder != null)
             {
-            FileOpenPicker picker = new FileOpenPicker();
-            picker.FileTypeFilter.Add(".txt");
-            IReadOnlyList<StorageFile> files = await picker.PickMultipleFilesAsync();
-            List<LibraryItem> libraryItems = new List<LibraryItem>();
-            foreach(StorageFile file in files) {                
+                IReadOnlyList<StorageFile> files = await folder.GetFilesAsync();
+                IList<StorageFile> filteredFiles = FilterFiles(files);
+                await LoadFiles(filteredFiles);
+            }
+        }
+
+        private static IList<StorageFile> FilterFiles(IReadOnlyList<StorageFile> files)
+        {
+            IList<StorageFile> filteredFiles = new List<StorageFile>();
+            foreach (StorageFile file in files)
+            {
+                if (file.FileType.EndsWith("txt"))
+                {
+                    filteredFiles.Add(file);
+                }
+            }
+            return filteredFiles;
+        }
+
+        private async System.Threading.Tasks.Task LoadFiles(IList<StorageFile> files)
+        {
+            foreach (StorageFile file in files)
+            {
                 LibraryItem libraryItem = new LibraryItem();
                 libraryItem.Id = file.Name;
-                libraryItem.SceneContent = new TextSceneContent();                
+                libraryItem.SceneContent = new TextSceneContent();
                 libraryItem.SceneContent.Content = await FileIO.ReadTextAsync(file);
-                libraryViewModel.Items.Add(libraryItem);           
+                libraryViewModel.Items.Add(libraryItem);
             }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             projectViewModel.Story.Story = projectViewModel.Story.Story;
+        }
+
+        private void Clear_Button_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            projectViewModel.Story.Clear();
         }
     }
 }

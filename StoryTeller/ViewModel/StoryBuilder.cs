@@ -119,7 +119,14 @@ namespace StoryTeller.ViewModel
                         IScene lastParentScene = parentStoryline.Last().CurrentScene;
                         if (lastParentScene is InteractiveScene)
                         {
-                            (lastParentScene as InteractiveScene).PossibleScenes.Add(addedScene.CurrentScene);
+                            IList<IScene> possibleScenes = (lastParentScene as InteractiveScene).PossibleScenes;
+
+                            if(possibleScenes.Count > 0) {
+                                possibleScenes.Insert(0, addedScene.CurrentScene);
+                            }
+                            else {
+                                possibleScenes.Add(addedScene.CurrentScene);
+                            }                            
                         }
                     }
                 }

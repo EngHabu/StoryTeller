@@ -25,18 +25,20 @@ namespace StoryTeller.Controls
             this.InitializeComponent();
         }
 
-        private void addStoryline_Click(object sender, RoutedEventArgs e)
+        private void addStoryline_Click(object sender, TappedRoutedEventArgs e)
         {
             StoryLineViewModel storyline = (DataContext as StoryLineViewModel);
             StoryViewModel storyModel = storyline.StoryModel;
             storyModel.AddStoryline(storyline);
+            e.Handled = true;
         }
 
         private void selectStoryline_Tapped(object sender, TappedRoutedEventArgs e)
         {
             StoryLineViewModel storyline = (DataContext as StoryLineViewModel);
             StoryViewModel storyModel = storyline.StoryModel;
-            storyModel.SelectStoryline(storyline);
+            storyModel.SelectStoryline(storyline);            
         }
+
     }
 }

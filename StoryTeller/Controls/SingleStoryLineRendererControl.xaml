@@ -13,10 +13,9 @@
     <StackPanel Orientation="Horizontal">
         <StackPanel Orientation="Horizontal" Background="Aquamarine" Tapped="selectStoryline_Tapped">
             <StackPanel x:Name="selectStoryline" Tapped="selectStoryline_Tapped" Width="20"></StackPanel>
-            <Button x:Name="addStoryline" Content="+" Click="addStoryline_Click"></Button>
-            <Button x:Name="deleteStoryline" Content="x"></Button>
+            <Button x:Name="addStoryline" Content="+" FontSize="28" Padding="5,-7,5,5" Tapped="addStoryline_Click"></Button>
         </StackPanel>
-        <ListBox ItemsSource="{Binding}">
+        <ListBox ItemsSource="{Binding}" ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Width="150" Text="{Binding CurrentScene.Content.Content}"></TextBlock>
@@ -24,9 +23,10 @@
             </ListBox.ItemTemplate>
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"/>
+                    <StackPanel Orientation="Horizontal" ScrollViewer.VerticalScrollBarVisibility="Hidden"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
+            
         </ListBox>
     </StackPanel>
 </UserControl>
