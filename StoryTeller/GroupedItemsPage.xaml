@@ -71,37 +71,42 @@
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Button Content="Load" Grid.Row="0" Click="Button_Click"/>
-                <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,1,0,-1" ItemsSource="{Binding Library.Items}">
-                    <GridView.ItemTemplate>
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Button Content="Default" Click="Button_Click"/>
+                    <Button Content="Load" Click="ButtonLoad_Click"/>
+                </StackPanel>                
+                <ListView x:Name="libraryPanel" Grid.Row="1" Margin="0,1,0,-1" ItemsSource="{Binding Library.Items}">
+                    <ListView.ItemTemplate>
                         <DataTemplate>
                             <controls:LibraryItemRendererControl>                                
                             </controls:LibraryItemRendererControl>
                         </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>
+                    </ListView.ItemTemplate>
+                </ListView>
             </Grid>
+            
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
                     <RowDefinition Height="2*"/>
-                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
+<<<<<<< HEAD
                     <controls:PreviewRendererControl Grid.Row="0" DataContext="{Binding StoryRendererViewModel, Mode=TwoWay}" Tapped="PreviewRendererControl_Tapped" />
+=======
+                    <controls:PreviewRendererControl Grid.Row="0" DataContext="{Binding Story, Mode=TwoWay}" />
+>>>>>>> ba99f2d70ef18209c4415cdaf62e2aa4ea6ab644
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
-                    <Button Content="Preview"  HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
-                    <Button Content="Reload" HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+                        <Button Content="Preview"  HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
+                        <Button Content="Reload" HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+                        <Button Content="Clear" HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Tapped="Clear_Button_Tapped"/>
                     </StackPanel>
                 </Grid>
-                <!--<StackPanel Grid.Row="0">
-                    <TextBlock x:Name="outputText" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="48" Height="250"/>
-                </StackPanel>-->
-                <controls:StoryLineRendererControl DataContext="{Binding Story}" Grid.Row="1">
-                    
+                <controls:StoryLineRendererControl DataContext="{Binding Story}" Grid.Row="1">                    
                 </controls:StoryLineRendererControl>
             </Grid>
         </Grid>

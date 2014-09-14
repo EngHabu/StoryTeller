@@ -161,10 +161,53 @@ namespace StoryTeller
 
         async private void Button_Click(object sender, RoutedEventArgs e)
         {
-            FileOpenPicker picker = new FileOpenPicker();
-            picker.FileTypeFilter.Add(".txt");
-            IReadOnlyList<StorageFile> files = await picker.PickMultipleFilesAsync();
-            List<LibraryItem> libraryItems = new List<LibraryItem>();
+            await LoadDefaultFiles();
+        }
+        async private void ButtonLoad_Click(object sender, RoutedEventArgs e)
+        {
+            await LoadFilesFromStorage();
+        }
+        private async System.Threading.Tasks.Task LoadFilesFromStorage()
+        {
+            FolderPicker folderPicker = new FolderPicker();
+            folderPicker.SuggestedStartLocation = PickerLocationId.ComputerFolder;
+            folderPicker.FileTypeFilter.Add(".txt");
+            StorageFolder folder = await folderPicker.PickSingleFolderAsync();
+            
+            
+            //FileOpenPicker picker = new FileOpenPicker();
+            //picker.FileTypeFilter.Add(".txt");
+
+            IReadOnlyList<StorageFile> files = await folder.GetFilesAsync();  //await picker.PickMultipleFilesAsync();
+            await LoadFiles(FilterFiles(files));
+        }
+
+        private async System.Threading.Tasks.Task LoadDefaultFiles()
+        {
+            StorageFolder folder = await Windows.Storage.KnownFolders.PicturesLibrary.GetFolderAsync("StoryTeller");
+            if (folder != null)
+            {
+                IReadOnlyList<StorageFile> files = await folder.GetFilesAsync();
+                IList<StorageFile> filteredFiles = FilterFiles(files);
+                await LoadFiles(filteredFiles);
+            }
+        }
+
+        private static IList<StorageFile> FilterFiles(IReadOnlyList<StorageFile> files)
+        {
+            IList<StorageFile> filteredFiles = new List<StorageFile>();
+            foreach (StorageFile file in files)
+            {
+                if (file.FileType.EndsWith("txt"))
+                {
+                    filteredFiles.Add(file);
+                }
+            }
+            return filteredFiles;
+        }
+
+        private async System.Threading.Tasks.Task LoadFiles(IList<StorageFile> files)
+        {
             foreach (StorageFile file in files)
             {
                 LibraryItem libraryItem = new LibraryItem();
@@ -180,9 +223,9 @@ namespace StoryTeller
             projectViewModel.Story.Story = projectViewModel.Story.Story;
         }
 
-        private void PreviewRendererControl_Tapped(object sender, TappedRoutedEventArgs e)
+        private void Clear_Button_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            projectViewModel.Story.Clear();
         }
     }
 }
