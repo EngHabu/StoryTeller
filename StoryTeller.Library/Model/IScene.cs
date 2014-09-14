@@ -14,5 +14,6 @@ namespace StoryTeller.DataModel.Model
         IScene FollowingScene { get; set; }
         bool IsBonusScene { get; set; }
         LibraryItem LibraryItem { get; }
+        IList<SceneTag> Tags { get;}
     }
 }
