@@ -7,9 +7,17 @@ namespace StoryTeller.DataModel.Model
 {
     public sealed class SceneTag
     {
-        string Id { get; set; }
-        string Name { get; set; }
-        string Content { get; set; }
-        SceneTagType Type { get; set; }
+
+        public SceneTag(string name, string content)
+        {
+            Type = SceneTagType.Custom;
+            Name = name;
+            Content = content;
+        }
+
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Content { get; set; }
+        public SceneTagType Type { get; set; }
     }
 }

@@ -40,5 +40,18 @@ namespace StoryTeller.Controls
             storyModel.SelectStoryline(storyline);            
         }
 
+        private void ListBox_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            
+        }
+
+        private void TextBlock_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            TextBlock textblock = sender as TextBlock;
+            FlyoutBase flyoutBase = Flyout.GetAttachedFlyout(textblock);
+            flyoutBase.Placement = FlyoutPlacementMode.Top;
+            flyoutBase.ShowAt(textblock);
+        }
+
     }
 }

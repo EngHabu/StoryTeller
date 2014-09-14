@@ -9,6 +9,6 @@ namespace StoryTeller.DataModel.Model
     {
         SceneContentType Type { get; set; }
         string Content { get; set; }
-        IEnumerable<SceneTag> Tags { get; set; }
+        IList<SceneTag> Tags { get;}
     }
 }

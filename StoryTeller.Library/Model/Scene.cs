@@ -10,6 +10,7 @@ namespace StoryTeller.DataModel.Model
     {
         private LibraryItem _libraryItem;
         private string _libraryItemId;
+        private IList<SceneTag> _tags;
 
         public Scene()
         {
@@ -21,6 +22,14 @@ namespace StoryTeller.DataModel.Model
         {
             _libraryItem = libraryItem;
             _libraryItemId = libraryItem.Id;
+        }
+
+        public IList<SceneTag> Tags
+        {
+            get
+            {
+                return Content.Tags;
+            }
         }
 
         public LibraryItem LibraryItem { 

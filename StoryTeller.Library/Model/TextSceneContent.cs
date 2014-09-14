@@ -9,7 +9,7 @@ namespace StoryTeller.DataModel.Model
     public sealed class TextSceneContent : ISceneContent
     {
         private string _content;
-        private IEnumerable<SceneTag> _tags;
+        private IList<SceneTag> _tags;
         public SceneContentType Type
         {
             get
@@ -34,15 +34,15 @@ namespace StoryTeller.DataModel.Model
             }
         }
 
-        public IEnumerable<SceneTag> Tags
+        public IList<SceneTag> Tags
         {
             get
             {
+                if (_tags == null) 
+                {
+                    _tags = new List<SceneTag>();
+                }
                 return _tags;
-            }
-            set
-            {
-                _tags = value;
             }
         }
     }

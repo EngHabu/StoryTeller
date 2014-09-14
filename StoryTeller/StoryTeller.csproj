@@ -126,6 +126,13 @@
     <Compile Include="Controls\StoryLineRendererControl.xaml.cs">
       <DependentUpon>StoryLineRendererControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TagsListControl.xaml.cs">
+      <DependentUpon>TagsListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TagsEditorControl.xaml.cs">
+      <DependentUpon>TagsEditorControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converter\SceneTagToString.cs" />
     <Compile Include="Converter\StringToSnippet.cs" />
     <Compile Include="Converter\StringToRtf.cs" />
     <Compile Include="Converter\XamlToRichTextBlockCollection.cs" />
@@ -201,6 +208,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\StoryLineRendererControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TagsListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TagsEditorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
