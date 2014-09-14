@@ -36,7 +36,7 @@ namespace StoryTeller.ViewModel
                 lineScenes.Add(new SceneViewModelPad());
             }
 
-            storylineAdder.Position(lineScenes);           
+            storylineAdder.Position(lineScenes);
 
             int padding = depth;
             while (currentScene != null)
@@ -45,7 +45,7 @@ namespace StoryTeller.ViewModel
                 lineScenes.Add(new SceneViewModel(currentScene));
                 if (currentScene is InteractiveScene)
                 {
-                    InteractiveScene interactiveScene = currentScene as InteractiveScene;                    
+                    InteractiveScene interactiveScene = currentScene as InteractiveScene;
                     foreach (IScene possibleStartScene in interactiveScene.PossibleScenes)
                     {
                         ConstructStoryLines(storyModel, lineScenes, possibleStartScene, padding, storylineAdder);
@@ -53,7 +53,7 @@ namespace StoryTeller.ViewModel
                     break;
                 }
                 else
-                {                    
+                {
                     currentScene = currentScene.FollowingScene;
                 }
             }
@@ -65,7 +65,8 @@ namespace StoryTeller.ViewModel
         public void lineScenes_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             StoryLineViewModel storylineModel = sender as StoryLineViewModel;
-            if (storylineModel == null) {
+            if (storylineModel == null)
+            {
                 return;
             }
 
@@ -73,11 +74,14 @@ namespace StoryTeller.ViewModel
 
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
             {
-                if (storylineModel.Parent == null && storylineModel.Count == 0) {
+                if (storylineModel.Parent == null && storylineModel.Count == 0)
+                {
                     storyModel.Story.StartScene = null;
                     return;
                 }
-                if (storylineModel.Count > 0) {
+
+                if (storylineModel.Count > 0)
+                {
                     SceneViewModel lastExistingSceneModel = storylineModel.Last();
                     IScene lastExistingScene = lastExistingSceneModel.CurrentScene;
                     SceneViewModel removedScene = e.OldItems[0] as SceneViewModel;
@@ -97,6 +101,7 @@ namespace StoryTeller.ViewModel
                     }
                 }
             }
+
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
             {
                 SceneViewModel addedScene = storylineModel.Last();
@@ -107,10 +112,11 @@ namespace StoryTeller.ViewModel
                 }
 
                 SceneViewModel previousScene = null;
-                if (storylineModel.Count > 1) {
+                if (storylineModel.Count > 1)
+                {
                     previousScene = storylineModel[storylineModel.Count - 2];
                 }
-                
+
                 if (previousScene is SceneViewModelPad)
                 {
                     StoryLineViewModel parentStoryline = storylineModel.Parent;
@@ -123,11 +129,12 @@ namespace StoryTeller.ViewModel
                         }
                     }
                 }
-                else if(previousScene != null){
+                else if (previousScene != null)
+                {
                     IScene currentScene = previousScene.CurrentScene;
                     currentScene.FollowingScene = addedScene.CurrentScene;
-                }                
-            }            
+                }
+            }
         }
 
     }

@@ -159,6 +159,7 @@
     <Compile Include="ViewModel\StorylineInserter.cs" />
     <Compile Include="ViewModel\StoryLineViewModel.cs" />
     <Compile Include="ViewModel\StoryReaderViewModel.cs" />
+    <Compile Include="ViewModel\StoryRendererViewModel.cs" />
     <Compile Include="ViewModel\StoryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

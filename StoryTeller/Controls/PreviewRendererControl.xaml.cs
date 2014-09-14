@@ -21,6 +21,17 @@ namespace StoryTeller.Controls
 {
     public sealed partial class PreviewRendererControl : UserControl
     {
+        public double ZoomFactor
+        {
+            get { return (double)GetValue(ZoomFactorProperty); }
+            set { SetValue(ZoomFactorProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ZoomFactor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ZoomFactorProperty =
+            DependencyProperty.Register("ZoomFactor", typeof(double), typeof(PreviewRendererControl), new PropertyMetadata(0));
+
+        
         public PreviewRendererControl()
         {
             this.InitializeComponent();

@@ -59,8 +59,10 @@ namespace StoryTeller
             libraryViewModel.Library = new Library();
             projectViewModel.Library = libraryViewModel;
 
-            StoryViewModel storyModel = new StoryViewModel(new Story());
+            Story story = new Story();
+            StoryViewModel storyModel = new StoryViewModel(story);
             projectViewModel.Story = storyModel;
+            projectViewModel.StoryRendererViewModel = new StoryRendererViewModel(story);
 
             this.DataContext = projectViewModel;
 

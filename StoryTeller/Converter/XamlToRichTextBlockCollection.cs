@@ -19,19 +19,27 @@ namespace StoryTeller.Converter
         {
             ObservableCollection<UIElement> blocks = new ObservableCollection<UIElement>();
             ObservableCollection<IScene> scenes = value as ObservableCollection<IScene>;
-            FillInBlocks(scenes, blocks);
+            double zoomFactor = 1;
+            if (null != parameter)
+            {
+                zoomFactor = (double)parameter;
+            }
+
+            FillInBlocks(scenes, blocks, zoomFactor);
 
             scenes.CollectionChanged += (p1, p2) =>
                 {
                     blocks.Clear();
-                    FillInBlocks(scenes, blocks);
+                    FillInBlocks(scenes, blocks, zoomFactor);
                 };
 
             return blocks;
         }
 
-        private static void FillInBlocks(ObservableCollection<IScene> scenes, ObservableCollection<UIElement> blocks)
+        private static void FillInBlocks(ObservableCollection<IScene> scenes, ObservableCollection<UIElement> blocks, double zoomFactor)
         {
+            double width = 750 * zoomFactor;
+            double height = 700 * zoomFactor;
             foreach (IScene scene in scenes)
             {
                 string stringContent = scene.Content.Content;
@@ -39,35 +47,35 @@ namespace StoryTeller.Converter
                 mainBlock.DataContext = scene;
                 mainBlock.Padding = new Thickness(20);
                 mainBlock.Foreground = new SolidColorBrush(Colors.Black);
-                mainBlock.Measure(new Windows.Foundation.Size(750, 700));
+                mainBlock.Measure(new Windows.Foundation.Size(width, height));
                 blocks.Add(mainBlock);
                 if (mainBlock.HasOverflowContent)
                 {
                     RichTextBlockOverflow overflow = new RichTextBlockOverflow()
                     {
-                        Width = 750,
-                        Height = 700
+                        Width = width,
+                        Height = height
                     };
 
                     overflow.DataContext = scene;
 
                     mainBlock.OverflowContentTarget = overflow;
                     overflow.Padding = new Thickness(20);
-                    overflow.Measure(new Windows.Foundation.Size(750, 700));
+                    overflow.Measure(new Windows.Foundation.Size(width, height));
                     blocks.Add(overflow);
                     while (overflow.HasOverflowContent)
                     {
                         RichTextBlockOverflow nextOverflow = new RichTextBlockOverflow()
                         {
-                            Width = 750,
-                            Height = 700
+                            Width = width,
+                            Height = height
                         };
 
                         nextOverflow.DataContext = scene;
 
                         overflow.OverflowContentTarget = nextOverflow;
                         nextOverflow.Padding = new Thickness(20);
-                        nextOverflow.Measure(new Windows.Foundation.Size(750, 700));
+                        nextOverflow.Measure(new Windows.Foundation.Size(width, height));
                         blocks.Add(nextOverflow);
                         overflow = nextOverflow;
                     }
