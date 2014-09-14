@@ -62,35 +62,34 @@
         </Grid>
         
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="70"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0" Orientation="Horizontal">
-                    <Button Content="Default" Click="Button_Click"/>
-                    <Button Content="Load" Click="ButtonLoad_Click"/>
-                </StackPanel>                
-                <ListView x:Name="libraryPanel" Grid.Row="1" Margin="0,1,0,-1" ItemsSource="{Binding Library.Items}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <controls:LibraryItemRendererControl>                                
-                            </controls:LibraryItemRendererControl>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
-            
-            <Grid Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="2*"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="70"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <Button Content="Default" Click="Button_Click"/>
+                        <Button Content="Load" Click="ButtonLoad_Click"/>
+                    </StackPanel>
+                    <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,1,0,-1" ItemsSource="{Binding Library.Items}">
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <controls:LibraryItemRendererControl>
+                                </controls:LibraryItemRendererControl>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </Grid>
+                <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
@@ -102,9 +101,9 @@
                         <Button Content="Clear" HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Tapped="Clear_Button_Tapped"/>
                     </StackPanel>
                 </Grid>
-                <controls:StoryLineRendererControl DataContext="{Binding Story}" Grid.Row="1">                    
-                </controls:StoryLineRendererControl>
             </Grid>
-        </Grid>
+            <controls:StoryLineRendererControl Grid.Row="1" DataContext="{Binding Story}">
+            </controls:StoryLineRendererControl>
+        </Grid>                
     </Grid>
 </Page>

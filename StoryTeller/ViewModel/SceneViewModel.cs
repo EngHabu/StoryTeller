@@ -28,8 +28,11 @@ namespace StoryTeller.ViewModel
         public SceneViewModel(IScene currentScene)
         {
             this.CurrentScene = currentScene;
-            _tags = new ObservableCollection<SceneTag>(currentScene.Tags);
-            _tags.CollectionChanged += _tags_CollectionChanged;
+            if (currentScene != null)
+            {
+                _tags = new ObservableCollection<SceneTag>(currentScene.Tags);
+                _tags.CollectionChanged += _tags_CollectionChanged;
+            }
         }
 
         void _tags_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
