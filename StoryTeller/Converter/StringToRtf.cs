@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StoryTeller.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Markup;
+using Windows.UI.Xaml.Media;
 
 namespace StoryTeller.Converter
 {
@@ -90,6 +92,15 @@ namespace StoryTeller.Converter
 
         static void link_Click(Hyperlink sender, HyperlinkClickEventArgs args)
         {
+            RichTextBlock parentRichTextBlock = VisualTreeHelper.GetParent(sender) as RichTextBlock;
+            if (null != parentRichTextBlock)
+            {
+                SceneViewModel scene = parentRichTextBlock.DataContext as SceneViewModel;
+                if (null != scene)
+                {
+                    scene.LinkClicked(sender.NavigateUri.OriginalString.Substring(sender.NavigateUri.OriginalString.LastIndexOf('/')));
+                }
+            }
         }
 
         public object Convert(object value, Type targetType, object parameter, string language)

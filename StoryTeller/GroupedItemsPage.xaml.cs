@@ -61,12 +61,19 @@ namespace StoryTeller
 
             Story story = new Story();
             StoryViewModel storyModel = new StoryViewModel(story);
+            storyModel.PossibleScenePickRequest += storyModel_PossibleScenePickRequest;
             projectViewModel.Story = storyModel;
+            projectViewModel.Story.PageWidth = 500;
+            projectViewModel.Story.PageHeight = 400;
             projectViewModel.StoryRendererViewModel = new StoryRendererViewModel(story);
 
             this.DataContext = projectViewModel;
 
             libraryPanel.DoubleTapped += libraryPanel_DoubleTapped;
+        }
+
+        void storyModel_PossibleScenePickRequest(object sender, string linkId)
+        {
         }
 
         void storylinePanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -226,6 +233,11 @@ namespace StoryTeller
         private void Clear_Button_Tapped(object sender, TappedRoutedEventArgs e)
         {
             projectViewModel.Story.Clear();
+        }
+
+        private void PreviewRendererControl_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
         }
     }
 }

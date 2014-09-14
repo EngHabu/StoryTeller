@@ -12,7 +12,7 @@ namespace StoryTeller.ViewModel
     public sealed class StoryRendererViewModel : INotifyPropertyChanged
     {
         private Story _story;
-        private ObservableCollection<IScene> _scenes;
+        private ObservableCollection<SceneViewModel> _scenes;
 
         public Story Story
         {
@@ -24,7 +24,7 @@ namespace StoryTeller.ViewModel
             }
         }
 
-        public ObservableCollection<IScene> Scenes
+        public ObservableCollection<SceneViewModel> Scenes
         {
             get { return _scenes; }
             set

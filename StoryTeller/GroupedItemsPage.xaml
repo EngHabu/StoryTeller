@@ -95,11 +95,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-<<<<<<< HEAD
-                    <controls:PreviewRendererControl Grid.Row="0" DataContext="{Binding StoryRendererViewModel, Mode=TwoWay}" Tapped="PreviewRendererControl_Tapped" />
-=======
-                    <controls:PreviewRendererControl Grid.Row="0" DataContext="{Binding Story, Mode=TwoWay}" />
->>>>>>> ba99f2d70ef18209c4415cdaf62e2aa4ea6ab644
+                    <controls:PreviewRendererControl Grid.Row="0" DataContext="{Binding Story, Mode=TwoWay}" Tapped="PreviewRendererControl_Tapped" />
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
                         <Button Content="Preview"  HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
                         <Button Content="Reload" HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>

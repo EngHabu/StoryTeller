@@ -1,4 +1,5 @@
 ﻿using StoryTeller.DataModel.Model;
+using StoryTeller.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,40 +16,40 @@ namespace StoryTeller.Converter
 {
     public sealed class XamlToRichTextBlockCollection : IValueConverter
     {
+        public const double DefaultPageWidth = 750;
+        public const double DefaultPageHeight = 700;
         public object Convert(object value, Type targetType, object parameter, string language)
         {
+            StoryViewModel storyViewModel = value as StoryViewModel;
             ObservableCollection<UIElement> blocks = new ObservableCollection<UIElement>();
-            ObservableCollection<IScene> scenes = value as ObservableCollection<IScene>;
-            double zoomFactor = 1;
-            if (null != parameter)
-            {
-                zoomFactor = (double)parameter;
-            }
+            ObservableCollection<SceneViewModel> scenes = storyViewModel.ScenesViewModel;
 
-            FillInBlocks(scenes, blocks, zoomFactor);
+            FillInBlocks(scenes, blocks, storyViewModel.PageWidth, storyViewModel.PageHeight);
 
             scenes.CollectionChanged += (p1, p2) =>
                 {
                     blocks.Clear();
-                    FillInBlocks(scenes, blocks, zoomFactor);
+                    FillInBlocks(scenes, blocks, storyViewModel.PageWidth, storyViewModel.PageHeight);
                 };
 
             return blocks;
         }
 
-        private static void FillInBlocks(ObservableCollection<IScene> scenes, ObservableCollection<UIElement> blocks, double zoomFactor)
+        private static void FillInBlocks(ObservableCollection<SceneViewModel> scenes, ObservableCollection<UIElement> blocks, double width, double height)
         {
-            double width = 750 * zoomFactor;
-            double height = 700 * zoomFactor;
-            foreach (IScene scene in scenes)
+            foreach (SceneViewModel sceneViewModel in scenes)
             {
+                IScene scene = sceneViewModel.CurrentScene;
                 string stringContent = scene.Content.Content;
                 RichTextBlock mainBlock = new StringToRtf().Convert(stringContent, null, null, null) as RichTextBlock;
-                mainBlock.DataContext = scene;
+                mainBlock.Width = width;
+                mainBlock.Height = height;
+                mainBlock.DataContext = sceneViewModel;
                 mainBlock.Padding = new Thickness(20);
                 mainBlock.Foreground = new SolidColorBrush(Colors.Black);
                 mainBlock.Measure(new Windows.Foundation.Size(width, height));
                 blocks.Add(mainBlock);
+
                 if (mainBlock.HasOverflowContent)
                 {
                     RichTextBlockOverflow overflow = new RichTextBlockOverflow()
@@ -57,8 +58,7 @@ namespace StoryTeller.Converter
                         Height = height
                     };
 
-                    overflow.DataContext = scene;
-
+                    overflow.DataContext = sceneViewModel;
                     mainBlock.OverflowContentTarget = overflow;
                     overflow.Padding = new Thickness(20);
                     overflow.Measure(new Windows.Foundation.Size(width, height));
@@ -71,8 +71,7 @@ namespace StoryTeller.Converter
                             Height = height
                         };
 
-                        nextOverflow.DataContext = scene;
-
+                        nextOverflow.DataContext = sceneViewModel;
                         overflow.OverflowContentTarget = nextOverflow;
                         nextOverflow.Padding = new Thickness(20);
                         nextOverflow.Measure(new Windows.Foundation.Size(width, height));

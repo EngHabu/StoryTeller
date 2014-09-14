@@ -9,8 +9,35 @@ namespace StoryTeller.DataModel.Model
     public sealed class InteractiveScene : Scene
     {
         private IList<IScene> _possibleScenes = new List<IScene>();
-        public InteractiveScene(LibraryItem libraryItem) : base(libraryItem) { }
+        private IDictionary<string, string> _linkIdToSceneId = new Dictionary<string, string>();
 
-        public IList<IScene> PossibleScenes { get { return _possibleScenes; } }
+        public InteractiveScene(LibraryItem libraryItem)
+            : base(libraryItem)
+        {
+        }
+
+        public IDictionary<string, string> LinkIdToSceneId
+        {
+            get { return _linkIdToSceneId; }
+            set { _linkIdToSceneId = value; }
+        }
+
+        public IList<IScene> PossibleScenes
+        {
+            get { return _possibleScenes; }
+            set { _possibleScenes = value; }
+        }
+
+        public IScene LookupSceneByLinkId(string linkId)
+        {
+            IScene result = null;
+            string sceneId;
+            if (LinkIdToSceneId.TryGetValue(linkId, out sceneId))
+            {
+                result = PossibleScenes.Where((scene) => scene.Id == sceneId).FirstOrDefault();
+            }
+
+            return result;
+        }
     }
 }
