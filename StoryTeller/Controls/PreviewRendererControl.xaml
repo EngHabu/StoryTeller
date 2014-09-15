@@ -74,7 +74,12 @@
                       HorizontalSnapPointsType="Mandatory">
         </ScrollViewer>-->
         <Border BorderBrush="DarkGray" BorderThickness="2" Margin="20" Background="White">
-            <ItemsControl ItemsSource="{Binding Converter={StaticResource XamlToRichTextBlockCollection}, Mode=TwoWay}">
+            <ItemsControl ItemsSource="{Binding Converter={StaticResource XamlToRichTextBlockCollection}, Mode=TwoWay}" x:Name="PagesControl">
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout>
+                        <local:ScenePickerControl></local:ScenePickerControl>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel AreScrollSnapPointsRegular="True" Orientation="Horizontal" />
@@ -102,7 +107,7 @@
             </ItemsControl.ItemTemplate>-->
                 <ItemsControl.Template>
                     <ControlTemplate>
-                        <ScrollViewer HorizontalSnapPointsType="Mandatory">
+                        <ScrollViewer HorizontalSnapPointsType="Mandatory" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled">
                             <ItemsPresenter />
                         </ScrollViewer>
                     </ControlTemplate>

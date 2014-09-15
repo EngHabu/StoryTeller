@@ -16,6 +16,23 @@ namespace StoryTeller.DataModel.Model
         {
         }
 
+        public override IScene FollowingScene
+        {
+            get
+            {
+                if (PossibleScenes.Count == 1)
+                {
+                    return PossibleScenes[0];
+                }
+
+                return null;
+            }
+            set
+            {
+                // Do nothing
+            }
+        }
+
         public IDictionary<string, string> LinkIdToSceneId
         {
             get { return _linkIdToSceneId; }

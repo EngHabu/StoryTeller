@@ -1,4 +1,5 @@
 ﻿using StoryTeller.DataModel;
+using StoryTeller.DataModel.Model;
 using StoryTeller.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,37 @@ namespace StoryTeller.Controls
         public PreviewRendererControl()
         {
             this.InitializeComponent();
+            DataContextChanged += PreviewRendererControl_DataContextChanged;
+        }
+
+        void PreviewRendererControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        {
+            StoryViewModel storyViewModel = args.NewValue as StoryViewModel;
+            if (null != storyViewModel)
+            {
+                storyViewModel.PossibleScenePickRequest += storyViewModel_PossibleScenePickRequest;
+            }
+        }
+
+        void storyViewModel_PossibleScenePickRequest(object sender, ScenePickerRequestArgs args)
+        {
+            Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(() =>
+            {
+                FlyoutBase flyoutBase = Flyout.GetAttachedFlyout(PagesControl);
+                Flyout flyout = flyoutBase as Flyout;
+                if (null != flyout)
+                {
+                    ScenePickerControl scenePicker = flyout.Content as ScenePickerControl;
+                    if (null != scenePicker)
+                    {
+                        scenePicker.DataContext = args.SenderChain.Where((obj) =>
+                            (obj is SceneViewModel)).FirstOrDefault();
+                    }
+                }
+
+                flyoutBase.Placement = FlyoutPlacementMode.Top;
+                flyoutBase.ShowAt(PagesControl);
+            }));
         }
 
         void TextBlock_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)

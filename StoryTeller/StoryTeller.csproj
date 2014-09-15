@@ -120,6 +120,9 @@
     <Compile Include="Controls\PreviewRendererControl.xaml.cs">
       <DependentUpon>PreviewRendererControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ScenePickerControl.xaml.cs">
+      <DependentUpon>ScenePickerControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SingleStoryLineRendererControl.xaml.cs">
       <DependentUpon>SingleStoryLineRendererControl.xaml</DependentUpon>
     </Compile>
@@ -157,6 +160,7 @@
     <Compile Include="Common\NavigationHelper.cs" />
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
+    <Compile Include="ViewModel\ScenePickerRequestArgs.cs" />
     <Compile Include="ViewModel\SceneViewModel.cs" />
     <Compile Include="ViewModel\SceneViewModelPad.cs" />
     <Compile Include="ViewModel\StoryBuilder.cs" />
@@ -200,6 +204,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PreviewRendererControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ScenePickerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

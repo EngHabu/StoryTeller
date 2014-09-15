@@ -123,11 +123,14 @@ namespace StoryTeller.ViewModel
                 return;
             }
 
-            if (CurrentStoryline.Count > 0 && CurrentStoryline.Last().CurrentScene is InteractiveScene)
+            InteractiveScene interactiveScene;
+            if (CurrentStoryline.Count > 0 
+                && (null != (interactiveScene = CurrentStoryline.Last().CurrentScene as InteractiveScene))
+                && interactiveScene.PossibleScenes.Count > 0)
             {
                 return;
             }
-
+            
             SceneViewModel sceneViewModel = CreateSceneViewModel(scene);
             CurrentStoryline.Add(sceneViewModel);
             Scenes.Add(scene);
@@ -144,14 +147,13 @@ namespace StoryTeller.ViewModel
             return sceneViewModel;
         }
 
-        void sceneViewModel_PickSceneRequest(object sender, string linkId)
+        void sceneViewModel_PickSceneRequest(object sender, ScenePickerRequestArgs args)
         {
-            OnPossibleScenePickRequest(linkId);
+            OnPossibleScenePickRequest(args);
         }
 
         void sceneViewModel_NavigateRequest(object sender, IScene scene)
         {
-
         }
 
         internal void SelectStoryline(StoryLineViewModel storyline)
@@ -213,11 +215,12 @@ namespace StoryTeller.ViewModel
             }
         }
 
-        private void OnPossibleScenePickRequest(string linkId)
+        private void OnPossibleScenePickRequest(ScenePickerRequestArgs args)
         {
             if (null != PossibleScenePickRequest)
             {
-                PossibleScenePickRequest(this, linkId);
+                args.SenderChain.Add(this);
+                PossibleScenePickRequest(this, args);
             }
         }
     }

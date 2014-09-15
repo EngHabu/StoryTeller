@@ -43,13 +43,14 @@ namespace StoryTeller.ViewModel
             {
                 padding++;
                 lineScenes.Add(new SceneViewModel(currentScene));
-                if (currentScene is InteractiveScene)
+                InteractiveScene interactiveScene = currentScene as InteractiveScene;
+                if (null != interactiveScene && interactiveScene.PossibleScenes.Count > 1)
                 {
-                    InteractiveScene interactiveScene = currentScene as InteractiveScene;
                     foreach (IScene possibleStartScene in interactiveScene.PossibleScenes)
                     {
                         ConstructStoryLines(storyModel, lineScenes, possibleStartScene, padding, storylineAdder);
                     }
+
                     break;
                 }
                 else
@@ -127,12 +128,14 @@ namespace StoryTeller.ViewModel
                         {
                             IList<IScene> possibleScenes = (lastParentScene as InteractiveScene).PossibleScenes;
 
-                            if(possibleScenes.Count > 0) {
+                            if (possibleScenes.Count > 0)
+                            {
                                 possibleScenes.Insert(0, addedScene.CurrentScene);
                             }
-                            else {
+                            else
+                            {
                                 possibleScenes.Add(addedScene.CurrentScene);
-                            }                            
+                            }
                         }
                     }
                 }

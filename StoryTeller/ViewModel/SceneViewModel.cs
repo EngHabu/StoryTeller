@@ -8,7 +8,7 @@ using System.Text;
 namespace StoryTeller.ViewModel
 {
     public delegate void SceneNavigateRequest(object sender, IScene scene);
-    public delegate void ScenePickerRequest(object sender, string linkId);
+    public delegate void ScenePickerRequest(object sender, ScenePickerRequestArgs args);
 
     public class SceneViewModel
     {
@@ -33,7 +33,16 @@ namespace StoryTeller.ViewModel
         public SceneViewModel(IScene currentScene)
         {
             this.CurrentScene = currentScene;
-            _tags = new ObservableCollection<SceneTag>(currentScene.Tags);
+            _tags = null;
+            if (null != currentScene)
+            {
+                _tags = new ObservableCollection<SceneTag>(currentScene.Tags);
+            }
+            else
+            {
+                _tags = new ObservableCollection<SceneTag>();
+            }
+
             _tags.CollectionChanged += _tags_CollectionChanged;
         }
 
@@ -68,7 +77,10 @@ namespace StoryTeller.ViewModel
         {
             if (null != PickSceneRequest)
             {
-                PickSceneRequest(this, linkId);
+                ScenePickerRequestArgs args = new ScenePickerRequestArgs();
+                args.LinkId = linkId;
+                args.SenderChain.Add(this);
+                PickSceneRequest(this, args);
             }
         }
 
