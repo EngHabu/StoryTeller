@@ -71,7 +71,7 @@ namespace StoryTeller.ViewModel
                     OnPickSceneRequest(linkId);
                 }
             }
-        }
+            }
 
         private void OnPickSceneRequest(string linkId)
         {
