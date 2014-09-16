@@ -17,16 +17,15 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Text="Select a scene to link to" Grid.Row="0"/>
-        <ListBox x:Name="Scenes" Grid.Row="1" ItemsSource="{Binding CurrentScene.PossibleScenes}">
+        <ListBox x:Name="Scenes" Grid.Row="1" ItemsSource="{Binding Scenes}" SelectedItem="{Binding SelectedScene, Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <controls:LibraryItemRendererControl DataContext="{Binding LibraryItem}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <StackPanel Orientation="Horizontal" Grid.Row="2">
+        <!--<StackPanel Orientation="Horizontal" Grid.Row="2">
             <Button x:Name="Accept" Content="Accept" />
-            <Button x:Name="Cancel" Content="Cancel" Click="Cancel_Click" />
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </UserControl>

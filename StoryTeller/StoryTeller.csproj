@@ -161,6 +161,7 @@
     <Compile Include="Common\RelayCommand.cs" />
     <Compile Include="Common\ObservableDictionary.cs" />
     <Compile Include="ViewModel\ScenePickerRequestArgs.cs" />
+    <Compile Include="ViewModel\ScenePickerViewModel.cs" />
     <Compile Include="ViewModel\SceneViewModel.cs" />
     <Compile Include="ViewModel\SceneViewModelPad.cs" />
     <Compile Include="ViewModel\StoryBuilder.cs" />

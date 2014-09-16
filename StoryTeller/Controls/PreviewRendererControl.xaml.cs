@@ -22,17 +22,6 @@ namespace StoryTeller.Controls
 {
     public sealed partial class PreviewRendererControl : UserControl
     {
-        public double ZoomFactor
-        {
-            get { return (double)GetValue(ZoomFactorProperty); }
-            set { SetValue(ZoomFactorProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for ZoomFactor.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ZoomFactorProperty =
-            DependencyProperty.Register("ZoomFactor", typeof(double), typeof(PreviewRendererControl), new PropertyMetadata(0));
-
-        
         public PreviewRendererControl()
         {
             this.InitializeComponent();
@@ -59,13 +48,24 @@ namespace StoryTeller.Controls
                     ScenePickerControl scenePicker = flyout.Content as ScenePickerControl;
                     if (null != scenePicker)
                     {
-                        scenePicker.DataContext = args.SenderChain.Where((obj) =>
-                            (obj is SceneViewModel)).FirstOrDefault();
+                        SceneViewModel sceneViewModel = args.SenderChain.Where((obj) =>
+                            (obj is SceneViewModel)).FirstOrDefault() as SceneViewModel;
+                        if (null != sceneViewModel)
+                        {
+                            InteractiveScene interactiveScene = sceneViewModel.CurrentScene as InteractiveScene;
+                            if (null != interactiveScene)
+                            {
+                                ScenePickerViewModel scenePickerModel = ScenePickerViewModel.Create(interactiveScene);
+                                scenePickerModel.SelectedScene = interactiveScene.LookupSceneByLinkId(args.LinkId);
+                                scenePickerModel.LinkId = args.LinkId;
+                                scenePicker.DataContext = scenePickerModel;
+                            }
+                        }
                     }
                 }
 
                 flyoutBase.Placement = FlyoutPlacementMode.Top;
-                flyoutBase.ShowAt(PagesControl);
+                flyoutBase.ShowAt(this);
             }));
         }
 

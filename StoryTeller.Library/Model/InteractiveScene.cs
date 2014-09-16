@@ -9,7 +9,7 @@ namespace StoryTeller.DataModel.Model
     public sealed class InteractiveScene : Scene
     {
         private IList<IScene> _possibleScenes = new List<IScene>();
-        private IDictionary<string, string> _linkIdToSceneId = new Dictionary<string, string>();
+        private Dictionary<string, string> _linkIdToSceneId = new Dictionary<string, string>();
 
         public InteractiveScene(LibraryItem libraryItem)
             : base(libraryItem)
@@ -33,7 +33,7 @@ namespace StoryTeller.DataModel.Model
             }
         }
 
-        public IDictionary<string, string> LinkIdToSceneId
+        public Dictionary<string, string> LinkIdToSceneId
         {
             get { return _linkIdToSceneId; }
             set { _linkIdToSceneId = value; }
