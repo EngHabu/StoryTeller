@@ -19,6 +19,10 @@
     </UserControl.Resources>
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <!--<ColumnDefinition Width="1*" />-->
@@ -73,8 +77,17 @@
         <!--<ScrollViewer HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible" VerticalScrollMode="Disabled" 
                       HorizontalSnapPointsType="Mandatory">
         </ScrollViewer>-->
-        <Border BorderBrush="DarkGray" BorderThickness="2" Margin="20" Background="White">
-            <ItemsControl ItemsSource="{Binding Path=Scenes, Converter={StaticResource XamlToRichTextBlockCollection}, Mode=TwoWay}">
+        <TextBlock x:Name="pageTitle" Text="{Binding Story.Title}" Grid.Column="0"  Grid.ColumnSpan="2"
+                        IsHitTestVisible="false" TextWrapping="NoWrap" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+                       Margin="0,0,30,30" FontStretch="Expanded" Grid.Row="0"/>
+        <Border BorderBrush="DarkGray" BorderThickness="2" Margin="20" Background="White"
+                Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding Converter={StaticResource XamlToRichTextBlockCollection}, Mode=TwoWay}" x:Name="PagesControl">
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout>
+                        <local:ScenePickerControl></local:ScenePickerControl>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel AreScrollSnapPointsRegular="True" Orientation="Horizontal" />
@@ -102,7 +115,7 @@
             </ItemsControl.ItemTemplate>-->
                 <ItemsControl.Template>
                     <ControlTemplate>
-                        <ScrollViewer HorizontalSnapPointsType="Mandatory">
+                        <ScrollViewer HorizontalSnapPointsType="Mandatory" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled">
                             <ItemsPresenter />
                         </ScrollViewer>
                     </ControlTemplate>

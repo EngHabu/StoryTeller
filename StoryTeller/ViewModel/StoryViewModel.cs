@@ -13,29 +13,60 @@ namespace StoryTeller.ViewModel
         private DataModel.Model.Story _story;
         private IScene _currentScene;
         ObservableCollection<IScene> _scenes;
-
+        ObservableCollection<SceneViewModel> _scenesViewModel = new ObservableCollection<SceneViewModel>();
+        private double _pageWidth = 750;
+        private double _pageHeight = 700;
         private StoryBuilder _builder = new StoryBuilder();
         private StoryLineViewModel _currentStoryline;
+        private ObservableCollection<StoryLineViewModel> _storyLines;
+
+        public event ScenePickerRequest PossibleScenePickRequest;
+
+        public double PageHeight
+        {
+            get { return _pageHeight; }
+            set { _pageHeight = value; }
+        }
+
+        public double PageWidth
+        {
+            get { return _pageWidth; }
+            set
+            {
+                _pageWidth = value;
+                OnPropertyChanged("PageWidth");
+            }
+        }
 
         public IScene CurrentScene
         {
             get { return _currentScene; }
-            set { _currentScene = value; }
+            set
+            {
+                _currentScene = value;
+                OnPropertyChanged("CurrentScene");
+            }
+        }
+
+        public ObservableCollection<SceneViewModel> ScenesViewModel
+        {
+            get { return _scenesViewModel; }
+            set
+            {
+                _scenesViewModel = value;
+                OnPropertyChanged("ScenesViewModel");
+            }
         }
 
         public ObservableCollection<IScene> Scenes
         {
             get { return _scenes; }
-            set { _scenes = value; }
+            set
+            {
+                _scenes = value;
+                OnPropertyChanged("Scenes");
+            }
         }
-
-        public StoryViewModel(Story story)
-        {
-            Story = story;
-            CurrentScene = Story.StartScene;
-            Scenes = _builder.StorylineBuilder.GetScenes(CurrentStoryline);
-        }
-
 
         public Story Story
         {
@@ -51,13 +82,32 @@ namespace StoryTeller.ViewModel
             }
         }
 
-        public StoryLineViewModel CurrentStoryline 
+        public StoryLineViewModel CurrentStoryline
         {
             get { return _currentStoryline; }
-            set { _currentStoryline = value; }
+            set
+            {
+                _currentStoryline = value;
+                OnPropertyChanged("CurrentStoryline");
+            }
         }
 
-        public ObservableCollection<StoryLineViewModel> StoryLines { get; set; }
+        public ObservableCollection<StoryLineViewModel> StoryLines
+        {
+            get { return _storyLines; }
+            set
+            {
+                _storyLines = value;
+                OnPropertyChanged("StoryLines");
+            }
+        }
+
+        public StoryViewModel(Story story)
+        {
+            Story = story;
+            CurrentScene = Story.StartScene;
+            Scenes = _builder.StorylineBuilder.GetScenes(CurrentStoryline);
+        }
 
         internal void Clear()
         {
@@ -65,7 +115,7 @@ namespace StoryTeller.ViewModel
             StoryLines = _builder.ConstructStoryLines(this);
             CurrentStoryline = StoryLines.First();
         }
-        
+
         internal void AddScene(IScene scene)
         {
             if (CurrentStoryline == null)
@@ -73,22 +123,69 @@ namespace StoryTeller.ViewModel
                 return;
             }
 
-            if (CurrentStoryline.Count > 0 && CurrentStoryline.Last().CurrentScene is InteractiveScene)
+            InteractiveScene interactiveScene;
+            if (CurrentStoryline.Count > 0
+                && (null != (interactiveScene = CurrentStoryline.Last().CurrentScene as InteractiveScene))
+                && interactiveScene.PossibleScenes.Count > 0)
             {
                 return;
             }
 
-            SceneViewModel sceneViewModel = new SceneViewModel(scene);
+            SceneViewModel sceneViewModel = CreateSceneViewModel(scene);
             CurrentStoryline.Add(sceneViewModel);
-            Scenes.Add(scene);
+            //Scenes.Add(scene);
+            //ScenesViewModel.Add(sceneViewModel);
             //Scenes = _builder.StorylineBuilder.GetScenes(CurrentStoryline);
             OnPropertyChanged("Scenes");
+        }
+
+        private SceneViewModel CreateSceneViewModel(IScene scene)
+        {
+            SceneViewModel sceneViewModel = new SceneViewModel(scene);
+            sceneViewModel.NavigateRequest += sceneViewModel_NavigateRequest;
+            sceneViewModel.PickSceneRequest += sceneViewModel_PickSceneRequest;
+            return sceneViewModel;
+        }
+
+        void sceneViewModel_PickSceneRequest(object sender, ScenePickerRequestArgs args)
+        {
+            OnPossibleScenePickRequest(args);
+        }
+
+        void sceneViewModel_NavigateRequest(object sender, IScene scene)
+        {
+            foreach (StoryLineViewModel storyLineViewModel in StoryLines)
+            {
+                SceneViewModel firstSceneViewModel = null;
+                if ((firstSceneViewModel = storyLineViewModel.FirstOrDefault(
+                    (sceneViewModel) => !(sceneViewModel is SceneViewModelPad))) != null)
+                {
+                    if (firstSceneViewModel.CurrentScene.Id == scene.Id)
+                    {
+                        SelectStoryline(storyLineViewModel);
+                        break;
+                    }
+                }
+            }
         }
 
         internal void SelectStoryline(StoryLineViewModel storyline)
         {
             CurrentStoryline = storyline;
+            ScenesViewModel = storyline;
             Scenes = _builder.StorylineBuilder.GetScenes(storyline);
+            //ScenesViewModel.Clear();
+            //foreach (SceneViewModel sceneViewModel in storyline)
+            //{
+            //    ScenesViewModel.Add(sceneViewModel);
+            //}
+
+            //Scenes.Clear();
+            //foreach (IScene scene in _builder.StorylineBuilder.GetScenes(storyline))
+            //{
+            //    Scenes.Add(scene);
+            //}
+
             if (Scenes.Count > 0)
             {
                 CurrentScene = Scenes[0];
@@ -110,7 +207,7 @@ namespace StoryTeller.ViewModel
                 {
                     interactiveScene = new InteractiveScene(lastScene.CurrentScene.LibraryItem);
                     storyline.Remove(lastScene);
-                    storyline.Add(new SceneViewModel(interactiveScene));
+                    storyline.Add(CreateSceneViewModel(interactiveScene));
                 }
 
                 int index = FindStoryLineIndex(storyline);
@@ -138,9 +235,18 @@ namespace StoryTeller.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyChanged)
         {
-            if (null == propertyChanged)
+            if (null != PropertyChanged)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyChanged));
+            }
+        }
+
+        private void OnPossibleScenePickRequest(ScenePickerRequestArgs args)
+        {
+            if (null != PossibleScenePickRequest)
+            {
+                args.SenderChain.Add(this);
+                PossibleScenePickRequest(this, args);
             }
         }
     }

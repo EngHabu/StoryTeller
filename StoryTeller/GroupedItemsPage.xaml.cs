@@ -59,9 +59,13 @@ namespace StoryTeller
             libraryViewModel.Library = new Library();
             projectViewModel.Library = libraryViewModel;
 
-            StoryViewModel storyModel = new StoryViewModel(new Story());
+            Story story = new Story();
+            StoryViewModel storyModel = new StoryViewModel(story);
             projectViewModel.Story = storyModel;
-            
+            projectViewModel.Story.PageWidth = 500;
+            projectViewModel.Story.PageHeight = 350;
+            projectViewModel.StoryRendererViewModel = new StoryRendererViewModel(story);
+
             this.DataContext = projectViewModel;
 
             libraryPanel.DoubleTapped += libraryPanel_DoubleTapped;
@@ -74,7 +78,7 @@ namespace StoryTeller
         private void libraryPanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             LibraryItem libraryItem = libraryPanel.SelectedItem as LibraryItem;
-            IScene scene = new Scene(libraryItem);
+            IScene scene = new InteractiveScene(libraryItem);
             projectViewModel.Story.AddScene(scene);
         }
 
@@ -153,8 +157,8 @@ namespace StoryTeller
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            
-            
+
+
         }
 
         async private void Button_Click(object sender, RoutedEventArgs e)
@@ -210,9 +214,9 @@ namespace StoryTeller
             {
                 LibraryItem libraryItem = new LibraryItem();
                 libraryItem.Id = file.Name;
-                libraryItem.SceneContent = new TextSceneContent();                
+                libraryItem.SceneContent = new TextSceneContent();
                 libraryItem.SceneContent.Content = await FileIO.ReadTextAsync(file);
-                libraryViewModel.Items.Add(libraryItem);           
+                libraryViewModel.Items.Add(libraryItem);
             }
         }
 
@@ -224,6 +228,11 @@ namespace StoryTeller
         private void Clear_Button_Tapped(object sender, TappedRoutedEventArgs e)
         {
             projectViewModel.Story.Clear();
+        }
+
+        private void PreviewRendererControl_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
         }
     }
 }

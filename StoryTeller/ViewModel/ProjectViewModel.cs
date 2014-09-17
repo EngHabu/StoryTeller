@@ -11,7 +11,18 @@ namespace StoryTeller.ViewModel
     {
         private StoryViewModel _story;
         private LibraryViewModel _library;
+        private StoryRendererViewModel _storyRendererViewModel;
 
+        public StoryRendererViewModel StoryRendererViewModel
+        {
+            get { return _storyRendererViewModel; }
+            set
+            {
+                _storyRendererViewModel = value;
+                OnPropertyChanged("StoryRendererViewModel");
+            }
+        }
+        
         public StoryViewModel Story
         {
             get { return _story; }

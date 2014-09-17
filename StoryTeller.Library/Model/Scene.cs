@@ -32,20 +32,24 @@ namespace StoryTeller.DataModel.Model
             }
         }
 
-        public LibraryItem LibraryItem { 
-            get {
-                if (_libraryItem == null) {
+        public LibraryItem LibraryItem
+        {
+            get
+            {
+                if (_libraryItem == null)
+                {
                     _libraryItem = Library.GetItem(_libraryItemId);
                 }
+
                 return _libraryItem;
-            } 
+            }
         }
 
         public virtual string Id
         {
             get;
             set;
-            }
+        }
 
         public virtual SceneType Type
         {
@@ -81,7 +85,7 @@ namespace StoryTeller.DataModel.Model
             }
         }
 
-        public IScene FollowingScene
+        public virtual IScene FollowingScene
         {
             get;
             set;

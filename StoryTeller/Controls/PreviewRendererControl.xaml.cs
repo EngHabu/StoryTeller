@@ -1,4 +1,5 @@
 ﻿using StoryTeller.DataModel;
+using StoryTeller.DataModel.Model;
 using StoryTeller.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,56 @@ namespace StoryTeller.Controls
         public PreviewRendererControl()
         {
             this.InitializeComponent();
+            DataContextChanged += PreviewRendererControl_DataContextChanged;
+        }
+
+        void PreviewRendererControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        {
+            StoryViewModel storyViewModel = args.NewValue as StoryViewModel;
+            if (null != storyViewModel)
+            {
+                storyViewModel.PossibleScenePickRequest += storyViewModel_PossibleScenePickRequest;
+                storyViewModel.PropertyChanged += storyViewModel_PropertyChanged;
+            }
+        }
+
+        void storyViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            object currentDataContext = PagesControl.DataContext;//.GetBindingExpression(ItemsControl.ItemsSourceProperty).
+            PagesControl.DataContext = null;
+            PagesControl.DataContext = currentDataContext;
+        }
+
+        void storyViewModel_PossibleScenePickRequest(object sender, ScenePickerRequestArgs args)
+        {
+            Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(() =>
+            {
+                FlyoutBase flyoutBase = Flyout.GetAttachedFlyout(PagesControl);
+                Flyout flyout = flyoutBase as Flyout;
+                if (null != flyout)
+                {
+                    ScenePickerControl scenePicker = flyout.Content as ScenePickerControl;
+                    if (null != scenePicker)
+                    {
+                        SceneViewModel sceneViewModel = args.SenderChain.Where((obj) =>
+                            (obj is SceneViewModel)).FirstOrDefault() as SceneViewModel;
+                        if (null != sceneViewModel)
+                        {
+                            InteractiveScene interactiveScene = sceneViewModel.CurrentScene as InteractiveScene;
+                            if (null != interactiveScene)
+                            {
+                                ScenePickerViewModel scenePickerModel = ScenePickerViewModel.Create(interactiveScene);
+                                scenePickerModel.SelectedScene = interactiveScene.LookupSceneByLinkId(args.LinkId);
+                                scenePickerModel.LinkId = args.LinkId;
+                                scenePicker.DataContext = scenePickerModel;
+                            }
+                        }
+                    }
+                }
+
+                flyoutBase.Placement = FlyoutPlacementMode.Top;
+                flyoutBase.ShowAt(this);
+            }));
         }
 
         void TextBlock_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
