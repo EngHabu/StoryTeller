@@ -202,6 +202,10 @@ namespace StoryTeller.ViewModel
                 if (lastScene.CurrentScene is InteractiveScene)
                 {
                     interactiveScene = lastScene.CurrentScene as InteractiveScene;
+                    if (null != interactiveScene)
+                    {
+                        interactiveScene.Type = SceneType.Interactive;
+                    }
                 }
                 else
                 {

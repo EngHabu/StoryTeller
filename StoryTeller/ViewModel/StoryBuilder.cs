@@ -44,7 +44,7 @@ namespace StoryTeller.ViewModel
                 padding++;
                 lineScenes.Add(new SceneViewModel(currentScene));
                 InteractiveScene interactiveScene = currentScene as InteractiveScene;
-                if (null != interactiveScene && interactiveScene.PossibleScenes.Count > 1)
+                if (null != interactiveScene && interactiveScene.Type == SceneType.Interactive)
                 {
                     foreach (IScene possibleStartScene in interactiveScene.PossibleScenes)
                     {
@@ -98,7 +98,14 @@ namespace StoryTeller.ViewModel
                     }
                     else
                     {
-                        lastExistingScene.FollowingScene = null;
+                        if (lastExistingScene is InteractiveScene)
+                        {
+                            (lastExistingScene as InteractiveScene).PossibleScenes.Remove(removedScene.CurrentScene);
+                        }
+                        else
+                        {
+                            lastExistingScene.FollowingScene = null;
+                        }
                     }
                 }
             }
@@ -142,7 +149,11 @@ namespace StoryTeller.ViewModel
                 else if (previousScene != null)
                 {
                     IScene currentScene = previousScene.CurrentScene;
-                    currentScene.FollowingScene = addedScene.CurrentScene;
+                    InteractiveScene interactiveScene = currentScene as InteractiveScene;
+                    if (null != interactiveScene)
+                    {
+                        interactiveScene.PossibleScenes.Add(addedScene.CurrentScene);
+                    }
                 }
             }
         }

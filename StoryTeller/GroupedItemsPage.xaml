@@ -97,7 +97,7 @@
                     <controls:PreviewRendererControl Grid.Row="0" DataContext="{Binding Story, Mode=TwoWay}" Tapped="PreviewRendererControl_Tapped" />
                     <StackPanel Orientation="Horizontal" Grid.Row="1">
                         <Button Content="Preview"  HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
-                        <Button Content="Reload" HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+                        <Button Content="Reload" HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Click="Reload_Button_Click"/>
                         <Button Content="Clear" HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Tapped="Clear_Button_Tapped"/>
                     </StackPanel>
                 </Grid>

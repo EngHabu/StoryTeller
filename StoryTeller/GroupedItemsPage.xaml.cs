@@ -220,7 +220,7 @@ namespace StoryTeller
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Reload_Button_Click(object sender, RoutedEventArgs e)
         {
             projectViewModel.Story.Story = projectViewModel.Story.Story;
         }
