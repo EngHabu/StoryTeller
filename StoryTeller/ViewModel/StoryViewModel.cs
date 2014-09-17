@@ -82,7 +82,7 @@ namespace StoryTeller.ViewModel
             }
         }
 
-        public StoryLineViewModel CurrentStoryline 
+        public StoryLineViewModel CurrentStoryline
         {
             get { return _currentStoryline; }
             set
@@ -115,7 +115,7 @@ namespace StoryTeller.ViewModel
             StoryLines = _builder.ConstructStoryLines(this);
             CurrentStoryline = StoryLines.First();
         }
-        
+
         internal void AddScene(IScene scene)
         {
             if (CurrentStoryline == null)
@@ -124,17 +124,17 @@ namespace StoryTeller.ViewModel
             }
 
             InteractiveScene interactiveScene;
-            if (CurrentStoryline.Count > 0 
+            if (CurrentStoryline.Count > 0
                 && (null != (interactiveScene = CurrentStoryline.Last().CurrentScene as InteractiveScene))
                 && interactiveScene.PossibleScenes.Count > 0)
             {
                 return;
             }
-            
+
             SceneViewModel sceneViewModel = CreateSceneViewModel(scene);
             CurrentStoryline.Add(sceneViewModel);
-            Scenes.Add(scene);
-            ScenesViewModel.Add(sceneViewModel);
+            //Scenes.Add(scene);
+            //ScenesViewModel.Add(sceneViewModel);
             //Scenes = _builder.StorylineBuilder.GetScenes(CurrentStoryline);
             OnPropertyChanged("Scenes");
         }
@@ -154,12 +154,38 @@ namespace StoryTeller.ViewModel
 
         void sceneViewModel_NavigateRequest(object sender, IScene scene)
         {
+            foreach (StoryLineViewModel storyLineViewModel in StoryLines)
+            {
+                SceneViewModel firstSceneViewModel = null;
+                if ((firstSceneViewModel = storyLineViewModel.FirstOrDefault(
+                    (sceneViewModel) => !(sceneViewModel is SceneViewModelPad))) != null)
+                {
+                    if (firstSceneViewModel.CurrentScene.Id == scene.Id)
+                    {
+                        SelectStoryline(storyLineViewModel);
+                        break;
+                    }
+                }
+            }
         }
 
         internal void SelectStoryline(StoryLineViewModel storyline)
         {
             CurrentStoryline = storyline;
+            ScenesViewModel = storyline;
             Scenes = _builder.StorylineBuilder.GetScenes(storyline);
+            //ScenesViewModel.Clear();
+            //foreach (SceneViewModel sceneViewModel in storyline)
+            //{
+            //    ScenesViewModel.Add(sceneViewModel);
+            //}
+
+            //Scenes.Clear();
+            //foreach (IScene scene in _builder.StorylineBuilder.GetScenes(storyline))
+            //{
+            //    Scenes.Add(scene);
+            //}
+
             if (Scenes.Count > 0)
             {
                 CurrentScene = Scenes[0];
@@ -209,7 +235,7 @@ namespace StoryTeller.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyChanged)
         {
-            if (null == propertyChanged)
+            if (null != PropertyChanged)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyChanged));
             }

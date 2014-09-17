@@ -34,7 +34,15 @@ namespace StoryTeller.Controls
             if (null != storyViewModel)
             {
                 storyViewModel.PossibleScenePickRequest += storyViewModel_PossibleScenePickRequest;
+                storyViewModel.PropertyChanged += storyViewModel_PropertyChanged;
             }
+        }
+
+        void storyViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            object currentDataContext = PagesControl.DataContext;//.GetBindingExpression(ItemsControl.ItemsSourceProperty).
+            PagesControl.DataContext = null;
+            PagesControl.DataContext = currentDataContext;
         }
 
         void storyViewModel_PossibleScenePickRequest(object sender, ScenePickerRequestArgs args)

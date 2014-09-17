@@ -39,6 +39,11 @@ namespace StoryTeller.Converter
         {
             foreach (SceneViewModel sceneViewModel in scenes)
             {
+                if (sceneViewModel is SceneViewModelPad)
+                {
+                    continue;
+                }
+
                 IScene scene = sceneViewModel.CurrentScene;
                 string stringContent = scene.Content.Content;
                 RichTextBlock mainBlock = new StringToRtf().Convert(stringContent, null, null, null) as RichTextBlock;
@@ -84,7 +89,7 @@ namespace StoryTeller.Converter
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            throw new NotImplementedException();
+            return value;
         }
     }
 }

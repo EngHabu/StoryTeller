@@ -18,7 +18,7 @@ namespace StoryTeller.ViewModel
 
         public IScene CurrentScene { get; set; }
 
-        public ObservableCollection<SceneTag> Tags 
+        public ObservableCollection<SceneTag> Tags
         {
             get
             {
@@ -48,7 +48,8 @@ namespace StoryTeller.ViewModel
 
         void _tags_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add) {
+            if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
+            {
                 foreach (SceneTag newTag in e.NewItems)
                 {
                     CurrentScene.Tags.Add(newTag);
@@ -71,7 +72,7 @@ namespace StoryTeller.ViewModel
                     OnPickSceneRequest(linkId);
                 }
             }
-            }
+        }
 
         private void OnPickSceneRequest(string linkId)
         {
