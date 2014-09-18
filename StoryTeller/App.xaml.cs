@@ -34,6 +34,7 @@ namespace StoryTeller
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace StoryTeller
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 // Display the current frame rate counters
-                this.DebugSettings.EnableFrameRateCounter = true;
+                //this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
 
@@ -62,6 +63,8 @@ namespace StoryTeller
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
+                
+                
                 //Associate the frame with a SuspensionManager key                                
                 SuspensionManager.RegisterFrame(rootFrame, "AppFrame");
                 // Set the default language
@@ -94,7 +97,7 @@ namespace StoryTeller
 #if StoryTellerViewer
                 rootFrame.Navigate(typeof(StoryTeller.Pages.StoryViewer), e.Arguments);
 #else
-                rootFrame.Navigate(typeof(GroupedItemsPage), e.Arguments);
+                rootFrame.Navigate(typeof(MainPage), e.Arguments);
 #endif
             }
             // Ensure the current window is active
