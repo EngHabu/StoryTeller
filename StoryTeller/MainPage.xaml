@@ -39,10 +39,11 @@
                 </TransitionCollection>
             </Grid.ChildrenTransitions>
             <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="3*"/>
                 <RowDefinition Height="2*"/>
-                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
@@ -53,8 +54,17 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Orientation="Horizontal">
-                        <Button Content="Default" Click="Button_Click"/>
-                        <Button Content="Load" Click="ButtonLoad_Click"/>
+                        <Button Content="+" Click="ButtonLoad_Click" Background="Transparent" Foreground="Blue" FontSize="40" Padding="0,-10,0,0"/>
+                    <Button Content="..." Background="Transparent" Foreground="Blue" FontSize="40" Padding="0,-30,0,0" Tapped="More_Tapped">
+                        <FlyoutBase.AttachedFlyout>
+                            <MenuFlyout>
+                                <MenuFlyoutItem Text="Default" Tapped="Default_Tapped"/>
+                                <MenuFlyoutItem Text="Reload" Tapped="Reload_Tapped"/>
+                                <MenuFlyoutItem Text="Clear" Tapped="Clear_Button_Tapped"/>
+                                
+                            </MenuFlyout>
+                        </FlyoutBase.AttachedFlyout>
+                    </Button>                    
                     </StackPanel>
                     <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,1,0,-1" ItemsSource="{Binding Library.Items}">
                         <GridView.ItemTemplate>
@@ -71,14 +81,9 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <controls:PreviewRendererControl Grid.Row="0" DataContext="{Binding Story, Mode=TwoWay}" Tapped="PreviewRendererControl_Tapped" />
-                    <StackPanel Orientation="Horizontal" Grid.Row="1">
-                        <Button Content="Preview"  HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Click="Button_Click_2"/>
-                        <Button Content="Reload" HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
-                        <Button Content="Clear" HorizontalAlignment="Left" Margin="7,5,0,0" VerticalAlignment="Top" Tapped="Clear_Button_Tapped"/>
-                    </StackPanel>
                 </Grid>
             </Grid>
-        <ScrollViewer Grid.Row="1" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible">
+        <ScrollViewer Grid.Row="2" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible">
             <controls:StoryLineRendererControl DataContext="{Binding Story}">
             </controls:StoryLineRendererControl>
         </ScrollViewer>

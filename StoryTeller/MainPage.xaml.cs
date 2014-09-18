@@ -148,7 +148,7 @@ namespace StoryTeller
 
         }
 
-        async private void Button_Click(object sender, RoutedEventArgs e)
+        async private void Default_Tapped(object sender, TappedRoutedEventArgs e)
         {
             await LoadDefaultFiles();
         }
@@ -207,7 +207,7 @@ namespace StoryTeller
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Reload_Tapped(object sender, TappedRoutedEventArgs e)
         {
             projectViewModel.Story.Story = projectViewModel.Story.Story;
         }
@@ -220,6 +220,14 @@ namespace StoryTeller
         private void PreviewRendererControl_Tapped(object sender, TappedRoutedEventArgs e)
         {
 
+        }
+
+        private void More_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            FrameworkElement uiElement = (FrameworkElement)sender;
+            FlyoutBase flyout = MenuFlyout.GetAttachedFlyout(uiElement);
+            flyout.Placement = FlyoutPlacementMode.Bottom;
+            flyout.ShowAt(uiElement);
         }
     }
 }
