@@ -5,7 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Foundation;
+using Windows.UI.Popups;
 using Windows.UI.Text;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
@@ -67,6 +71,7 @@ namespace StoryTeller.Converter
                 @"<RichTextBlock TextWrapping=""Wrap"" Padding=""20"" Width=""750"" Height=""700"" CharacterSpacing=""100"" LineHeight=""20"" MaxLines=""31"" FontSize=""14"" FontFamily=""Times New Roman"" xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>"
                 + PlainTextToXaml(plainText)
                 + "</RichTextBlock>") as RichTextBlock;
+            blocksObj.ContextMenuOpening += mainBlock_ContextMenuOpening;
 
             return blocksObj;
         }
@@ -104,6 +109,80 @@ namespace StoryTeller.Converter
                 if (null != scene)
                 {
                     scene.LinkClicked(linkId);
+                }
+            }
+        }
+
+        private static void RaiseCreateSceneLinkEvent(TextPointer start, TextPointer end)
+        {
+            FrameworkElement element = start.VisualParent;
+            if (null != element)
+            {
+                SceneViewModel scene = element.DataContext as SceneViewModel;
+                if (null != scene)
+                {
+                    scene.CreateLinkAt(start, end);
+                }
+            }
+        }
+
+        private static Rect GetVisualRectangle(RichTextBlock textBlock, TextPointer textPointer)
+        {
+            UIElement container = textPointer.VisualParent;
+            Rect beforeTransform = textPointer.GetCharacterRect(LogicalDirection.Forward);
+            GeneralTransform transform = container.TransformToVisual(null);
+            Rect afterTransform = transform.TransformBounds(beforeTransform);
+            return afterTransform;
+        }
+
+        // returns a rect for selected text
+        // if no text is selected, returns caret location
+        // textbox should not be empty
+        private static Rect GetTextboxSelectionRect(RichTextBlock textbox)
+        {
+            Rect rectFirst, rectLast;
+            rectFirst = GetVisualRectangle(textbox, textbox.SelectionStart);
+            rectLast = GetVisualRectangle(textbox, textbox.SelectionEnd);
+            double left = Math.Min(rectFirst.Left, rectLast.Left);
+            double top = Math.Min(rectFirst.Top, rectLast.Top);
+            double right = Math.Max(rectFirst.Right, rectLast.Right);
+            double bottom = Math.Max(rectFirst.Bottom, rectLast.Bottom);
+            Rect boundingRect = new Rect(left, top, right - left, bottom - top);
+
+            return boundingRect;
+        }
+
+        private static async void mainBlock_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+            e.Handled = true;
+            RichTextBlock textbox = (RichTextBlock)sender;
+            if (!string.IsNullOrWhiteSpace(textbox.SelectedText) && textbox.SelectedText.Length > 0)
+            {
+                // Create a menu and add commands specifying an id value for each instead of a delegate.
+                var menu = new PopupMenu();
+                menu.Commands.Add(new UICommand("Copy", null, 1));
+                menu.Commands.Add(new UICommandSeparator());
+                menu.Commands.Add(new UICommand("Create Scene Link", null, 2));
+
+                // We don't want to obscure content, so pass in a rectangle representing the selection area.
+                // NOTE: this code only handles textboxes with a single line. If a textbox has multiple lines,
+                //       then the context menu should be placed at cursor/pointer location by convention.
+                Rect rect = GetTextboxSelectionRect(textbox);
+                var chosenCommand = await menu.ShowForSelectionAsync(rect);
+                if (chosenCommand != null)
+                {
+                    switch ((int)chosenCommand.Id)
+                    {
+                        case 1:
+                            String selectedText = textbox.SelectedText;
+                            var dataPackage = new DataPackage();
+                            dataPackage.SetText(selectedText);
+                            Clipboard.SetContent(dataPackage);
+                            break;
+
+                        case 2:
+                            break;
+                    }
                 }
             }
         }

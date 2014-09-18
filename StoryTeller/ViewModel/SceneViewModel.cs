@@ -92,5 +92,10 @@ namespace StoryTeller.ViewModel
                 NavigateRequest(this, scene);
             }
         }
+
+        internal void CreateLinkAt(Windows.UI.Xaml.Documents.TextPointer start, Windows.UI.Xaml.Documents.TextPointer end)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

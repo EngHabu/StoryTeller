@@ -6,10 +6,14 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Foundation;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
+using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Media;
 
 namespace StoryTeller.Converter
@@ -86,7 +90,7 @@ namespace StoryTeller.Converter
                 }
             }
         }
-
+        
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
             return value;
