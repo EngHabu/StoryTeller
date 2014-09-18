@@ -54,8 +54,8 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Orientation="Horizontal">
-                        <Button Content="+" Click="ButtonLoad_Click" Background="Transparent" Foreground="Blue" FontSize="40" Padding="0,-10,0,0"/>
-                    <Button Content="..." Background="Transparent" Foreground="Blue" FontSize="40" Padding="0,-30,0,0" Tapped="More_Tapped">
+                        <Button Content="+" Click="ButtonLoad_Click" Background="Transparent" Foreground="Blue" FontSize="30" Padding="0,-10,0,0"/>
+                    <Button Content="..." Background="Transparent" Foreground="Blue" FontSize="30" Padding="0,-23,0,0" Tapped="More_Tapped">
                         <FlyoutBase.AttachedFlyout>
                             <MenuFlyout>
                                 <MenuFlyoutItem Text="Default" Tapped="Default_Tapped"/>
@@ -66,7 +66,7 @@
                         </FlyoutBase.AttachedFlyout>
                     </Button>                    
                     </StackPanel>
-                    <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,1,0,-1" ItemsSource="{Binding Library.Items}">
+                    <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,1,0,-1" ItemsSource="{Binding Library.Items}" CanDragItems="True">
                         <GridView.ItemTemplate>
                             <DataTemplate>
                                 <controls:LibraryItemRendererControl>

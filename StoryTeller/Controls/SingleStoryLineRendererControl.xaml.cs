@@ -53,5 +53,10 @@ namespace StoryTeller.Controls
             flyoutBase.ShowAt(textblock);
         }
 
+        private void storylineListbox_Drop(object sender, DragEventArgs e)
+        {
+            
+        }
+
     }
 }

@@ -22,7 +22,7 @@
             <StackPanel x:Name="selectStoryline" Tapped="selectStoryline_Tapped" Width="20"></StackPanel>
             <Button x:Name="addStoryline" Content="+" FontSize="28" Padding="5,-7,5,5" Tapped="addStoryline_Click"></Button>
         </StackPanel>
-        <ListBox x:Name="storylineListbox" ItemsSource="{Binding}" ScrollViewer.VerticalScrollBarVisibility="Hidden" DoubleTapped="ListBox_DoubleTapped">
+        <ListBox x:Name="storylineListbox" ItemsSource="{Binding}" ScrollViewer.VerticalScrollBarVisibility="Hidden" DoubleTapped="ListBox_DoubleTapped" AllowDrop="True" Drop="storylineListbox_Drop">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Width="150" Text="{Binding CurrentScene.Content.Content, Converter={StaticResource ResourceKey=StringToSnippet}}" DoubleTapped="TextBlock_DoubleTapped">
