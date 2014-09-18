@@ -133,10 +133,29 @@ namespace StoryTeller.ViewModel
 
             SceneViewModel sceneViewModel = CreateSceneViewModel(scene);
             CurrentStoryline.Add(sceneViewModel);
+            RefreshScenes(CurrentStoryline);
             //Scenes.Add(scene);
             //ScenesViewModel.Add(sceneViewModel);
             //Scenes = _builder.StorylineBuilder.GetScenes(CurrentStoryline);
             OnPropertyChanged("Scenes");
+        }
+
+        private void RefreshScenes(StoryLineViewModel storyline)
+        {
+            ScenesViewModel = new ObservableCollection<SceneViewModel>(BuildPath(storyline));
+            SceneViewModel lastSceneViewModel = null;
+            Func<SceneViewModel, bool> isNotPad = (sceneViewModel) => !(sceneViewModel is SceneViewModelPad);
+            lastSceneViewModel = storyline.LastOrDefault(isNotPad);
+
+            if (null != lastSceneViewModel)
+            {
+                Scenes = new ObservableCollection<IScene>(BuildPath(Story.StartScene, lastSceneViewModel.CurrentScene));
+            }
+
+            if (Scenes.Count > 0)
+            {
+                CurrentScene = Scenes[0];
+            }
         }
 
         private SceneViewModel CreateSceneViewModel(IScene scene)
@@ -172,24 +191,50 @@ namespace StoryTeller.ViewModel
         internal void SelectStoryline(StoryLineViewModel storyline)
         {
             CurrentStoryline = storyline;
-            ScenesViewModel = storyline;
-            Scenes = _builder.StorylineBuilder.GetScenes(storyline);
-            //ScenesViewModel.Clear();
-            //foreach (SceneViewModel sceneViewModel in storyline)
-            //{
-            //    ScenesViewModel.Add(sceneViewModel);
-            //}
+            RefreshScenes(storyline);
+        }
 
-            //Scenes.Clear();
-            //foreach (IScene scene in _builder.StorylineBuilder.GetScenes(storyline))
-            //{
-            //    Scenes.Add(scene);
-            //}
-
-            if (Scenes.Count > 0)
+        private IEnumerable<SceneViewModel> BuildPath(StoryLineViewModel targetStoryLine)
+        {
+            List<SceneViewModel> result = new List<SceneViewModel>();
+            result.AddRange(targetStoryLine.Reverse());
+            StoryLineViewModel parent = targetStoryLine;
+            while (null != (parent = parent.Parent))
             {
-                CurrentScene = Scenes[0];
+                result.AddRange(parent.Reverse());
             }
+
+            result.Reverse();
+            return result;
+        }
+
+        private IEnumerable<IScene> BuildPath(IScene start, IScene targetScene)
+        {
+            List<IScene> result = new List<IScene>();
+            if (null == start)
+            {
+                return result;
+            }
+
+            if (start.Id == targetScene.Id)
+            {
+                result.Add(targetScene);
+                return result;
+            }
+
+            InteractiveScene interactiveScene = start as InteractiveScene;
+            foreach (IScene scene in interactiveScene.PossibleScenes)
+            {
+                IEnumerable<IScene> route = BuildPath(scene, targetScene);
+                if (route.FirstOrDefault() != null)
+                {
+                    result.Add(start);
+                    result.AddRange(route);
+                    break;
+                }
+            }
+
+            return result;
         }
 
         internal void AddStoryline(StoryLineViewModel storyline)
@@ -202,6 +247,10 @@ namespace StoryTeller.ViewModel
                 if (lastScene.CurrentScene is InteractiveScene)
                 {
                     interactiveScene = lastScene.CurrentScene as InteractiveScene;
+                    if (null != interactiveScene)
+                    {
+                        interactiveScene.Type = SceneType.Interactive;
+                    }
                 }
                 else
                 {

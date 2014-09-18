@@ -53,14 +53,8 @@ namespace StoryTeller.DataModel.Model
 
         public virtual SceneType Type
         {
-            get
-            {
-                return SceneType.Regular;
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get;
+            set;
         }
 
         public ISceneContent Content
