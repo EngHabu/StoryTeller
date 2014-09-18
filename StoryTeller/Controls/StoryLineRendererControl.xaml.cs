@@ -1,4 +1,5 @@
 ﻿using StoryTeller.DataModel.Model;
+using StoryTeller.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,6 +29,12 @@ namespace StoryTeller.Controls
         private void ListBox_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             
+        }
+
+        private void storylinePanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StoryLineViewModel storylineModel = storylinePanel.SelectedItem as StoryLineViewModel;
+            storylineModel.StoryModel.SelectStoryline(storylineModel);
         }
 
     }

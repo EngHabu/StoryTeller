@@ -126,7 +126,7 @@ namespace StoryTeller.ViewModel
             InteractiveScene interactiveScene;
             if (CurrentStoryline.Count > 0
                 && (null != (interactiveScene = CurrentStoryline.Last().CurrentScene as InteractiveScene))
-                && interactiveScene.PossibleScenes.Count > 0)
+                && interactiveScene.Type == SceneType.Interactive)
             {
                 return;
             }
