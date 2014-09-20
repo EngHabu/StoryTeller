@@ -1,6 +1,4 @@
-﻿using StoryTeller.DataModel.Model;
-using StoryTeller.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,23 +17,11 @@ using Windows.UI.Xaml.Navigation;
 
 namespace StoryTeller.Controls
 {
-    public sealed partial class StoryLineRendererControl : UserControl
+    public sealed partial class SingleTagRenderer : UserControl
     {
-        public StoryLineRendererControl()
+        public SingleTagRenderer()
         {
             this.InitializeComponent();
         }
-
-        private void ListBox_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
-        {
-            
-        }
-
-        private void storylinePanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            StoryLineViewModel storylineModel = storylinePanel.SelectedItem as StoryLineViewModel;
-            storylineModel.StoryModel.SelectStoryline(storylineModel);
-        }
-
     }
 }

@@ -21,7 +21,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
-            <RowDefinition Height="15*" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -115,7 +117,7 @@
             </ItemsControl.ItemTemplate>-->
                 <ItemsControl.Template>
                     <ControlTemplate>
-                        <ScrollViewer HorizontalSnapPointsType="Mandatory" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled">
+                        <ScrollViewer HorizontalSnapPointsType="Mandatory" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" ViewChanged="ScrollViewer_ViewChanged">
                             <ItemsPresenter />
                         </ScrollViewer>
                     </ControlTemplate>
@@ -184,5 +186,7 @@
             </ContentControl>
         </RichTextBlock>
         <RichTextBlockOverflow Grid.Column="1" x:Name="SecondaryTextBlock"></RichTextBlockOverflow>-->
+        <local:TagsList Grid.Row="2" x:Name="tagsList" DoubleTapped="tagsList_DoubleTapped"/>
+        <local:TagsList Grid.Row="3" x:Name="favoriteTagsList" DataContext="{Binding FavoriteTags}"/>
     </Grid>
 </UserControl>

@@ -10,12 +10,16 @@
     d:DesignWidth="400">
     
     <Grid>
-        <ListBox x:Name="storylinePanel" ItemsSource="{Binding StoryLines}">
+        <ListBox x:Name="storylinePanel" ItemsSource="{Binding StoryLines}" ItemContainerStyle="{StaticResource ResourceKey=ListBoxItemStyle}" SelectionChanged="storylinePanel_SelectionChanged">
+            <ListBox.Style>
+        		<StaticResource ResourceKey="ListBoxStyle"/>
+        	</ListBox.Style>
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <local:SingleStoryLineRendererControl/>
                 </DataTemplate>
-            </ListBox.ItemTemplate>            
+            </ListBox.ItemTemplate>
+
         </ListBox>
     </Grid>
 </UserControl>
