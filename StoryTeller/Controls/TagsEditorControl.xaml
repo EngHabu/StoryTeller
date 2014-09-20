@@ -22,6 +22,6 @@
         <TextBox Grid.Row="0" x:Name="tagValue" FontSize="30" KeyUp="TextBox_KeyUp" TextChanged="tagValue_TextChanged" BorderThickness="0" Background="Transparent"/>
         
         <local:TagsList Grid.Row="1" DataContext="{Binding Tags}"/>
-        <CheckBox Content="Bonus" Grid.Row="2" IsChecked="{Binding IsBonus}"/>
+        <CheckBox Content="Bonus" Grid.Row="2" IsChecked="{Binding IsBonus, Mode=TwoWay}"/>
     </Grid>
 </UserControl>

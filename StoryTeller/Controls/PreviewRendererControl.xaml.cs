@@ -3,6 +3,7 @@ using StoryTeller.DataModel.Model;
 using StoryTeller.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -136,7 +137,7 @@ namespace StoryTeller.Controls
                     tagsList.DataContext = sceneModel.Tags;
                     break;
                 }
-            }            
+            }
             
             ItemsPresenter itemsPresenter = scrollViewer.Content as ItemsPresenter;                        
         }

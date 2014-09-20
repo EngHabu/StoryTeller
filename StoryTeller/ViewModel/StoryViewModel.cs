@@ -36,9 +36,15 @@ namespace StoryTeller.ViewModel
                 if (_favorites == null)
                 {
                     _favorites = new ObservableCollection<SceneTag>();
+                    _favorites.CollectionChanged += _favorites_CollectionChanged;
                 }
                 return _favorites;
             }
+        }
+
+        void _favorites_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            RefreshScenes(CurrentStoryline);
         }
 
         public double PageWidth
@@ -176,7 +182,13 @@ namespace StoryTeller.ViewModel
             SceneViewModel sceneViewModel = new SceneViewModel(scene);
             sceneViewModel.NavigateRequest += sceneViewModel_NavigateRequest;
             sceneViewModel.PickSceneRequest += sceneViewModel_PickSceneRequest;
+            sceneViewModel.BonusSceneChanged += sceneViewModel_BonusSceneChanged;
             return sceneViewModel;
+        }
+
+        void sceneViewModel_BonusSceneChanged()
+        {
+            RefreshScenes(CurrentStoryline);
         }
 
         void sceneViewModel_PickSceneRequest(object sender, ScenePickerRequestArgs args)
@@ -210,7 +222,7 @@ namespace StoryTeller.ViewModel
         private IEnumerable<SceneViewModel> BuildPath(StoryLineViewModel targetStoryLine)
         {
             List<SceneViewModel> result = new List<SceneViewModel>();
-            result.AddRange(targetStoryLine.Reverse());
+            result.AddRange(ReverseAndFilter(targetStoryLine));
             StoryLineViewModel parent = targetStoryLine;
             while (null != (parent = parent.Parent))
             {
@@ -220,6 +232,34 @@ namespace StoryTeller.ViewModel
             result.Reverse();
             return result;
         }
+
+        private static IEnumerable<SceneViewModel> ReverseAndFilter(StoryLineViewModel targetStoryLine)
+        {
+            return (from scene in targetStoryLine
+                    where (!scene.IsBonus || (scene.IsBonus && isFavorited(targetStoryLine, scene)))
+             select scene).Reverse();
+        }
+
+        private static bool isFavorited(StoryLineViewModel targetStoryLine, SceneViewModel scene)
+        {
+            ObservableCollection<SceneTag> favoriteTags = targetStoryLine.StoryModel.FavoriteTags;
+            if (favoriteTags.Count == 0)
+            {
+                return false;
+            }
+            foreach (SceneTag sceneTag in scene.Tags)
+            {
+                foreach (SceneTag favoriteTag in favoriteTags)
+                {
+                    if (favoriteTag.Content.Equals(sceneTag.Content))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
 
         private IEnumerable<IScene> BuildPath(IScene start, IScene targetScene)
         {
