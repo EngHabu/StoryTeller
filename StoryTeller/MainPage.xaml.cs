@@ -62,8 +62,6 @@ namespace StoryTeller
             Story story = new Story();
             StoryViewModel storyModel = new StoryViewModel(story);
             projectViewModel.Story = storyModel;
-            projectViewModel.Story.PageWidth = 800;
-            projectViewModel.Story.PageHeight = 350;
             projectViewModel.StoryRendererViewModel = new StoryRendererViewModel(story);
 
             this.DataContext = projectViewModel;

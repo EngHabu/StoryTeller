@@ -22,6 +22,7 @@ namespace StoryTeller.Converter
     {
         public const double DefaultPageWidth = 750;
         public const double DefaultPageHeight = 700;
+
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             StoryViewModel storyViewModel = value as StoryViewModel;

@@ -22,10 +22,43 @@ namespace StoryTeller.Controls
 {
     public sealed partial class PreviewRendererControl : UserControl
     {
+        private double _pageWidth = 750;
+        private double _pageHeight = 500;
+        private const double _pageWidthDiffEpsilon = 0.001;
+
+        public int ColumnsCount
+        {
+            get { return (int)GetValue(ColumnsCountProperty); }
+            set { SetValue(ColumnsCountProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ColumnsCount.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ColumnsCountProperty =
+            DependencyProperty.Register("ColumnsCount", typeof(int), typeof(PreviewRendererControl), new PropertyMetadata(0));
+        
         public PreviewRendererControl()
         {
             this.InitializeComponent();
             DataContextChanged += PreviewRendererControl_DataContextChanged;
+        }
+
+        private static bool AreEqual(double pageWidth1, double pageWidth2)
+        {
+            return Math.Abs(pageWidth1 - pageWidth2) < _pageWidthDiffEpsilon;
+        }
+
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            _pageWidth = availableSize.Width / ColumnsCount;
+            StoryViewModel model = DataContext as StoryViewModel;
+            if (null != model && !AreEqual(_pageWidth, model.PageWidth))
+            {
+                model.PageWidth = _pageWidth;
+                model.PageHeight = _pageHeight;
+                RebindView();
+            }
+
+            return base.MeasureOverride(availableSize);
         }
 
         void PreviewRendererControl_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
@@ -40,10 +73,19 @@ namespace StoryTeller.Controls
 
         void storyViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
+            RebindView();
+        }
+
+        private void RebindView()
+        {
             object currentDataContext = PagesControl.DataContext;//.GetBindingExpression(ItemsControl.ItemsSourceProperty).
             PagesControl.DataContext = null;
             PagesControl.DataContext = currentDataContext;
-            tagsList.DataContext = (currentDataContext as StoryViewModel).ScenesViewModel.First().Tags;
+            SceneViewModel sceneViewModel = (currentDataContext as StoryViewModel).ScenesViewModel.FirstOrDefault();
+            if (null != sceneViewModel)
+            {
+                tagsList.DataContext = sceneViewModel.Tags;
+            }
         }
 
         void storyViewModel_PossibleScenePickRequest(object sender, ScenePickerRequestArgs args)
@@ -94,8 +136,7 @@ namespace StoryTeller.Controls
                     tagsList.DataContext = sceneModel.Tags;
                     break;
                 }
-            }
-            
+            }            
             
             ItemsPresenter itemsPresenter = scrollViewer.Content as ItemsPresenter;                        
         }
