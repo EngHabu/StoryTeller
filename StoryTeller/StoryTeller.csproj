@@ -180,6 +180,8 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Assets\fullscreen-icon.jpg" />
+    <Content Include="SmallLogo.scale-100.png" />
     <None Include="Common\ReadMe.txt" />
     <None Include="StoryTeller_TemporaryKey.pfx" />
     <Content Include="DataModel\SampleData.json" />

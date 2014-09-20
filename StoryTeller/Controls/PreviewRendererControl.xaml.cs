@@ -1,5 +1,6 @@
 ﻿using StoryTeller.DataModel;
 using StoryTeller.DataModel.Model;
+using StoryTeller.Pages;
 using StoryTeller.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -159,6 +160,14 @@ namespace StoryTeller.Controls
                 StoryViewModel storyModel = DataContext as StoryViewModel;
                 storyModel.FavoriteTags.Add(new SceneTag(selectedTag.Name, selectedTag.Content));
             }
+        }
+
+        private void fullscreen_Button_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            string guid = Guid.NewGuid().ToString();
+            ViewModelCache.Local.Put(guid, DataContext as StoryViewModel);
+            
+            (Window.Current.Content as Frame).Navigate(typeof(StoryViewer), guid);
         }
     }
 }
