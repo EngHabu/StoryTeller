@@ -7,32 +7,21 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300"
+    d:DesignHeight="90"
     d:DesignWidth="400"
-    Height="500"
     Width="400">
 
     <Grid>
         <Grid.RowDefinitions>           
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="4*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Text="Tag" Margin="0,0,10,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="18"></TextBlock>
-            <TextBlock Text="Type" Margin="0,0,10,0" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="18"></TextBlock>
-            <TextBox x:Name="tagValue" Grid.Row="1" Grid.Column="1" FontSize="30" KeyUp="TextBox_KeyUp" />
-            <ComboBox x:Name="tagTypes" Grid.Row="0" Grid.Column="1" FontSize="30">
-
-            </ComboBox>
-        </Grid>
-        <local:TagsListControl Grid.Row="1"/>
+        
+        <TextBlock Grid.Row="0" Text="Tag" VerticalAlignment="Center" Foreground="LightGray"/>
+        <TextBox Grid.Row="0" x:Name="tagValue" FontSize="30" KeyUp="TextBox_KeyUp" TextChanged="tagValue_TextChanged" BorderThickness="0" Background="Transparent"/>
+        
+        <local:TagsList Grid.Row="1" DataContext="{Binding Tags}"/>
+        <CheckBox Content="Bonus" Grid.Row="2" IsChecked="{Binding IsBonus}"/>
     </Grid>
 </UserControl>

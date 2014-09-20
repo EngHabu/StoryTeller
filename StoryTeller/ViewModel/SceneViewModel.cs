@@ -30,6 +30,18 @@ namespace StoryTeller.ViewModel
             }
         }
 
+        public bool IsBonus
+        {
+            get
+            {
+                return CurrentScene.IsBonusScene;
+            }
+            set
+            {
+                CurrentScene.IsBonusScene = value;
+            }
+        }
+
         public SceneViewModel(IScene currentScene)
         {
             this.CurrentScene = currentScene;

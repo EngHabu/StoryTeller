@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -24,8 +25,6 @@ namespace StoryTeller.Controls
         public TagsEditorControl()
         {
             this.InitializeComponent();
-            tagTypes.ItemsSource = Enum.GetValues(typeof(SceneTagType)).Cast<SceneTagType>();
-            tagTypes.SelectedItem = SceneTagType.Custom;
         }
 
         private void TextBox_KeyUp(object sender, KeyRoutedEventArgs e)
@@ -33,8 +32,13 @@ namespace StoryTeller.Controls
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 SceneViewModel sceneModel = DataContext as SceneViewModel;
-                sceneModel.Tags.Add(new SceneTag(tagTypes.SelectedItem.ToString(), tagValue.Text));
+                sceneModel.Tags.Add(new SceneTag("", tagValue.Text));
             }
+        }
+
+        private void tagValue_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
         }
     }
 }
