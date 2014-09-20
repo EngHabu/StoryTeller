@@ -55,7 +55,7 @@
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Orientation="Horizontal">
                         <Button Content="+" Click="ButtonLoad_Click" Background="Transparent" Foreground="Blue" FontSize="30" Padding="0,-10,0,0"/>
-                        <Button Content="..." Background="Transparent" Foreground="Blue" FontSize="30" Padding="0,-23,0,0" Tapped="More_Tapped">
+                    <Button Content="..." Background="Transparent" Foreground="Blue" FontSize="30" Padding="0,-23,0,0" Tapped="More_Tapped">
                         <FlyoutBase.AttachedFlyout>
                             <MenuFlyout>
                                 <MenuFlyoutItem Text="Default" Tapped="Default_Tapped"/>
@@ -77,10 +77,14 @@
                 </Grid>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <controls:PreviewRendererControl Grid.Row="0" DataContext="{Binding Story, Mode=TwoWay}" Tapped="PreviewRendererControl_Tapped" ColumnsCount="1" />
+                <Button x:Name="FullScreenPreview"
+                        Content="Full Screen"
+                        Grid.Row="0" Click="FullScreenPreview_Click"/>
+                <controls:PreviewRendererControl Grid.Row="1" DataContext="{Binding Story, Mode=TwoWay}" Tapped="PreviewRendererControl_Tapped" ColumnsCount="1" />
                 </Grid>
             </Grid>
         <ScrollViewer Grid.Row="2" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible">
