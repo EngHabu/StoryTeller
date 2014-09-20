@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StoryTeller.DataModel.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,9 +20,18 @@ namespace StoryTeller.Controls
 {
     public sealed partial class TagsList : UserControl
     {
+        private SolidColorBrush _tagBackground;
         public TagsList()
         {
             this.InitializeComponent();
+        }
+
+        public SceneTag SelectedTag
+        {
+            get
+            {
+                return tagsList.SelectedItem as SceneTag;
+            }
         }
     }
 }

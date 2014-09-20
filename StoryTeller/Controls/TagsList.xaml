@@ -11,7 +11,7 @@
     Height="30">
 
     <ScrollViewer VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden">
-    <ListBox Background="Transparent" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource ResourceKey=ListBoxItemStyle}" Margin="0,0,0,0" Padding="0,0,0,0" BorderThickness="0">
+    <ListBox x:Name="tagsList" Background="Transparent" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource ResourceKey=ListBoxItemStyle}" Margin="0,0,0,0" Padding="0,0,0,0" BorderThickness="0">
         <ListBox.Style>
             <StaticResource ResourceKey="ListBoxStyle"/>
         </ListBox.Style>

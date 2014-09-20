@@ -19,6 +19,7 @@ namespace StoryTeller.ViewModel
         private StoryBuilder _builder = new StoryBuilder();
         private StoryLineViewModel _currentStoryline;
         private ObservableCollection<StoryLineViewModel> _storyLines;
+        private ObservableCollection<SceneTag> _favorites;
 
         public event ScenePickerRequest PossibleScenePickRequest;
 
@@ -26,6 +27,18 @@ namespace StoryTeller.ViewModel
         {
             get { return _pageHeight; }
             set { _pageHeight = value; }
+        }
+
+        public ObservableCollection<SceneTag> FavoriteTags 
+        {
+            get
+            {
+                if (_favorites == null)
+                {
+                    _favorites = new ObservableCollection<SceneTag>();
+                }
+                return _favorites;
+            }
         }
 
         public double PageWidth
@@ -281,7 +294,7 @@ namespace StoryTeller.ViewModel
             return -1;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;        
         private void OnPropertyChanged(string propertyChanged)
         {
             if (null != PropertyChanged)

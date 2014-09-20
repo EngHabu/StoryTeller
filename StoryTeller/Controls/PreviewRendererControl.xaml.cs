@@ -107,5 +107,16 @@ namespace StoryTeller.Controls
             Rect rect = new Rect(0.0, 0.0, container.ActualWidth, container.ActualHeight);
             return rect.Contains(new Point(bounds.Left, bounds.Top)) || rect.Contains(new Point(bounds.Right, bounds.Bottom));
         }
+
+        private void tagsList_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {            
+            SceneTag selectedTag = tagsList.SelectedTag;
+
+            if (selectedTag != null)
+            {
+                StoryViewModel storyModel = DataContext as StoryViewModel;
+                storyModel.FavoriteTags.Add(new SceneTag(selectedTag.Name, selectedTag.Content));
+            }
+        }
     }
 }
