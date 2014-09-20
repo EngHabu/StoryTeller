@@ -8,7 +8,7 @@ namespace StoryTeller.ViewModel
     public class SceneViewModelPad : SceneViewModel
     {
         public SceneViewModelPad()
-            : base(null)
+            : base(new DummyScene())
         {
         }
     }
