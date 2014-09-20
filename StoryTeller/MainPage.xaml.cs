@@ -19,6 +19,7 @@ using Windows.Storage.Pickers;
 using Windows.Storage;
 using StoryTeller.Controls;
 using StoryTeller.ViewModel;
+using StoryTeller.Pages;
 
 // The Grouped Items Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234231
 
@@ -226,6 +227,13 @@ namespace StoryTeller
             FlyoutBase flyout = MenuFlyout.GetAttachedFlyout(uiElement);
             flyout.Placement = FlyoutPlacementMode.Bottom;
             flyout.ShowAt(uiElement);
+        }
+
+        private void FullScreenPreview_Click(object sender, RoutedEventArgs e)
+        {
+            string guid = Guid.NewGuid().ToString();
+            ViewModelCache.Local.Put(guid, projectViewModel.Story);
+            this.Frame.Navigate(typeof(StoryViewer), guid);
         }
     }
 }

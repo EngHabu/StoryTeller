@@ -42,10 +42,10 @@
                         AutomationProperties.Name="Back"
                         AutomationProperties.AutomationId="BackButton"
                         AutomationProperties.ItemType="Navigation Button"/>
-            <TextBlock x:Name="pageTitle" Text="{Binding Story.Title}" Grid.Column="0"  Grid.ColumnSpan="2"
+            <!--<TextBlock x:Name="pageTitle" Text="{Binding Story.Title}" Grid.Column="0"  Grid.ColumnSpan="2"
                         IsHitTestVisible="false" TextWrapping="NoWrap" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
-                       Margin="0,0,30,30" FontStretch="Expanded"/>
+                       Margin="0,0,30,30" FontStretch="Expanded"/>-->
         </Grid>
-        <controls:PreviewRendererControl Grid.Row="1" DataContext="{Binding}" />
+        <controls:PreviewRendererControl Grid.Row="1" DataContext="{Binding}"  ColumnsCount="2" />
     </Grid>
 </Page>

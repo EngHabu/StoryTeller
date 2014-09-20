@@ -27,7 +27,6 @@ namespace StoryTeller.Pages
     /// </summary>
     public sealed partial class StoryViewer : Page
     {
-
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
@@ -38,7 +37,6 @@ namespace StoryTeller.Pages
             get { return _viewModel; }
             set { _viewModel = value; }
         }
-
 
         /// <summary>
         /// This can be changed to a strongly typed view model.
@@ -60,7 +58,7 @@ namespace StoryTeller.Pages
 
         public StoryViewer()
         {
-            ViewModel = new StoryViewModel(ProjectDataSource.Project.Story);
+            //ViewModel = new StoryViewModel(ProjectDataSource.Project.Story);
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
@@ -88,6 +86,8 @@ namespace StoryTeller.Pages
             //Stream stream = await storageFile.OpenStreamForWriteAsync();
             //s.WriteObject(stream, project);
             //stream.Flush();
+            string key = e.NavigationParameter.ToString();
+            DataContext = ViewModelCache.Local.Retrieve(key);
         }
 
         /// <summary>

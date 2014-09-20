@@ -32,60 +32,64 @@
         * Row 1 contains the rest of the page layout
     -->
 
-        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <Grid.ChildrenTransitions>
-                <TransitionCollection>
-                    <EntranceThemeTransition/>
-                </TransitionCollection>
-            </Grid.ChildrenTransitions>
-            <Grid.RowDefinitions>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        <Grid.RowDefinitions>
             <RowDefinition Height="20" />
             <RowDefinition Height="3*"/>
-                <RowDefinition Height="2*"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="70"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Grid.Row="0" Orientation="Horizontal">
-                        <Button Content="+" Click="ButtonLoad_Click" Background="Transparent" Foreground="Blue" FontSize="30" Padding="0,-10,0,0"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" Orientation="Horizontal">
+                    <Button Content="+" Click="ButtonLoad_Click" Background="Transparent" Foreground="Blue" FontSize="30" Padding="0,-10,0,0"/>
                     <Button Content="..." Background="Transparent" Foreground="Blue" FontSize="30" Padding="0,-23,0,0" Tapped="More_Tapped">
                         <FlyoutBase.AttachedFlyout>
                             <MenuFlyout>
                                 <MenuFlyoutItem Text="Default" Tapped="Default_Tapped"/>
                                 <MenuFlyoutItem Text="Reload" Tapped="Reload_Tapped"/>
                                 <MenuFlyoutItem Text="Clear" Tapped="Clear_Button_Tapped"/>
-                                
+
                             </MenuFlyout>
                         </FlyoutBase.AttachedFlyout>
-                    </Button>                    
-                    </StackPanel>
-                    <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,1,0,-1" ItemsSource="{Binding Library.Items}" CanDragItems="True">
-                        <GridView.ItemTemplate>
-                            <DataTemplate>
-                                <controls:LibraryItemRendererControl>
-                                </controls:LibraryItemRendererControl>
-                            </DataTemplate>
-                        </GridView.ItemTemplate>
-                    </GridView>
-                </Grid>
-                <Grid Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <controls:PreviewRendererControl Grid.Row="0" DataContext="{Binding Story, Mode=TwoWay}" Tapped="PreviewRendererControl_Tapped" ColumnsCount="1" />
-                </Grid>
+                    </Button>
+                </StackPanel>
+                <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,1,0,-1" ItemsSource="{Binding Library.Items}" CanDragItems="True">
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <controls:LibraryItemRendererControl>
+                            </controls:LibraryItemRendererControl>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
             </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Button x:Name="FullScreenPreview"
+                        Content="Full Screen"
+                        Grid.Row="0" Click="FullScreenPreview_Click"/>
+                <controls:PreviewRendererControl Grid.Row="1" DataContext="{Binding Story, Mode=TwoWay}" Tapped="PreviewRendererControl_Tapped" ColumnsCount="1" />
+            </Grid>
+        </Grid>
         <ScrollViewer Grid.Row="2" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible">
             <controls:StoryLineRendererControl DataContext="{Binding Story}">
             </controls:StoryLineRendererControl>
         </ScrollViewer>
-    </Grid>                
+    </Grid>
 </Page>
