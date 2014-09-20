@@ -20,6 +20,14 @@ namespace StoryTeller.Converter
 {
     public sealed class StringToRtf : IValueConverter
     {
+        private const double InvisibleFontSize = 0.004;
+        private const double epsilon = 0.0001;
+
+        private static bool IsInisibleFontSize(double fontSize)
+        {
+            return Math.Abs(fontSize - InvisibleFontSize) < epsilon;
+        }
+
         public static string PlainTextToRtf(string plainText)
         {
             string escapedPlainText = plainText.Replace(@"\", @"\\").Replace("{", @"\{").Replace("}", @"\}");
@@ -39,16 +47,8 @@ namespace StoryTeller.Converter
         private static string ConvertLinksToXamlString(string plainText)
         {
             plainText = Regex.Replace(plainText, @"(\{(?<SceneId>[^}]*):(?<LinkText>[^}]*)\})",
-                @"<Hyperlink NavigateUri=""#$2""><Run Text=""$3""/></Hyperlink>");
+                @"<Hyperlink><Run Text=""#$2"" FontSize=""" + InvisibleFontSize + @"""/><Run Text=""$3""/></Hyperlink>");
             return plainText;
-        }
-
-        public static BlockCollection PlainTextToBlockCollection(string plainText)
-        {
-            string innerText = PlainTextToXaml(plainText);
-            return XamlReader.Load("<BlockCollection  xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>"
-                + innerText
-                + "</BlockCollection>") as BlockCollection;
         }
 
         public static IEnumerable<Block> PlainTextToBlocks(string plainText)
@@ -83,22 +83,50 @@ namespace StoryTeller.Converter
                 Paragraph paragraph = block as Paragraph;
                 if (null != paragraph)
                 {
-                    foreach (Inline inline in paragraph.Inlines)
-                    {
-                        Hyperlink link = inline as Hyperlink;
-                        if (null != link)
-                        {
-                            string linkId = link.NavigateUri.OriginalString.Substring(link.NavigateUri.OriginalString.LastIndexOf('/') + 1);
-                            link.NavigateUri = null;
-                            link.Click += (hyperlink, args) =>
-                            {
-                                clickAction(hyperlink, linkId);
-                            };
-                        }
-                    }
+                    FixHyperLinks(paragraph, clickAction);
                 }
             }
         }
+
+        private static void FixHyperLinks(Paragraph paragraph, Action<Hyperlink, string> clickAction)
+        {
+            if (null == paragraph)
+            {
+                throw new ArgumentNullException("paragraph");
+            }
+
+            foreach (Inline inline in paragraph.Inlines)
+            {
+                Hyperlink link = inline as Hyperlink;
+                if (null != link)
+                {
+                    string linkId = string.Empty;
+                    if (null != link.NavigateUri)
+                    {
+                        linkId = link.NavigateUri.OriginalString.Substring(link.NavigateUri.OriginalString.LastIndexOf('/') + 1);
+                        link.NavigateUri = null;
+                    }
+                    else
+                    {
+                        linkId = string.Empty;
+                        foreach (Inline linkInline in link.Inlines)
+                        {
+                            Run linkRun = linkInline as Run;
+                            if (IsInisibleFontSize(linkRun.FontSize))
+                            {
+                                linkId = linkRun.Text;
+                            }
+                        }
+                    }
+
+                    link.Click += (hyperlink, args) =>
+                    {
+                        clickAction(hyperlink, linkId);
+                    };
+                }
+            }
+        }
+
 
         static void link_Click(Hyperlink sender, string linkId)
         {
@@ -181,10 +209,106 @@ namespace StoryTeller.Converter
                             break;
 
                         case 2:
+                            TextPointer start = textbox.SelectionStart;
+                            TextPointer end = textbox.SelectionEnd;
+                            Run startRun = start.Parent as Run;
+                            Run endRun = end.Parent as Run;
+                            int startIndex = start.Offset - startRun.ElementStart.Offset;
+                            int endIndex = end.Offset - endRun.ElementStart.Offset;
+                            if (startRun == endRun)
+                            {
+                                IEnumerable<Inline> splitted = SplitRun(startRun, startIndex, endIndex);
+                                Paragraph p = startRun.ElementStart.Parent as Paragraph;
+                                int runIndex = p.Inlines.IndexOf(startRun);
+                                p.Inlines.RemoveAt(runIndex);
+                                foreach (Inline inline in splitted.Reverse())
+                                {
+                                    p.Inlines.Insert(runIndex, inline);
+                                }
+
+                                FixHyperLinks(p, link_Click);
+                                UpdateOriginalText(textbox);
+                            }
+
                             break;
                     }
                 }
             }
+        }
+
+        private static void UpdateOriginalText(RichTextBlock richTextBlock)
+        {
+            string plainText = ConvertRichTextBlocksToPlainText(richTextBlock.Blocks);
+            SceneViewModel sceneViewModel = richTextBlock.DataContext as SceneViewModel;
+            if (null != sceneViewModel)
+            {
+                sceneViewModel.CurrentScene.Content.Content = plainText;
+            }
+        }
+
+        private static string ConvertRichTextBlocksToPlainText(BlockCollection blockCollection)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (Block block in blockCollection)
+            {
+                Paragraph paragraph = block as Paragraph;
+                foreach (Inline inline in paragraph.Inlines)
+                {
+                    Run run = inline as Run;
+                    Hyperlink link = inline as Hyperlink;
+                    if (null != run)
+                    {
+                        sb.Append(run.Text);
+                    }
+                    else if (null != link)
+                    {
+                        string linkContents = string.Empty;
+                        string linkId = string.Empty;
+                        foreach (Inline linkInline in link.Inlines)
+                        {
+                            Run linkRun = linkInline as Run;
+                            if (IsInisibleFontSize(linkRun.FontSize))
+                            {
+                                linkId = linkRun.Text;
+                            }
+                            else
+                            {
+                                linkContents = linkRun.Text;
+                            }
+                        }
+
+                        sb.AppendFormat("{{{0}:{1}}}",
+                            linkId, linkContents);
+                    }
+                }
+
+                sb.AppendLine();
+            }
+
+            string result = sb.ToString();
+            return result;
+        }
+
+        private static IEnumerable<Inline> SplitRun(Run startRun, int startIndex, int endIndex)
+        {
+            string original = startRun.Text;
+            string before = original.Substring(0, startIndex - 1);
+            string mid = original.Substring(startIndex - 1, endIndex - startIndex);
+            // TODO: haytham: Will crash if endIndex is last character...
+            string after = original.Substring(endIndex - 1);
+            List<Inline> inlines = new List<Inline>();
+            inlines.Add(new Run { Text = before });
+            inlines.Add(CreateHyperlink(mid, Guid.NewGuid().ToString()));
+            inlines.Add(new Run { Text = after });
+            return inlines;
+        }
+
+        private static Hyperlink CreateHyperlink(string content, string navigateUri)
+        {
+            Hyperlink link = new Hyperlink();
+            link.Inlines.Add(new Run { Text = "#" + navigateUri, FontSize = InvisibleFontSize });
+            link.Inlines.Add(new Run { Text = content });
+            return link;
         }
 
         public object Convert(object value, Type targetType, object parameter, string language)
