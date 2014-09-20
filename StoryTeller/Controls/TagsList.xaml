@@ -10,19 +10,21 @@
     d:DesignWidth="400"
     Height="30">
 
-    <ListBox Background="Transparent" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource ResourceKey=ListBoxItemStyle}" Margin="0,0,0,0" Padding="0,0,0,0">
+    <ScrollViewer VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden">
+    <ListBox Background="Transparent" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource ResourceKey=ListBoxItemStyle}" Margin="0,0,0,0" Padding="0,0,0,0" BorderThickness="0">
         <ListBox.Style>
             <StaticResource ResourceKey="ListBoxStyle"/>
         </ListBox.Style>
         <ListBox.ItemsPanel>
             <ItemsPanelTemplate>
-                <StackPanel Orientation="Horizontal"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,0"/>
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <local:SingleTagRenderer></local:SingleTagRenderer>
+                <local:SingleTagRenderer Padding="0,0,0,0"></local:SingleTagRenderer>
             </DataTemplate>
-        </ListBox.ItemTemplate>
+        </ListBox.ItemTemplate>        
     </ListBox>
+    </ScrollViewer>
 </UserControl>

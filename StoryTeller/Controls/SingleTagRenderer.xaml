@@ -17,8 +17,8 @@
         </ResourceDictionary>
     </UserControl.Resources>
     
-    <Grid Width="Auto">
+    <Grid Width="Auto" Margin="0,0,0,0">
         <Rectangle RadiusX="10" RadiusY="10" Fill="LightGray" Stroke="LightGray" Width="Auto"/>
-        <TextBlock Text="{Binding Converter={StaticResource ResourceKey=SceneTagToString}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Lucida Sans" Width="Auto"/>
+        <TextBlock Text="{Binding Converter={StaticResource ResourceKey=SceneTagToString}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Lucida Sans" Width="Auto" Margin="5,0,5,0" Padding="0,0,0,0"/>
     </Grid>
 </UserControl>

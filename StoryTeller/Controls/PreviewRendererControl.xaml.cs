@@ -43,6 +43,7 @@ namespace StoryTeller.Controls
             object currentDataContext = PagesControl.DataContext;//.GetBindingExpression(ItemsControl.ItemsSourceProperty).
             PagesControl.DataContext = null;
             PagesControl.DataContext = currentDataContext;
+            tagsList.DataContext = (currentDataContext as StoryViewModel).ScenesViewModel.First().Tags;
         }
 
         void storyViewModel_PossibleScenePickRequest(object sender, ScenePickerRequestArgs args)
