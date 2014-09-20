@@ -81,5 +81,30 @@ namespace StoryTeller.Controls
         {
             TextBlock textBlock = sender as TextBlock;
         }
+
+        private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            ScrollViewer scrollViewer = sender as ScrollViewer;
+            foreach (FrameworkElement frameworkElement in PagesControl.Items)
+            {
+                if (IsUserVisible(frameworkElement, scrollViewer))
+                {
+                    SceneViewModel sceneModel = frameworkElement.DataContext as SceneViewModel;
+                    tagsList.DataContext = sceneModel.Tags;
+                    break;
+                }
+            }
+            
+            
+            ItemsPresenter itemsPresenter = scrollViewer.Content as ItemsPresenter;                        
+        }
+
+        private bool IsUserVisible(FrameworkElement element, FrameworkElement container)
+        {
+
+            Rect bounds = element.TransformToVisual(container).TransformBounds(new Rect(0.0, 0.0, element.ActualWidth, element.ActualHeight));
+            Rect rect = new Rect(0.0, 0.0, container.ActualWidth, container.ActualHeight);
+            return rect.Contains(new Point(bounds.Left, bounds.Top)) || rect.Contains(new Point(bounds.Right, bounds.Bottom));
+        }
     }
 }

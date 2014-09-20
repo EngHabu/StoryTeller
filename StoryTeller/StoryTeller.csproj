@@ -126,8 +126,14 @@
     <Compile Include="Controls\SingleStoryLineRendererControl.xaml.cs">
       <DependentUpon>SingleStoryLineRendererControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SingleTagRenderer.xaml.cs">
+      <DependentUpon>SingleTagRenderer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StoryLineRendererControl.xaml.cs">
       <DependentUpon>StoryLineRendererControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TagsList.xaml.cs">
+      <DependentUpon>TagsList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TagsListControl.xaml.cs">
       <DependentUpon>TagsListControl.xaml</DependentUpon>
@@ -210,7 +216,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\SingleTagRenderer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\StoryLineRendererControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TagsList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
