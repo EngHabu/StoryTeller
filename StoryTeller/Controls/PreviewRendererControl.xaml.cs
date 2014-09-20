@@ -3,6 +3,7 @@ using StoryTeller.DataModel.Model;
 using StoryTeller.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -43,7 +44,11 @@ namespace StoryTeller.Controls
             object currentDataContext = PagesControl.DataContext;//.GetBindingExpression(ItemsControl.ItemsSourceProperty).
             PagesControl.DataContext = null;
             PagesControl.DataContext = currentDataContext;
-            tagsList.DataContext = (currentDataContext as StoryViewModel).ScenesViewModel.First().Tags;
+            ObservableCollection<SceneViewModel> scenes = (currentDataContext as StoryViewModel).ScenesViewModel;
+            if(scenes.Count > 0)
+            {
+                tagsList.DataContext = scenes.First().Tags;
+            }
         }
 
         void storyViewModel_PossibleScenePickRequest(object sender, ScenePickerRequestArgs args)

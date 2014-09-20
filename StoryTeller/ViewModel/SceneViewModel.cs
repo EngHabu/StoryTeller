@@ -9,11 +9,13 @@ namespace StoryTeller.ViewModel
 {
     public delegate void SceneNavigateRequest(object sender, IScene scene);
     public delegate void ScenePickerRequest(object sender, ScenePickerRequestArgs args);
+    public delegate void SceneBonusChanged();
 
     public class SceneViewModel
     {
         public event SceneNavigateRequest NavigateRequest;
         public event ScenePickerRequest PickSceneRequest;
+        public event SceneBonusChanged BonusSceneChanged;
         private ObservableCollection<SceneTag> _tags;
 
         public IScene CurrentScene { get; set; }
@@ -39,7 +41,13 @@ namespace StoryTeller.ViewModel
             set
             {
                 CurrentScene.IsBonusScene = value;
+                BonusSceneChanged();
             }
+        }
+
+        private void NotifyBonusScenesChanged()
+        {
+            
         }
 
         public SceneViewModel(IScene currentScene)
