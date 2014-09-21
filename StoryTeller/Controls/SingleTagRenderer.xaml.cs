@@ -21,7 +21,19 @@ namespace StoryTeller.Controls
     {
         public SingleTagRenderer()
         {
-            this.InitializeComponent();
+            this.InitializeComponent();           
+        }
+
+        public Brush TagColor
+        {
+            get
+            {
+                return backgroundPanel.Fill;
+            }
+            set
+            {
+                backgroundPanel.Fill = value;
+            }
         }
     }
 }

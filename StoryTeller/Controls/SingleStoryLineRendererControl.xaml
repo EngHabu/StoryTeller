@@ -18,8 +18,8 @@
     </UserControl.Resources>
 
     <StackPanel Orientation="Horizontal">
-        <StackPanel Orientation="Horizontal" Tapped="selectStoryline_Tapped" Background="Transparent">
-            <StackPanel x:Name="selectStoryline" Tapped="selectStoryline_Tapped" Width="20" Background="Transparent"></StackPanel>
+        <StackPanel Orientation="Horizontal" Tapped="selectStoryline_Tapped" Background="Transparent">            
+            <Rectangle x:Name="selectStoryline" Tapped="selectStoryline_Tapped" Width="5" Fill="Transparent"></Rectangle>
             <Button x:Name="addStoryline" Content="+" FontSize="28" Padding="5,-7,5,5" Tapped="addStoryline_Click" Background="Transparent"></Button>
         </StackPanel>
         <ListBox x:Name="storylineListbox" ItemsSource="{Binding}" ScrollViewer.VerticalScrollBarVisibility="Hidden" DoubleTapped="ListBox_DoubleTapped" AllowDrop="True" Drop="storylineListbox_Drop" BorderBrush="Transparent" ItemContainerStyle="{StaticResource ResourceKey=ListBoxItemStyle}">            
@@ -28,13 +28,16 @@
         	</ListBox.Style>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Width="150" Text="{Binding CurrentScene.Content.Content, Converter={StaticResource ResourceKey=StringToSnippet}}" DoubleTapped="TextBlock_DoubleTapped">
+                    <Grid>
+                        <Rectangle Fill="White"></Rectangle>
+                        <TextBlock Width="150" Text="{Binding CurrentScene.Content.Content, Converter={StaticResource ResourceKey=StringToSnippet}}" DoubleTapped="TextBlock_DoubleTapped" Foreground="Black">
                         <FlyoutBase.AttachedFlyout>
                             <Flyout>
                                 <local:TagsEditorControl DataContext="{Binding}"></local:TagsEditorControl>
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>
-                    </TextBlock>
+                        </TextBlock>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>           
             <ListBox.ItemsPanel>

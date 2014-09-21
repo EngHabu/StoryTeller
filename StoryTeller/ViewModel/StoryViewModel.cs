@@ -183,7 +183,13 @@ namespace StoryTeller.ViewModel
             sceneViewModel.NavigateRequest += sceneViewModel_NavigateRequest;
             sceneViewModel.PickSceneRequest += sceneViewModel_PickSceneRequest;
             sceneViewModel.BonusSceneChanged += sceneViewModel_BonusSceneChanged;
+            sceneViewModel.SceneTagsChanged += sceneViewModel_SceneTagsChanged;
             return sceneViewModel;
+        }
+
+        void sceneViewModel_SceneTagsChanged(SceneViewModel sender)
+        {
+            OnPropertyChanged("Tags");
         }
 
         void sceneViewModel_BonusSceneChanged()

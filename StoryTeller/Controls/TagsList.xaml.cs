@@ -20,7 +20,6 @@ namespace StoryTeller.Controls
 {
     public sealed partial class TagsList : UserControl
     {
-        private SolidColorBrush _tagBackground;
         public TagsList()
         {
             this.InitializeComponent();
@@ -33,5 +32,7 @@ namespace StoryTeller.Controls
                 return tagsList.SelectedItem as SceneTag;
             }
         }
+
+        public Brush TagListColor { get; set; }
     }
 }

@@ -120,7 +120,7 @@
             </ItemsControl.ItemTemplate>-->
                 <ItemsControl.Template>
                     <ControlTemplate>
-                        <ScrollViewer HorizontalSnapPointsType="Mandatory" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" ViewChanged="ScrollViewer_ViewChanged">
+                        <ScrollViewer x:Name="pagesScroll" HorizontalSnapPointsType="Mandatory" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" ViewChanged="ScrollViewer_ViewChanged">
                             <ItemsPresenter />
                         </ScrollViewer>
                     </ControlTemplate>
