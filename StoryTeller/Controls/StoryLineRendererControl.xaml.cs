@@ -36,6 +36,5 @@ namespace StoryTeller.Controls
             StoryLineViewModel storylineModel = storylinePanel.SelectedItem as StoryLineViewModel;
             storylineModel.StoryModel.SelectStoryline(storylineModel);
         }
-
     }
 }

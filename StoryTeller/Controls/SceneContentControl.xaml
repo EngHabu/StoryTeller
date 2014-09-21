@@ -38,7 +38,7 @@ Her mother-->
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBlock Foreground="Gray" x:Name="contentHeader" Margin="-3,0,0,0" FontSize="32" Text="{Binding Converter={StaticResource ResourceKey=SceneContentHeader}}" VerticalAlignment="Bottom" FontFamily="Segoe UI Light" TextTrimming="CharacterEllipsis" />
+            <TextBlock Foreground="CornflowerBlue" Opacity="80" x:Name="contentHeader" Margin="-3,0,0,0" FontSize="32" Text="{Binding Converter={StaticResource ResourceKey=SceneContentHeader}}" VerticalAlignment="Bottom" FontFamily="Segoe UI Light" TextTrimming="CharacterEllipsis" />
             <!--Rhonda-->
         </Grid>
         <Rectangle Grid.Column="1" Fill="AliceBlue"/>

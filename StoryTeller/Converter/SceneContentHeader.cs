@@ -16,7 +16,7 @@ namespace StoryTeller.Converter
             string stringContent = sceneContent.Content;
             if (stringContent != null)
             {
-                return stringContent.Length > 10 ? stringContent.Substring(0, 10) : stringContent;
+                return stringContent.Length > 15 ? stringContent.Substring(0, 15) : stringContent;
             }
             return "";
         }
