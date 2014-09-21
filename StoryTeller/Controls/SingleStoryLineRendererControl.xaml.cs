@@ -45,12 +45,12 @@ namespace StoryTeller.Controls
             
         }
 
-        private void TextBlock_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        private void Scene_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            TextBlock textblock = sender as TextBlock;
-            FlyoutBase flyoutBase = Flyout.GetAttachedFlyout(textblock);
+            FrameworkElement sceneControl = sender as FrameworkElement;
+            FlyoutBase flyoutBase = Flyout.GetAttachedFlyout(sceneControl);
             flyoutBase.Placement = FlyoutPlacementMode.Top;
-            flyoutBase.ShowAt(textblock);
+            flyoutBase.ShowAt(sceneControl);
         }
 
         private void storylineListbox_Drop(object sender, DragEventArgs e)

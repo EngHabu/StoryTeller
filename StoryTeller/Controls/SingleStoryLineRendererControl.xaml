@@ -8,8 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="300"
-    d:DesignWidth="400"
-    Height="40">
+    d:DesignWidth="400">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -20,7 +19,7 @@
     <StackPanel Orientation="Horizontal">
         <StackPanel Orientation="Horizontal" Tapped="selectStoryline_Tapped" Background="Transparent">            
             <Rectangle x:Name="selectStoryline" Tapped="selectStoryline_Tapped" Width="5" Fill="Transparent"></Rectangle>
-            <Button x:Name="addStoryline" Content="+" FontSize="28" Padding="5,-7,5,5" Tapped="addStoryline_Click" Background="Transparent"></Button>
+            <Button x:Name="addStoryline" Content="+" FontSize="28" Padding="5,-7,5,5" Tapped="addStoryline_Click" Background="Transparent" VerticalAlignment="Top"></Button>
         </StackPanel>
         <ListBox x:Name="storylineListbox" ItemsSource="{Binding}" ScrollViewer.VerticalScrollBarVisibility="Hidden" DoubleTapped="ListBox_DoubleTapped" AllowDrop="True" Drop="storylineListbox_Drop" BorderBrush="Transparent" ItemContainerStyle="{StaticResource ResourceKey=ListBoxItemStyle}">            
         	<ListBox.Style>
@@ -29,14 +28,14 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
-                        <Rectangle Fill="White"></Rectangle>
-                        <TextBlock Width="150" Text="{Binding CurrentScene.Content.Content, Converter={StaticResource ResourceKey=StringToSnippet}}" DoubleTapped="TextBlock_DoubleTapped" Foreground="Black">
+                        <!--<TextBlock Width="150" Text="{Binding .Content, Converter={StaticResource ResourceKey=StringToSnippet}}" DoubleTapped="TextBlock_DoubleTapped" Foreground="Black">-->
+                        <local:SceneContentControl DataContext="{Binding}" DoubleTapped="Scene_DoubleTapped">
                         <FlyoutBase.AttachedFlyout>
                             <Flyout>
                                 <local:TagsEditorControl DataContext="{Binding}"></local:TagsEditorControl>
                             </Flyout>
                         </FlyoutBase.AttachedFlyout>
-                        </TextBlock>
+                        </local:SceneContentControl>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>           

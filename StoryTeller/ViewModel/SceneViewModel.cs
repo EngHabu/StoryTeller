@@ -12,7 +12,7 @@ namespace StoryTeller.ViewModel
     public delegate void SceneBonusChanged();
     public delegate void SceneTagsChanged(SceneViewModel sender);
 
-    public class SceneViewModel
+    public class SceneViewModel : ISceneContentHolder
     {
         public event SceneNavigateRequest NavigateRequest;
         public event ScenePickerRequest PickSceneRequest;
@@ -119,6 +119,35 @@ namespace StoryTeller.ViewModel
         internal void CreateLinkAt(Windows.UI.Xaml.Documents.TextPointer start, Windows.UI.Xaml.Documents.TextPointer end)
         {
             throw new NotImplementedException();
+        }
+
+        IList<SceneTag> ISceneContentHolder.Tags
+        {
+            get { return _tags; }
+        }
+
+        public SceneContentType Type
+        {
+            get
+            {
+                return CurrentScene.Content.Type;
+            }
+            set
+            {
+                CurrentScene.Content.Type = value;
+            }
+        }
+
+        public string Content
+        {
+            get
+            {
+                return CurrentScene.Content.Content;
+            }
+            set
+            {
+                CurrentScene.Content.Content = value;
+            }
         }
     }
 }

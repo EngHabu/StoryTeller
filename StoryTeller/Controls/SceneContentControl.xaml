@@ -1,0 +1,46 @@
+﻿<UserControl
+    x:Class="StoryTeller.Controls.SceneContentControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:StoryTeller.Controls"
+    xmlns:converter="using:StoryTeller.Converter"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="110"
+    d:DesignWidth="230"
+    Width="230" Height="110">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <converter:SceneContentHeader x:Key="SceneContentHeader" />
+            <converter:SceneContentSnippet x:Key="SceneContentSnippet" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="19*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Margin="5,5,0,0">
+            <!--      Rhonda, filled with excitement, hung up the phone. "Mother!" she called out, "I've been invited to Melissa's for dinner tonight. What should I wear?"
+Her mother-->
+            <TextBlock x:Name="contentSnippet" TextWrapping="Wrap" Foreground="LightGray" FontSize="14" FontFamily="Georgia" HorizontalAlignment="Stretch" Text="{Binding Converter={StaticResource ResourceKey=SceneContentSnippet}}">
+                
+            </TextBlock>
+            <Rectangle x:Name="gradient">
+                <Rectangle.Fill>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="White" Offset="1.0"/>
+                        <GradientStop Color="White" Offset="0.8"/>
+                        <GradientStop Color="Transparent" Offset="0.0"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <TextBlock Foreground="Gray" x:Name="contentHeader" Margin="-3,0,0,0" FontSize="32" Text="{Binding Converter={StaticResource ResourceKey=SceneContentHeader}}" VerticalAlignment="Bottom" FontFamily="Segoe UI Light" TextTrimming="CharacterEllipsis" />
+            <!--Rhonda-->
+        </Grid>
+        <Rectangle Grid.Column="1" Fill="AliceBlue"/>
+    </Grid>
+</UserControl>
