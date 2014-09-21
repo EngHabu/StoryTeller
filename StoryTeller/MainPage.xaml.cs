@@ -231,9 +231,6 @@ namespace StoryTeller
 
         private void FullScreenPreview_Click(object sender, RoutedEventArgs e)
         {
-            string guid = Guid.NewGuid().ToString();
-            ViewModelCache.Local.Put(guid, projectViewModel.Story);
-            this.Frame.Navigate(typeof(StoryViewer), guid);
         }
     }
 }

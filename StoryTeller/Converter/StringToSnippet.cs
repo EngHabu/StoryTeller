@@ -16,7 +16,7 @@ namespace StoryTeller.Converter
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             string content = ((string)value);
-            return content.Substring(0, content.Length > 10 ? 10 : content.Length) + "...";
+            return content == null ? "" : content.Substring(0, content.Length > 10 ? 10 : content.Length) + "...";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

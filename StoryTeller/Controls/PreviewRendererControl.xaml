@@ -82,6 +82,9 @@
         <TextBlock x:Name="pageTitle" Text="{Binding Story.Title}" Grid.Column="0"  Grid.ColumnSpan="2"
                         IsHitTestVisible="false" TextWrapping="NoWrap" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
                        Margin="0,0,30,30" FontStretch="Expanded" Grid.Row="0"/>
+        <Button x:Name="fullscreen_Button" Background="Transparent" HorizontalAlignment="Right" Grid.Row="0" Padding="0,0,0,0" Tapped="fullscreen_Button_Tapped">
+            <Image Source="/Assets/fullscreen-icon.jpg" Stretch="None"/>
+        </Button>
         <Border Background="White"
                 Grid.Row="1">
             <ItemsControl ItemsSource="{Binding Converter={StaticResource XamlToRichTextBlockCollection}, Mode=TwoWay}" x:Name="PagesControl">

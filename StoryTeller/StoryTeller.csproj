@@ -149,6 +149,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\DummyScene.cs" />
     <Compile Include="ViewModel\LibraryViewModel.cs" />
     <Compile Include="Pages\StoryViewer.xaml.cs">
       <DependentUpon>StoryViewer.xaml</DependentUpon>
@@ -179,6 +180,8 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <Content Include="Assets\fullscreen-icon.jpg" />
+    <Content Include="SmallLogo.scale-100.png" />
     <None Include="Common\ReadMe.txt" />
     <None Include="StoryTeller_TemporaryKey.pfx" />
     <Content Include="DataModel\SampleData.json" />

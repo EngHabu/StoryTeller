@@ -226,7 +226,7 @@ namespace StoryTeller.ViewModel
             StoryLineViewModel parent = targetStoryLine;
             while (null != (parent = parent.Parent))
             {
-                result.AddRange(parent.Reverse());
+                result.AddRange(ReverseAndFilter(parent));
             }
 
             result.Reverse();
