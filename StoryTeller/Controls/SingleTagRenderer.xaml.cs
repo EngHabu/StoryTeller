@@ -19,21 +19,24 @@ namespace StoryTeller.Controls
 {
     public sealed partial class SingleTagRenderer : UserControl
     {
+        public Brush TagColor
+        {
+            get { return (Brush)GetValue(TagColorProperty); }
+            set
+            {
+                SetValue(TagColorProperty, value);
+                backgroundPanel.Fill = value;
+            }
+        }
+
+        // Using a DependencyProperty as the backing store for TagColor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TagColorProperty =
+            DependencyProperty.Register("TagColor", typeof(Brush), typeof(SingleTagRenderer), new PropertyMetadata(0));
+
+
         public SingleTagRenderer()
         {
             this.InitializeComponent();           
-        }
-
-        public Brush TagColor
-        {
-            get
-            {
-                return backgroundPanel.Fill;
-            }
-            set
-            {
-                backgroundPanel.Fill = value;
-            }
         }
     }
 }
