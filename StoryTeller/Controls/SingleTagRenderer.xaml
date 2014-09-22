@@ -10,7 +10,8 @@
     d:DesignHeight="300"
     d:DesignWidth="300"
     Height="20"
-    Width="Auto">
+    Width="Auto"
+    x:Name="MyControl">
     <UserControl.Resources>
         <ResourceDictionary>
             <converter:SceneTagToString x:Key="SceneTagToString" />
@@ -18,7 +19,8 @@
     </UserControl.Resources>
     
     <Grid Width="Auto" Margin="0,0,0,0">
-        <Rectangle RadiusX="10" RadiusY="10"  Width="Auto" x:Name="backgroundPanel"/>
-        <TextBlock Text="{Binding Converter={StaticResource ResourceKey=SceneTagToString}}" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Lucida Sans" Width="Auto" Margin="5,0,5,0" Padding="0,0,0,0" Foreground="White"/>
+        <Rectangle RadiusX="10" RadiusY="10"  Width="Auto" x:Name="backgroundPanel" Fill="{Binding ElementName=MyControl, Path=TagColor}"/>
+        <TextBlock Text="{Binding Converter={StaticResource ResourceKey=SceneTagToString}}" VerticalAlignment="Center" 
+                   HorizontalAlignment="Center" FontFamily="Lucida Sans" Width="Auto" Margin="5,0,5,0" Padding="0,0,0,0" Foreground="White"/>
     </Grid>
 </UserControl>

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,6 +26,16 @@ namespace StoryTeller.Controls
             this.InitializeComponent();
         }
 
+        public Brush TagColor
+        {
+            get { return (Brush)GetValue(TagColorProperty); }
+            set { SetValue(TagColorProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for TagColor.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TagColorProperty =
+            DependencyProperty.Register("TagColor", typeof(Brush), typeof(TagsList), new PropertyMetadata(new SolidColorBrush(Colors.LightGray)));
+
         public SceneTag SelectedTag
         {
             get
@@ -32,7 +43,5 @@ namespace StoryTeller.Controls
                 return tagsList.SelectedItem as SceneTag;
             }
         }
-
-        public Brush TagListColor { get; set; }
     }
 }

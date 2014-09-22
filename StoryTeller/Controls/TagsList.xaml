@@ -23,7 +23,7 @@
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <local:SingleTagRenderer Padding="0,0,0,0" Margin="0,0,0,0" TagColor="LightGray"></local:SingleTagRenderer>
+                    <local:SingleTagRenderer Padding="0,0,0,0" Margin="0,0,0,0" TagColor="{Binding ElementName=tagsLister, Path=TagColor}"></local:SingleTagRenderer>
             </DataTemplate>
         </ListBox.ItemTemplate>        
     </ListBox>
