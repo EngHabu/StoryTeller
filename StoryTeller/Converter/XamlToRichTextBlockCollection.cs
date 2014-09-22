@@ -53,11 +53,12 @@ namespace StoryTeller.Converter
                 string stringContent = scene.Content.Content;
                 RichTextBlock mainBlock = new StringToRtf().Convert(stringContent, null, null, null) as RichTextBlock;
                 mainBlock.Width = width;
-                mainBlock.Height = height;
+                mainBlock.Height = height - 20;
                 mainBlock.DataContext = sceneViewModel;
                 mainBlock.Padding = new Thickness(20);
                 mainBlock.Foreground = new SolidColorBrush(Colors.Black);
-                mainBlock.Measure(new Windows.Foundation.Size(width, height));
+                mainBlock.Measure(new Windows.Foundation.Size(width - mainBlock.Padding.Bottom - mainBlock.Padding.Top,
+                                                              height - mainBlock.Padding.Right - mainBlock.Padding.Left));
                 blocks.Add(mainBlock);
 
                 if (mainBlock.HasOverflowContent)
@@ -71,7 +72,8 @@ namespace StoryTeller.Converter
                     overflow.DataContext = sceneViewModel;
                     mainBlock.OverflowContentTarget = overflow;
                     overflow.Padding = new Thickness(20);
-                    overflow.Measure(new Windows.Foundation.Size(width, height));
+                    overflow.Measure(new Windows.Foundation.Size(width - overflow.Padding.Bottom - overflow.Padding.Top
+                                                            , height - overflow.Padding.Right - overflow.Padding.Left));
                     blocks.Add(overflow);
                     while (overflow.HasOverflowContent)
                     {
@@ -84,7 +86,8 @@ namespace StoryTeller.Converter
                         nextOverflow.DataContext = sceneViewModel;
                         overflow.OverflowContentTarget = nextOverflow;
                         nextOverflow.Padding = new Thickness(20);
-                        nextOverflow.Measure(new Windows.Foundation.Size(width, height));
+                        nextOverflow.Measure(new Windows.Foundation.Size(width - nextOverflow.Padding.Bottom - nextOverflow.Padding.Top
+                                                            , height - nextOverflow.Padding.Right - nextOverflow.Padding.Left));
                         blocks.Add(nextOverflow);
                         overflow = nextOverflow;
                     }
