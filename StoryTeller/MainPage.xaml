@@ -32,22 +32,23 @@
         * Row 1 contains the rest of the page layout
     -->
 
-        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <Grid.ChildrenTransitions>
-                <TransitionCollection>
-                    <EntranceThemeTransition/>
-                </TransitionCollection>
-            </Grid.ChildrenTransitions>
-            <Grid.RowDefinitions>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+        <Grid.RowDefinitions>
             <RowDefinition Height="20" />
             <RowDefinition Height="3*"/>
-                <RowDefinition Height="2*"/>
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1" />
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Margin="30,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="70"/>
@@ -66,31 +67,38 @@
                         </FlyoutBase.AttachedFlyout>
                     </Button>
                 </StackPanel>
-                
+
                 <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,3,0,-3" ItemsSource="{Binding Library.Items}">
-                        <GridView.ItemsPanel>
-                            <ItemsPanelTemplate>
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
                             <WrapGrid Orientation="Vertical"/>
                         </ItemsPanelTemplate>
-                        </GridView.ItemsPanel>
-                        <GridView.ItemTemplate>
+                    </GridView.ItemsPanel>
+                    <GridView.ItemTemplate>
                         <DataTemplate>
                             <controls:SceneContentControl DataContext="{Binding}">
                             </controls:SceneContentControl>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>
-                
-            </Grid>
-            <!--<Button x:Name="FullScreenPreview"
-                        Content="Full Screen"
-                        Grid.Row="0" Click="FullScreenPreview_Click"/>-->
-                <controls:PreviewRendererControl Grid.Column="1" DataContext="{Binding Story, Mode=TwoWay}" Tapped="PreviewRendererControl_Tapped" ColumnsCount="1" />
 
             </Grid>
-        <ScrollViewer Grid.Row="2" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible">
-            <controls:StoryLineRendererControl DataContext="{Binding Story}">
-            </controls:StoryLineRendererControl>
-        </ScrollViewer>
-    </Grid>                
+            <Rectangle Grid.Column="1">
+                <Rectangle.Fill>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Offset="0.0" Color="Transparent"/>
+                        <GradientStop Offset="0.05" Color="Gray"/>
+                        <GradientStop Offset="0.95" Color="Gray"/>
+                        <GradientStop Offset="1.0" Color="Transparent"/>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+            <controls:PreviewRendererControl Grid.Column="2" DataContext="{Binding Story, Mode=TwoWay}" Tapped="PreviewRendererControl_Tapped" ColumnsCount="1" />
+
+        </Grid>
+
+        <controls:StoryLineRendererControl DataContext="{Binding Story}" Grid.Row="2">
+        </controls:StoryLineRendererControl>
+
+    </Grid>
 </Page>
