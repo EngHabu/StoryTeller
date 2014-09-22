@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:StoryTeller.Controls"
     xmlns:converter="using:StoryTeller.Converter"
+    xmlns:thirdparty="using:WinRTXamlToolkit.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -16,10 +17,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        
-        <TextBlock Grid.Row="0" Text="Tag" VerticalAlignment="Center" Foreground="LightGray"/>
-        <TextBox Grid.Row="0" x:Name="tagValue" FontSize="30" KeyUp="TextBox_KeyUp" TextChanged="tagValue_TextChanged" BorderThickness="0" Background="Transparent"/>
+        </Grid.RowDefinitions>        
+        <thirdparty:WatermarkTextBox WatermarkText="Tag" Grid.Row="0" x:Name="tagValue" FontSize="30" KeyUp="TextBox_KeyUp" TextChanged="tagValue_TextChanged" BorderThickness="0" Background="Transparent"/>
         
         <local:TagsList Grid.Row="1" DataContext="{Binding Tags}"/>
         <CheckBox Content="Bonus" Grid.Row="2" IsChecked="{Binding IsBonus, Mode=TwoWay}"/>

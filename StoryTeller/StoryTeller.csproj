@@ -266,6 +266,10 @@
       <Project>{4e4c1a71-b03a-4469-8ef8-4445155136e0}</Project>
       <Name>StoryTeller.DataModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ThirdParty\WinRTXamlToolkit\WinRTXamlToolkit.csproj">
+      <Project>{7b7966be-213f-4b84-867d-2a0ccf61245f}</Project>
+      <Name>WinRTXamlToolkit</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">
