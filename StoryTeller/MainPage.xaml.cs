@@ -246,5 +246,13 @@ namespace StoryTeller
         private void FullScreenPreview_Click(object sender, RoutedEventArgs e)
         {
         }
+
+        private void titleTextbox_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                projectViewModel.Story.Title = titleTextbox.Text;
+            }
+        }
     }
 }

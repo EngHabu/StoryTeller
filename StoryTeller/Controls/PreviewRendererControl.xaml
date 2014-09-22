@@ -79,9 +79,9 @@
         <!--<ScrollViewer HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible" VerticalScrollMode="Disabled" 
                       HorizontalSnapPointsType="Mandatory">
         </ScrollViewer>-->
-        <TextBlock x:Name="pageTitle" Text="{Binding Story.Title}" Grid.Column="0"  Grid.ColumnSpan="2"
-                        IsHitTestVisible="false" TextWrapping="NoWrap" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
-                       Margin="0,0,30,30" FontStretch="Expanded" Grid.Row="0"/>
+        <TextBlock x:Name="pageTitle" Text="{Binding Title}" Grid.Column="0"  Grid.ColumnSpan="2"
+                        IsHitTestVisible="false" TextWrapping="NoWrap" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
+                       Margin="0,0,30,30" FontStretch="Expanded" Grid.Row="0" FontFamily="Georgia"/>
         <Button x:Name="fullscreen_Button" Background="Transparent" HorizontalAlignment="Right" Grid.Row="0" Padding="0,0,0,0" Tapped="fullscreen_Button_Tapped">
             <Image Source="/Assets/fullscreen-icon.jpg" Stretch="None"/>
         </Button>

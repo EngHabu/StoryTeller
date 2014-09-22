@@ -42,6 +42,19 @@ namespace StoryTeller.ViewModel
             }
         }
 
+        public string Title
+        {
+            get
+            {
+                return _story.Title;
+            }
+            set
+            {
+                _story.Title = value;
+                OnPropertyChanged("Title");
+            }
+        }
+
         void _favorites_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             RefreshScenes(CurrentStoryline);
