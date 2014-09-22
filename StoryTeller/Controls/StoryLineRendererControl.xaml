@@ -10,16 +10,32 @@
     d:DesignWidth="400">
     
     <Grid>
-        <ListBox x:Name="storylinePanel" ItemsSource="{Binding StoryLines}" ItemContainerStyle="{StaticResource ResourceKey=ListBoxItemStyle}" SelectionChanged="storylinePanel_SelectionChanged">
-            <ListBox.Style>
-        		<StaticResource ResourceKey="ListBoxStyle"/>
-        	</ListBox.Style>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <local:SingleStoryLineRendererControl/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Rectangle Grid.Row="0">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Offset="0.0" Color="Transparent"/>
+                    <GradientStop Offset="0.05" Color="Gray"/>
+                    <GradientStop Offset="0.95" Color="Gray"/>
+                    <GradientStop Offset="1.0" Color="Transparent"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <ScrollViewer Grid.Row="1" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Visible">
+            <ListBox x:Name="storylinePanel" ItemsSource="{Binding StoryLines}" ItemContainerStyle="{StaticResource ResourceKey=ListBoxItemStyle}" SelectionChanged="storylinePanel_SelectionChanged" BorderThickness="0">
+                <ListBox.Style>
+                    <StaticResource ResourceKey="ListBoxStyle"/>
+                </ListBox.Style>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <local:SingleStoryLineRendererControl/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
 
-        </ListBox>
+            </ListBox>
+        </ScrollViewer>
     </Grid>
 </UserControl>
