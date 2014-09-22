@@ -40,7 +40,7 @@ namespace StoryTeller.Converter
         public static string PlainTextToXaml(string plainText)
         {
             return @"<Paragraph TextIndent=""20"">"
-                + ConvertLinksToXamlString(plainText).Replace(Environment.NewLine, @"</Paragraph><Paragraph TextIndent=""20"">")
+                + ConvertLinksToXamlString(plainText).Replace(Environment.NewLine, @"</Paragraph><Paragraph></Paragraph><Paragraph TextIndent=""20"">")
                 + "</Paragraph>";
         }
 
@@ -68,7 +68,7 @@ namespace StoryTeller.Converter
         public static RichTextBlock PlainTextToRichTextBlock(string plainText)
         {
             RichTextBlock blocksObj = XamlReader.Load(
-                @"<RichTextBlock TextWrapping=""Wrap"" Padding=""20"" Width=""750"" Height=""700"" CharacterSpacing=""100"" LineHeight=""20"" MaxLines=""31"" FontSize=""14"" FontFamily=""Times New Roman"" xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>"
+                @"<RichTextBlock TextWrapping=""Wrap"" Padding=""20"" Width=""750"" Height=""700"" CharacterSpacing=""100"" LineHeight=""20"" MaxLines=""31"" FontSize=""20"" FontFamily=""Times New Roman"" xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>"
                 + PlainTextToXaml(plainText)
                 + "</RichTextBlock>") as RichTextBlock;
             blocksObj.ContextMenuOpening += mainBlock_ContextMenuOpening;

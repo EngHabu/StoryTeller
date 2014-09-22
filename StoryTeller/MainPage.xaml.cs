@@ -110,10 +110,16 @@ namespace StoryTeller
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
             //var sampleDataGroups = await SampleDataSource.GetGroupsAsync();
             //this.DefaultViewModel["Groups"] = sampleDataGroups;
+            DataContext = null;
             DataContext = ViewModelCache.Local.Retrieve(ViewModelCacheKey);
             if (null == DataContext)
             {
                 SetDefaultContext();
+            }
+            else
+            {
+                projectViewModel = DataContext as ProjectViewModel;
+                libraryViewModel = projectViewModel.Library;
             }
         }
 
