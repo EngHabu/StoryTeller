@@ -134,7 +134,7 @@ namespace StoryTeller.Controls
         }
 
         void TextBlock_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
-        {            
+        {
             TextBlock textBlock = sender as TextBlock;
         }
 

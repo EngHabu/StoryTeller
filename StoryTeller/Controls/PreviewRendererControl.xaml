@@ -190,7 +190,7 @@
             </ContentControl>
         </RichTextBlock>
         <RichTextBlockOverflow Grid.Column="1" x:Name="SecondaryTextBlock"></RichTextBlockOverflow>-->
-        <local:TagsList Grid.Row="2" x:Name="tagsList" DoubleTapped="tagsList_DoubleTapped"/>
-        <local:TagsList Grid.Row="3" x:Name="favoriteTagsList" DataContext="{Binding FavoriteTags}"/>
+        <local:TagsList Grid.Row="2" x:Name="tagsList" DoubleTapped="tagsList_DoubleTapped" TagColor="LightGray"/>
+        <local:TagsList Grid.Row="3" x:Name="favoriteTagsList" DataContext="{Binding FavoriteTags}" TagColor="CornflowerBlue"/>
     </Grid>
 </UserControl>
