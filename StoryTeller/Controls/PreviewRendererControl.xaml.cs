@@ -151,7 +151,10 @@ namespace StoryTeller.Controls
                 if (IsUserVisible(frameworkElement, PagesControl))
                 {
                     SceneViewModel sceneModel = frameworkElement.DataContext as SceneViewModel;
-                    AddUniqueTags(sceneModel, availableTags);
+                    if (null != sceneModel)
+                    {
+                        AddUniqueTags(sceneModel, availableTags);
+                    }
                 }
             }
             tagsList.DataContext = availableTags;

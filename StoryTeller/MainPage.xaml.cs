@@ -30,6 +30,7 @@ namespace StoryTeller
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private const string ViewModelCacheKey = "MainPageViewModel";
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private LibraryViewModel libraryViewModel = new LibraryViewModel();
@@ -57,17 +58,28 @@ namespace StoryTeller
             this.InitializeComponent();
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
+            this.navigationHelper.SaveState += navigationHelper_SaveState;
+
+            SetDefaultContext();
+
+            libraryPanel.DoubleTapped += libraryPanel_DoubleTapped;
+        }
+
+        private void SetDefaultContext()
+        {
             libraryViewModel.Library = new Library();
             projectViewModel.Library = libraryViewModel;
-
             Story story = new Story();
             StoryViewModel storyModel = new StoryViewModel(story);
             projectViewModel.Story = storyModel;
             projectViewModel.StoryRendererViewModel = new StoryRendererViewModel(story);
 
             this.DataContext = projectViewModel;
+        }
 
-            libraryPanel.DoubleTapped += libraryPanel_DoubleTapped;
+        void navigationHelper_SaveState(object sender, SaveStateEventArgs e)
+        {
+            ViewModelCache.Local.Put(ViewModelCacheKey, DataContext);
         }
 
         void storylinePanel_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -96,8 +108,13 @@ namespace StoryTeller
         private async void navigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
             // TODO: Create an appropriate data model for your problem domain to replace the sample data
-            var sampleDataGroups = await SampleDataSource.GetGroupsAsync();
-            this.DefaultViewModel["Groups"] = sampleDataGroups;
+            //var sampleDataGroups = await SampleDataSource.GetGroupsAsync();
+            //this.DefaultViewModel["Groups"] = sampleDataGroups;
+            DataContext = ViewModelCache.Local.Retrieve(ViewModelCacheKey);
+            if (null == DataContext)
+            {
+                SetDefaultContext();
+            }
         }
 
         /// <summary>
@@ -114,9 +131,6 @@ namespace StoryTeller
             // by passing required information as a navigation parameter
             this.Frame.Navigate(typeof(MainPage), ((SampleDataGroup)group).UniqueId);
         }
-
-
-
 
         #region NavigationHelper registration
 
