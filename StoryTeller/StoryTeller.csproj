@@ -117,6 +117,9 @@
     <Compile Include="Controls\LibraryItemRendererControl.xaml.cs">
       <DependentUpon>LibraryItemRendererControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PagesControl.xaml.cs">
+      <DependentUpon>PagesControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PreviewRendererControl.xaml.cs">
       <DependentUpon>PreviewRendererControl.xaml</DependentUpon>
     </Compile>
@@ -181,7 +184,6 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <Content Include="Assets\fullscreen-icon.jpg" />
-    <Content Include="SmallLogo.scale-100.png" />
     <None Include="Common\ReadMe.txt" />
     <None Include="StoryTeller_TemporaryKey.pfx" />
     <Content Include="DataModel\SampleData.json" />
@@ -205,6 +207,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LibraryItemRendererControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PagesControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

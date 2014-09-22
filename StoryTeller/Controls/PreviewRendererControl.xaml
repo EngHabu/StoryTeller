@@ -18,12 +18,12 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="10*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -86,8 +86,9 @@
             <Image Source="/Assets/fullscreen-icon.jpg" Stretch="None"/>
         </Button>
         <Border Background="White"
+                x:Name="PagesBorder"
                 Grid.Row="1">
-            <ItemsControl ItemsSource="{Binding Converter={StaticResource XamlToRichTextBlockCollection}, Mode=TwoWay}" x:Name="PagesControl">
+            <local:PagesControl ItemsSource="{Binding Converter={StaticResource XamlToRichTextBlockCollection}, Mode=TwoWay}" x:Name="PagesControl">
                 <FlyoutBase.AttachedFlyout>
                     <Flyout>
                         <local:ScenePickerControl></local:ScenePickerControl>
@@ -125,7 +126,7 @@
                         </ScrollViewer>
                     </ControlTemplate>
                 </ItemsControl.Template>
-            </ItemsControl>
+            </local:PagesControl>
         </Border>
         <!--</ScrollViewer>-->
         <!--<FlipView

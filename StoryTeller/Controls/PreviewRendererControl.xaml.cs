@@ -31,7 +31,11 @@ namespace StoryTeller.Controls
         public int ColumnsCount
         {
             get { return (int)GetValue(ColumnsCountProperty); }
-            set { SetValue(ColumnsCountProperty, value); }
+            set
+            {
+                SetValue(ColumnsCountProperty, value);
+                PagesControl.ColumnsCount = value;
+            }
         }
 
         // Using a DependencyProperty as the backing store for ColumnsCount.  This enables animation, styling, binding, etc...
@@ -51,14 +55,14 @@ namespace StoryTeller.Controls
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            _pageWidth = availableSize.Width / ColumnsCount;
-            StoryViewModel model = DataContext as StoryViewModel;
-            if (null != model && !AreEqual(_pageWidth, model.PageWidth))
-            {
-                model.PageWidth = _pageWidth;
-                model.PageHeight = _pageHeight;
-                RebindView();
-            }
+            //_pageWidth = availableSize.Width / ColumnsCount;
+            //StoryViewModel model = DataContext as StoryViewModel;
+            //if (null != model && !AreEqual(_pageWidth, model.PageWidth))
+            //{
+            //    model.PageWidth = _pageWidth;
+            //    model.PageHeight = _pageHeight = availableSize.Height;
+            //    RebindView();
+            //}
 
             return base.MeasureOverride(availableSize);
         }
