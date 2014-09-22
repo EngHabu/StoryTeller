@@ -123,6 +123,9 @@
     <Compile Include="Controls\PreviewRendererControl.xaml.cs">
       <DependentUpon>PreviewRendererControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SceneContentControl.xaml.cs">
+      <DependentUpon>SceneContentControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ScenePickerControl.xaml.cs">
       <DependentUpon>ScenePickerControl.xaml</DependentUpon>
     </Compile>
@@ -144,6 +147,8 @@
     <Compile Include="Controls\TagsEditorControl.xaml.cs">
       <DependentUpon>TagsEditorControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\SceneContentHeader.cs" />
+    <Compile Include="Converter\SceneContentSnippet.cs" />
     <Compile Include="Converter\SceneTagToString.cs" />
     <Compile Include="Converter\StringToSnippet.cs" />
     <Compile Include="Converter\StringToRtf.cs" />
@@ -215,6 +220,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PreviewRendererControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SceneContentControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

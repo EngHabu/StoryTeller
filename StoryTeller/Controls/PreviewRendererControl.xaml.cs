@@ -87,11 +87,18 @@ namespace StoryTeller.Controls
             object currentDataContext = PagesControl.DataContext;//.GetBindingExpression(ItemsControl.ItemsSourceProperty).
             PagesControl.DataContext = null;
             PagesControl.DataContext = currentDataContext;
-            SceneViewModel sceneViewModel = (currentDataContext as StoryViewModel).ScenesViewModel.FirstOrDefault();
-            if (null != sceneViewModel)
+            StoryViewModel story = PagesControl.DataContext as StoryViewModel;
+            SceneViewModel firstScene = story.ScenesViewModel.FirstOrDefault();
+            if (firstScene != null)
             {
-                tagsList.DataContext = sceneViewModel.Tags;
-            }
+                ObservableCollection<SceneTag> availableTags = new ObservableCollection<SceneTag>();
+                AddUniqueTags(firstScene, availableTags);
+                if (story.ScenesViewModel.Count > 1)
+                {
+                    AddUniqueTags(story.ScenesViewModel[1], availableTags);
+                }
+                tagsList.DataContext = availableTags;
+            }            
         }
 
         void storyViewModel_PossibleScenePickRequest(object sender, ScenePickerRequestArgs args)
@@ -127,24 +134,50 @@ namespace StoryTeller.Controls
         }
 
         void TextBlock_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
-        {
+        {            
             TextBlock textBlock = sender as TextBlock;
         }
 
         private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
-            ScrollViewer scrollViewer = sender as ScrollViewer;
+            RecalculateVisibleTags();            
+        }
+
+        private void RecalculateVisibleTags()
+        {
+            ObservableCollection<SceneTag> availableTags = new ObservableCollection<SceneTag>();
             foreach (FrameworkElement frameworkElement in PagesControl.Items)
             {
-                if (IsUserVisible(frameworkElement, scrollViewer))
+                if (IsUserVisible(frameworkElement, PagesControl))
                 {
                     SceneViewModel sceneModel = frameworkElement.DataContext as SceneViewModel;
-                    tagsList.DataContext = sceneModel.Tags;
-                    break;
+                    AddUniqueTags(sceneModel, availableTags);
                 }
             }
-            
-            ItemsPresenter itemsPresenter = scrollViewer.Content as ItemsPresenter;                        
+            tagsList.DataContext = availableTags;
+        }
+
+        private void AddUniqueTags(SceneViewModel sceneModel, ObservableCollection<SceneTag> availableTags)
+        {
+            foreach (SceneTag sceneTag in sceneModel.Tags)
+            {
+                if (!ContainsTag(availableTags, sceneTag))
+                {
+                    availableTags.Add(sceneTag);
+                }
+            }
+        }
+
+        private bool ContainsTag(ObservableCollection<SceneTag> availableTags, SceneTag sceneTag)
+        {
+            foreach (SceneTag availableTag in availableTags)
+            {
+                if (sceneTag.Content.Equals(availableTag.Content))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private bool IsUserVisible(FrameworkElement element, FrameworkElement container)

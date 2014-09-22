@@ -45,7 +45,7 @@
                                             <Storyboard>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="LayoutRoot"
                                                                    Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListBoxItemPointerOverBackgroundThemeBrush}" />
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TransparentColor}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
                                                                    Storyboard.TargetProperty="Foreground">
@@ -84,11 +84,11 @@
                                             <Storyboard>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="InnerGrid"
                                                                    Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListBoxItemPointerOverBackgroundThemeBrush}" />
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TransparentColor}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
                                                                    Storyboard.TargetProperty="Foreground">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListBoxItemPointerOverBackgroundThemeBrush}" />
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TransparentColor}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                             </Storyboard>
                                         </VisualState>
@@ -96,7 +96,7 @@
                                             <Storyboard>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="InnerGrid"
                                                                    Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListBoxItemPointerOverBackgroundThemeBrush}" />
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TransparentColor}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
                                                                    Storyboard.TargetProperty="Foreground">
@@ -120,7 +120,7 @@
                                             <Storyboard>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="InnerGrid"
                                                                    Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListBoxItemPointerOverBackgroundThemeBrush}" />
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TransparentColor}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
                                                                    Storyboard.TargetProperty="Foreground">
@@ -132,7 +132,7 @@
                                             <Storyboard>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="InnerGrid"
                                                                    Storyboard.TargetProperty="Background">
-                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ListBoxItemPointerOverBackgroundThemeBrush}" />
+                                                    <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource TransparentColor}" />
                                                 </ObjectAnimationUsingKeyFrames>
                                                 <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
                                                                    Storyboard.TargetProperty="Foreground">
@@ -161,7 +161,7 @@
                                 <Grid x:Name="InnerGrid"
                           Background="Transparent">
                                     <Rectangle x:Name="PressedBackground"
-                                   Fill="{ThemeResource ListBoxItemPressedBackgroundThemeBrush}"
+                                   Fill="{ThemeResource TransparentColor}"
                                    Opacity="0" />
                                     <ContentPresenter x:Name="ContentPresenter"
                                           Content="{TemplateBinding Content}"

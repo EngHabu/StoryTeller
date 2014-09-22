@@ -1,5 +1,4 @@
-﻿using StoryTeller.DataModel.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,21 +17,11 @@ using Windows.UI.Xaml.Navigation;
 
 namespace StoryTeller.Controls
 {
-    public sealed partial class TagsList : UserControl
+    public sealed partial class SceneContentControl : UserControl
     {
-        public TagsList()
+        public SceneContentControl()
         {
             this.InitializeComponent();
         }
-
-        public SceneTag SelectedTag
-        {
-            get
-            {
-                return tagsList.SelectedItem as SceneTag;
-            }
-        }
-
-        public Brush TagListColor { get; set; }
     }
 }

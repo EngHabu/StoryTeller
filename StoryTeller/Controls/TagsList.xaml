@@ -8,9 +8,10 @@
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
+    x:Name="tagsLister"
     Height="30">
 
-    <ScrollViewer VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden">
+    <ScrollViewer VerticalScrollMode="Disabled" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" Margin="0,0,0,0" Padding="0,0,0,0">
     <ListBox x:Name="tagsList" Background="Transparent" ItemsSource="{Binding}" ItemContainerStyle="{StaticResource ResourceKey=ListBoxItemStyle}" Margin="0,0,0,0" Padding="0,0,0,0" BorderThickness="0">
         <ListBox.Style>
             <StaticResource ResourceKey="ListBoxStyle"/>
@@ -22,7 +23,7 @@
         </ListBox.ItemsPanel>
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <local:SingleTagRenderer Padding="0,0,0,0"></local:SingleTagRenderer>
+                <local:SingleTagRenderer Padding="0,0,0,0" Margin="0,0,0,0" TagColor="LightGray"></local:SingleTagRenderer>
             </DataTemplate>
         </ListBox.ItemTemplate>        
     </ListBox>

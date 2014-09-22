@@ -66,14 +66,21 @@
                         </FlyoutBase.AttachedFlyout>
                     </Button>
                 </StackPanel>
-                <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,3,0,-3" ItemsSource="{Binding Library.Items}" CanDragItems="True">
-                    <GridView.ItemTemplate>
+                
+                <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,3,0,-3" ItemsSource="{Binding Library.Items}">
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                            <WrapGrid Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                        <GridView.ItemTemplate>
                         <DataTemplate>
-                            <controls:LibraryItemRendererControl>
-                            </controls:LibraryItemRendererControl>
+                            <controls:SceneContentControl DataContext="{Binding}">
+                            </controls:SceneContentControl>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>
+                
             </Grid>
             <!--<Button x:Name="FullScreenPreview"
                         Content="Full Screen"

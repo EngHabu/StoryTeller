@@ -108,6 +108,7 @@
     <Compile Include="Model\InteractiveScene.cs" />
     <Compile Include="Model\IScene.cs" />
     <Compile Include="Model\ISceneContent.cs" />
+    <Compile Include="Model\ISceneContentHolder.cs" />
     <Compile Include="Model\Library.cs" />
     <Compile Include="Model\LibraryItem.cs" />
     <Compile Include="Model\PointerScene.cs" />

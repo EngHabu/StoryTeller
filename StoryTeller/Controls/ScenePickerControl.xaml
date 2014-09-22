@@ -20,7 +20,7 @@
         <ListBox x:Name="Scenes" Grid.Row="1" ItemsSource="{Binding Scenes}" SelectedItem="{Binding SelectedScene, Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <controls:LibraryItemRendererControl DataContext="{Binding LibraryItem}" />
+                    <controls:SceneContentControl DataContext="{Binding LibraryItem}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
