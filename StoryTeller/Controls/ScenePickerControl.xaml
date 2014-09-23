@@ -17,10 +17,13 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <TextBlock Text="Select a scene to link to" Grid.Row="0"/>
-        <ListBox x:Name="Scenes" Grid.Row="1" ItemsSource="{Binding Scenes}" SelectedItem="{Binding SelectedScene, Mode=TwoWay}">
+        <ListBox x:Name="Scenes" Grid.Row="1" ItemsSource="{Binding Scenes}" SelectedItem="{Binding SelectedScene, Mode=TwoWay}" ItemContainerStyle="{StaticResource ResourceKey=ListBoxItemStyle}">
+            <ListBox.Style>
+                <StaticResource ResourceKey="ListBoxStyle"/>
+            </ListBox.Style>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <controls:SceneContentControl DataContext="{Binding LibraryItem}" />
+                    <controls:SceneContentMediumControl DataContext="{Binding LibraryItem}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
