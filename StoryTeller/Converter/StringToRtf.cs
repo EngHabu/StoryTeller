@@ -1,4 +1,6 @@
-﻿using StoryTeller.ViewModel;
+﻿using StoryTeller.Controls;
+using StoryTeller.DataModel.Model;
+using StoryTeller.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +13,7 @@ using Windows.UI.Popups;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Markup;
@@ -88,7 +91,7 @@ namespace StoryTeller.Converter
             }
         }
 
-        private static void FixHyperLinks(Paragraph paragraph, Action<Hyperlink, string> clickAction)
+        private static string FixHyperLinks(Paragraph paragraph, Action<Hyperlink, string> clickAction)
         {
             if (null == paragraph)
             {
@@ -123,8 +126,11 @@ namespace StoryTeller.Converter
                     {
                         clickAction(hyperlink, linkId);
                     };
+
+                    return linkId;
                 }
             }
+            return null;
         }
 
 
@@ -184,56 +190,65 @@ namespace StoryTeller.Converter
         {
             e.Handled = true;
             RichTextBlock textbox = (RichTextBlock)sender;
+
+            SceneViewModel sceneModel = textbox.DataContext as SceneViewModel;
+            InteractiveScene interactiveScene = sceneModel.CurrentScene as InteractiveScene;
+            if (interactiveScene.Type != SceneType.Interactive || interactiveScene.PossibleScenes.Count == 0)
+            {
+                return;
+            }
+
             if (!string.IsNullOrWhiteSpace(textbox.SelectedText) && textbox.SelectedText.Length > 0)
             {
-                // Create a menu and add commands specifying an id value for each instead of a delegate.
-                var menu = new PopupMenu();
-                menu.Commands.Add(new UICommand("Copy", null, 1));
-                menu.Commands.Add(new UICommandSeparator());
-                menu.Commands.Add(new UICommand("Create Scene Link", null, 2));
-
-                // We don't want to obscure content, so pass in a rectangle representing the selection area.
-                // NOTE: this code only handles textboxes with a single line. If a textbox has multiple lines,
-                //       then the context menu should be placed at cursor/pointer location by convention.
                 Rect rect = GetTextboxSelectionRect(textbox);
-                var chosenCommand = await menu.ShowForSelectionAsync(rect);
-                if (chosenCommand != null)
+                Popup popup = new Popup();                
+
+                popup.VerticalOffset = rect.Y + rect.Height/2;
+                popup.HorizontalOffset = rect.X - 5;
+                popup.IsLightDismissEnabled = true;
+
+                ScenePickerViewModel scenePickerModel = ScenePickerViewModel.Create(interactiveScene);                                
+                ScenePickerControl scenePicker = new ScenePickerControl();
+                scenePicker.PickSceneRequest += (IScene selectedScene) => 
                 {
-                    switch ((int)chosenCommand.Id)
-                    {
-                        case 1:
-                            String selectedText = textbox.SelectedText;
-                            var dataPackage = new DataPackage();
-                            dataPackage.SetText(selectedText);
-                            Clipboard.SetContent(dataPackage);
-                            break;
+                    string linkId = CreateHyperlink(textbox);
+                    scenePickerModel.LinkId = linkId;
+                    scenePickerModel.SelectedScene = selectedScene;                    
+                    popup.IsOpen = false;
+                };
 
-                        case 2:
-                            TextPointer start = textbox.SelectionStart;
-                            TextPointer end = textbox.SelectionEnd;
-                            Run startRun = start.Parent as Run;
-                            Run endRun = end.Parent as Run;
-                            int startIndex = start.Offset - startRun.ElementStart.Offset;
-                            int endIndex = end.Offset - endRun.ElementStart.Offset;
-                            if (startRun == endRun)
-                            {
-                                IEnumerable<Inline> splitted = SplitRun(startRun, startIndex, endIndex);
-                                Paragraph p = startRun.ElementStart.Parent as Paragraph;
-                                int runIndex = p.Inlines.IndexOf(startRun);
-                                p.Inlines.RemoveAt(runIndex);
-                                foreach (Inline inline in splitted.Reverse())
-                                {
-                                    p.Inlines.Insert(runIndex, inline);
-                                }
-
-                                FixHyperLinks(p, link_Click);
-                                UpdateOriginalText(textbox);
-                            }
-
-                            break;
-                    }
-                }
+                scenePicker.DataContext = scenePickerModel;                                
+                popup.Child = scenePicker;
+                popup.IsOpen = true;
             }
+        }
+
+
+        private static string CreateHyperlink(RichTextBlock textbox)
+        {
+            TextPointer start = textbox.SelectionStart;
+            TextPointer end = textbox.SelectionEnd;
+            Run startRun = start.Parent as Run;
+            Run endRun = end.Parent as Run;
+            int startIndex = start.Offset - startRun.ElementStart.Offset;
+            int endIndex = end.Offset - endRun.ElementStart.Offset;
+            if (startRun == endRun)
+            {
+                IEnumerable<Inline> splitted = SplitRun(startRun, startIndex, endIndex);
+                Paragraph p = startRun.ElementStart.Parent as Paragraph;
+                int runIndex = p.Inlines.IndexOf(startRun);
+                p.Inlines.RemoveAt(runIndex);
+                foreach (Inline inline in splitted.Reverse())
+                {
+                    p.Inlines.Insert(runIndex, inline);
+                }
+
+                string linkId = FixHyperLinks(p, link_Click);
+                UpdateOriginalText(textbox);
+
+                return linkId;
+            }
+            return null;
         }
 
         private static void UpdateOriginalText(RichTextBlock richTextBlock)
