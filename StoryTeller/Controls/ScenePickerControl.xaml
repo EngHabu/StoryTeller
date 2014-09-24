@@ -10,17 +10,21 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
     
-    <Grid Margin="10">
+    <Grid Margin="10" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Text="Select a scene to link to" Grid.Row="0"/>
-        <ListBox x:Name="Scenes" Grid.Row="1" ItemsSource="{Binding Scenes}" SelectedItem="{Binding SelectedScene, Mode=TwoWay}">
+        <!--<TextBlock Text="Select a scene to link to" Grid.Row="0"/>-->
+        <!--<ListBox x:Name="Scenes" Grid.Row="1" ItemsSource="{Binding Scenes}" SelectedItem="{Binding SelectedScene, Mode=TwoWay}" ItemContainerStyle="{StaticResource ResourceKey=ListBoxItemStyle}">-->
+        <ListBox x:Name="Scenes" Grid.Row="1" ItemsSource="{Binding Scenes}" ItemContainerStyle="{StaticResource ResourceKey=ListBoxItemStyle}" SelectionChanged="Scenes_SelectionChanged">
+            <ListBox.Style>
+                <StaticResource ResourceKey="ListBoxStyle"/>
+            </ListBox.Style>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <controls:SceneContentControl DataContext="{Binding LibraryItem}" />
+                    <controls:SceneContentMediumControl DataContext="{Binding LibraryItem}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

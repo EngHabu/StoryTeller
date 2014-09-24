@@ -1,4 +1,6 @@
-﻿using System;
+﻿using StoryTeller.DataModel.Model;
+using StoryTeller.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,6 +21,10 @@ namespace StoryTeller.Controls
 {
     public sealed partial class ScenePickerControl : UserControl
     {
+
+        public delegate void ScenePickerRequest(IScene scene);
+        public event ScenePickerRequest PickSceneRequest;
+
         public ScenePickerControl()
         {
             this.InitializeComponent();
@@ -47,6 +53,11 @@ namespace StoryTeller.Controls
             }
 
             return result;
+        }
+
+        private void Scenes_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            PickSceneRequest(Scenes.SelectedItem as IScene);            
         }
     }
 }

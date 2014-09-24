@@ -123,6 +123,9 @@
     <Compile Include="Controls\PreviewRendererControl.xaml.cs">
       <DependentUpon>PreviewRendererControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SceneContentMediumControl.xaml.cs">
+      <DependentUpon>SceneContentMediumControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SceneContentControl.xaml.cs">
       <DependentUpon>SceneContentControl.xaml</DependentUpon>
     </Compile>
@@ -140,9 +143,6 @@
     </Compile>
     <Compile Include="Controls\TagsList.xaml.cs">
       <DependentUpon>TagsList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TagsListControl.xaml.cs">
-      <DependentUpon>TagsListControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TagsEditorControl.xaml.cs">
       <DependentUpon>TagsEditorControl.xaml</DependentUpon>
@@ -223,6 +223,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\SceneContentMediumControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SceneContentControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -244,10 +248,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\TagsList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\TagsListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
