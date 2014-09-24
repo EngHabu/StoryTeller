@@ -97,31 +97,14 @@
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel AreScrollSnapPointsRegular="True" Orientation="Horizontal" />
-                        <!--<StackPanel Orientation="Horizontal" />-->
-                        <!--<common:RichTextColumns2 Scenes="{Binding Scenes}">
-                        <common:RichTextColumns2.InitialColumnTemplate>
-                            <DataTemplate>
-                                <RichTextBlock TextWrapping="Wrap" Padding="20" Width="750" Height="700" CharacterSpacing="100" LineHeight="20" MaxLines="31" 
-                                               FontSize="14" FontFamily="Times New Roman">
-                                </RichTextBlock>
-                            </DataTemplate>
-                        </common:RichTextColumns2.InitialColumnTemplate>
-                        <common:RichTextColumns2.ColumnTemplate>
-                            <DataTemplate>
-                                <RichTextBlockOverflow Width="750" Margin="50,0,0,0" MaxLines="31"/>
-                            </DataTemplate>
-                        </common:RichTextColumns2.ColumnTemplate>
-                    </common:RichTextColumns2>-->
+                        <!--<StackPanel Orientation="Horizontal" AreScrollSnapPointsRegular="True" />-->
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-                <!--<ItemsControl.ItemTemplate>
-                <common:RichTextColumns>
-                    
-                </common:RichTextColumns>
-            </ItemsControl.ItemTemplate>-->
                 <ItemsControl.Template>
                     <ControlTemplate>
-                        <ScrollViewer x:Name="pagesScroll" HorizontalSnapPointsType="Mandatory" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" ViewChanged="ScrollViewer_ViewChanged">
+                        <ScrollViewer x:Name="pagesScroll" HorizontalSnapPointsType="Mandatory"
+                                      VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" 
+                                      ViewChanged="ScrollViewer_ViewChanged">
                             <ItemsPresenter />
                         </ScrollViewer>
                     </ControlTemplate>
