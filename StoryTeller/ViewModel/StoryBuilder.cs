@@ -78,7 +78,11 @@ namespace StoryTeller.ViewModel
                 InteractiveScene removedScene = removedSceneModel.CurrentScene as InteractiveScene;  
                 IList<IScene> oldSuccessors = removedScene.PossibleScenes;
 
-                if (e.OldStartingIndex > 0)
+                if (removedScene == story.StartScene && oldSuccessors.Count == 1)
+                {
+                    story.StartScene = oldSuccessors[0];
+                }
+                else
                 {
                     InteractiveScene oldPredecessor = GetPredecessor(e.OldStartingIndex, storylineModel);
 
@@ -88,10 +92,7 @@ namespace StoryTeller.ViewModel
                         oldPredecessor.PossibleScenes.Add(scene);
                     }
                 }
-                else if (removedScene == story.StartScene && oldSuccessors.Count == 1)
-                {
-                    story.StartScene = oldSuccessors[0];
-                }
+                
             }
 
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
