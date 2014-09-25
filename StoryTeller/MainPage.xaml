@@ -51,7 +51,7 @@
                 <ColumnDefinition Width="1" />
                 <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" Margin="30,0,0,0">
+            <Grid Grid.Column="0" Margin="30,0,0,0" x:Name="LibraryGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="70"/>
                     <RowDefinition Height="*"/>
@@ -95,12 +95,14 @@
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
-            <controls:PreviewRendererControl Grid.Column="2" DataContext="{Binding Story, Mode=TwoWay}" Tapped="PreviewRendererControl_Tapped" ColumnsCount="1" />
+            <controls:PreviewRendererControl Grid.Column="2" DataContext="{Binding Story, Mode=TwoWay}" 
+                                             SelectedSceneViewModel="{Binding SelectedSceneViewModel, Mode=TwoWay}" 
+                                             Tapped="PreviewRendererControl_Tapped" ColumnsCount="1" />
 
         </Grid>
         <thirdparty:WatermarkTextBox Margin="30,0,0,0" Grid.Row="2" x:Name="titleTextbox" WatermarkText="Type in story title" Text="{Binding Story.Title}" BorderThickness="0" FontFamily="Georgia" Foreground="CornflowerBlue" KeyUp="titleTextbox_KeyUp"/>
          
-        <controls:StoryLineRendererControl DataContext="{Binding Story}" Grid.Row="3">
+        <controls:StoryLineRendererControl DataContext="{Binding Story}" Grid.Row="3" x:Name="StoryLineRenderer">
         </controls:StoryLineRendererControl>
 
     </Grid>

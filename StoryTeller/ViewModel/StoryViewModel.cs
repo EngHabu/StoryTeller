@@ -20,8 +20,19 @@ namespace StoryTeller.ViewModel
         private StoryLineViewModel _currentStoryline;
         private ObservableCollection<StoryLineViewModel> _storyLines;
         private ObservableCollection<SceneTag> _favorites;
+        private SceneViewModel _selectedSceneViewModel = null;
 
         public event ScenePickerRequest PossibleScenePickRequest;
+
+        public SceneViewModel SelectedSceneViewModel
+        {
+            get { return _selectedSceneViewModel; }
+            set
+            {
+                _selectedSceneViewModel = value;
+                OnPropertyChanged("SelectedSceneViewModel");
+            }
+        }
 
         public double PageHeight
         {
@@ -29,7 +40,7 @@ namespace StoryTeller.ViewModel
             set { _pageHeight = value; }
         }
 
-        public ObservableCollection<SceneTag> FavoriteTags 
+        public ObservableCollection<SceneTag> FavoriteTags
         {
             get
             {
@@ -187,6 +198,8 @@ namespace StoryTeller.ViewModel
             if (Scenes.Count > 0)
             {
                 CurrentScene = Scenes[0];
+                SelectedSceneViewModel = storyline.FirstOrDefault(isNotPad);
+                SelectedSceneViewModel = null;
             }
         }
 
@@ -226,6 +239,7 @@ namespace StoryTeller.ViewModel
                     if (firstSceneViewModel.CurrentScene.Id == scene.Id)
                     {
                         SelectStoryline(storyLineViewModel);
+                        SelectedSceneViewModel = firstSceneViewModel;
                         break;
                     }
                 }
@@ -256,7 +270,7 @@ namespace StoryTeller.ViewModel
         {
             return (from scene in targetStoryLine
                     where (!scene.IsBonus || (scene.IsBonus && isFavorited(targetStoryLine, scene)))
-             select scene).Reverse();
+                    select scene).Reverse();
         }
 
         private static bool isFavorited(StoryLineViewModel targetStoryLine, SceneViewModel scene)
@@ -353,7 +367,7 @@ namespace StoryTeller.ViewModel
             return -1;
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;        
+        public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyChanged)
         {
             if (null != PropertyChanged)

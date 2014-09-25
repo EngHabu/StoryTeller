@@ -46,6 +46,7 @@
                         IsHitTestVisible="false" TextWrapping="NoWrap" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" 
                        Margin="0,0,30,30" FontStretch="Expanded"/>-->
         </Grid>
-        <controls:PreviewRendererControl Grid.Row="1" DataContext="{Binding}" ColumnsCount="2" />
+        <controls:PreviewRendererControl Grid.Row="1" DataContext="{Binding}" ColumnsCount="1" 
+                                         SelectedSceneViewModel="{Binding SelectedSceneViewModel, Mode=TwoWay}" />
     </Grid>
 </Page>

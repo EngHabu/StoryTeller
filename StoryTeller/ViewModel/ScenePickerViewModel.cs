@@ -26,7 +26,16 @@ namespace StoryTeller.ViewModel
         public string LinkId
         {
             get { return _linkId; }
-            set { _linkId = value; }
+            set
+            {
+                _linkId = value;
+                if (null != SelectedScene && !string.IsNullOrWhiteSpace(LinkId))
+                {
+                    InteractiveScene.LinkIdToSceneId[LinkId] = _selectedScene.Id;
+                }
+
+                OnPropertyChanged("LinkId");
+            }
         }
         
         public IScene SelectedScene
@@ -35,7 +44,7 @@ namespace StoryTeller.ViewModel
             set
             {
                 _selectedScene = value;
-                if (null != _selectedScene)
+                if (null != _selectedScene && !string.IsNullOrWhiteSpace(LinkId))
                 {
                     InteractiveScene.LinkIdToSceneId[LinkId] = _selectedScene.Id;
                 }

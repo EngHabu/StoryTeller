@@ -33,7 +33,7 @@ namespace StoryTeller.Controls
         // Using a DependencyProperty as the backing store for ColumnsCount.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ColumnsCountProperty =
             DependencyProperty.Register("ColumnsCount", typeof(int), typeof(PreviewRendererControl), new PropertyMetadata(0));
-        
+
         public PagesControl()
         {
             this.InitializeComponent();
@@ -43,7 +43,7 @@ namespace StoryTeller.Controls
         protected override Size MeasureOverride(Size availableSize)
         {
             StoryViewModel storyViewModel = DataContext as StoryViewModel;
-            if (storyViewModel != null 
+            if (storyViewModel != null
                 && (!AreEqual(availableSize.Width / ColumnsCount, storyViewModel.PageWidth)
                     || !AreEqual(availableSize.Height, storyViewModel.PageHeight)))
             {

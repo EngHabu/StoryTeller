@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -24,9 +25,32 @@ namespace StoryTeller.Controls
 {
     public sealed partial class PreviewRendererControl : UserControl
     {
+        private Popup popup = new Popup();
         private double _pageWidth = 750;
         private double _pageHeight = 500;
         private const double _pageWidthDiffEpsilon = 0.001;
+        // Using a DependencyProperty as the backing store for SelectSceneView.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty SelectedSceneViewModelProperty =
+            DependencyProperty.Register("SelectedSceneViewModel", typeof(SceneViewModel), typeof(PreviewRendererControl), new PropertyMetadata(null, new PropertyChangedCallback((dpObj, args) =>
+            {
+                PreviewRendererControl control = dpObj as PreviewRendererControl;
+                //control.ScrollTo(args.NewValue as SceneViewModel);
+                control.SelectedSceneViewModel = args.NewValue as SceneViewModel;
+            })));
+
+        // Using a DependencyProperty as the backing store for ColumnsCount.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ColumnsCountProperty =
+            DependencyProperty.Register("ColumnsCount", typeof(int), typeof(PreviewRendererControl), new PropertyMetadata(0));
+
+        public SceneViewModel SelectedSceneViewModel
+        {
+            get { return (SceneViewModel)GetValue(SelectedSceneViewModelProperty); }
+            set
+            {
+                SetValue(SelectedSceneViewModelProperty, value);
+                ScrollTo(value);
+            }
+        }
 
         public int ColumnsCount
         {
@@ -38,10 +62,6 @@ namespace StoryTeller.Controls
             }
         }
 
-        // Using a DependencyProperty as the backing store for ColumnsCount.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ColumnsCountProperty =
-            DependencyProperty.Register("ColumnsCount", typeof(int), typeof(PreviewRendererControl), new PropertyMetadata(0));
-        
         public PreviewRendererControl()
         {
             this.InitializeComponent();
@@ -77,6 +97,106 @@ namespace StoryTeller.Controls
             }
         }
 
+        public static T FindItemsPanel<T>(ItemsControl itemsControl)
+            where T : Panel
+        {
+            Point p = new Point(itemsControl.ActualWidth / 2,
+                itemsControl.ActualHeight / 2);
+            UIElement result = VisualTreeHelper.FindElementsInHostCoordinates(p, itemsControl).FirstOrDefault();
+
+            DependencyObject visual = result;
+            while (!(visual is T))
+            {
+                visual = VisualTreeHelper.GetParent(visual);
+            }
+
+            return visual as T;
+        }
+
+        private Panel GetItemsPanel(DependencyObject itemsControl)
+        {
+            ItemsPresenter itemsPresenter = GetVisualChild<ItemsPresenter>(itemsControl);
+            Panel itemsPanel = VisualTreeHelper.GetChild(itemsPresenter, 0) as Panel;
+            return itemsPanel;
+        }
+
+        private static T GetVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            T child = default(T);
+
+            int numVisuals = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < numVisuals; i++)
+            {
+                DependencyObject v = VisualTreeHelper.GetChild(parent, i);
+                child = v as T;
+                if (child == null)
+                {
+                    child = GetVisualChild<T>(v);
+                }
+                else if (child != null)
+                {
+                    break;
+                }
+            }
+
+            return child;
+        }
+
+        public void ScrollTo(SceneViewModel sceneViewModel)
+        {
+            if (null != sceneViewModel)
+            {
+                double horizontalOffset = 0;
+                int horizontalItemsOffset = 0;
+                foreach (var obj in PagesControl.Items)
+                {
+                    RichTextBlock rtb = obj as RichTextBlock;
+                    RichTextBlockOverflow overflow = obj as RichTextBlockOverflow;
+                    if (null != rtb)
+                    {
+                        horizontalOffset += rtb.ActualWidth;
+                    }
+                    else if (null != overflow)
+                    {
+                        horizontalOffset += overflow.ActualWidth;
+                    }
+
+                    horizontalItemsOffset++;
+
+                    if (null != rtb && rtb.DataContext == sceneViewModel)
+                    {
+                        break;
+                    }
+
+                    if (null != overflow && overflow.DataContext == sceneViewModel)
+                    {
+                        break;
+                    }
+                }
+
+                ScrollViewer viewer = GetVisualChild<ScrollViewer>(PagesControl);
+                if (null != viewer)
+                {
+                    Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(() =>
+                    {
+                        //viewer.ScrollToHorizontalOffset(horizontalItemsOffset);
+                        viewer.ChangeView(horizontalOffset: horizontalItemsOffset + 1, verticalOffset: null, zoomFactor: null);
+                    }));
+                    //TimeSpan period = TimeSpan.FromMilliseconds(10);
+
+                    //Windows.System.Threading.ThreadPoolTimer.CreateTimer(async (source) =>
+                    //{
+                    //    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    //    {
+                    //        viewer.ScrollToHorizontalOffset(horizontalItemsOffset + 1);
+                    //        viewer.ChangeView(horizontalOffset: horizontalItemsOffset + 1, verticalOffset: null, zoomFactor: null);
+                    //    });
+                    //}
+                    //, period);
+                }
+            }
+        }
+
         void storyViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             RebindView();
@@ -97,39 +217,40 @@ namespace StoryTeller.Controls
                 {
                     AddUniqueTags(story.ScenesViewModel[1], availableTags);
                 }
+
                 tagsList.DataContext = availableTags;
-            }            
+            }
         }
 
         void storyViewModel_PossibleScenePickRequest(object sender, ScenePickerRequestArgs args)
         {
             Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(() =>
             {
-                FlyoutBase flyoutBase = Flyout.GetAttachedFlyout(PagesControl);
-                Flyout flyout = flyoutBase as Flyout;
-                if (null != flyout)
+                popup.VerticalOffset = this.ActualHeight / 2;
+                popup.HorizontalOffset = this.ActualWidth / 2;
+                popup.IsLightDismissEnabled = true;
+
+                SceneViewModel sceneViewModel = args.SenderChain.Where((obj) =>
+                    (obj is SceneViewModel)).FirstOrDefault() as SceneViewModel;
+                if (null != sceneViewModel)
                 {
-                    ScenePickerControl scenePicker = flyout.Content as ScenePickerControl;
-                    if (null != scenePicker)
+                    InteractiveScene interactiveScene = sceneViewModel.CurrentScene as InteractiveScene;
+                    if (null != interactiveScene)
                     {
-                        SceneViewModel sceneViewModel = args.SenderChain.Where((obj) =>
-                            (obj is SceneViewModel)).FirstOrDefault() as SceneViewModel;
-                        if (null != sceneViewModel)
+                        ScenePickerViewModel scenePickerModel = ScenePickerViewModel.Create(interactiveScene);
+                        ScenePickerControl scenePicker = new ScenePickerControl();
+                        scenePicker.PickSceneRequest += (IScene selectedScene) =>
                         {
-                            InteractiveScene interactiveScene = sceneViewModel.CurrentScene as InteractiveScene;
-                            if (null != interactiveScene)
-                            {
-                                ScenePickerViewModel scenePickerModel = ScenePickerViewModel.Create(interactiveScene);
-                                scenePickerModel.SelectedScene = interactiveScene.LookupSceneByLinkId(args.LinkId);
-                                scenePickerModel.LinkId = args.LinkId;
-                                scenePicker.DataContext = scenePickerModel;
-                            }
-                        }
+                            scenePickerModel.LinkId = args.LinkId;
+                            scenePickerModel.SelectedScene = selectedScene;
+                            popup.IsOpen = false;                            
+                        };
+
+                        scenePicker.DataContext = scenePickerModel;
+                        popup.Child = scenePicker;
+                        popup.IsOpen = true;
                     }
                 }
-
-                flyoutBase.Placement = FlyoutPlacementMode.Top;
-                flyoutBase.ShowAt(this);
             }));
         }
 
@@ -140,7 +261,7 @@ namespace StoryTeller.Controls
 
         private void ScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
-            RecalculateVisibleTags();            
+            RecalculateVisibleTags();
         }
 
         private void RecalculateVisibleTags()
@@ -157,6 +278,7 @@ namespace StoryTeller.Controls
                     }
                 }
             }
+
             tagsList.DataContext = availableTags;
         }
 
@@ -180,19 +302,19 @@ namespace StoryTeller.Controls
                     return true;
                 }
             }
+
             return false;
         }
 
         private bool IsUserVisible(FrameworkElement element, FrameworkElement container)
         {
-
             Rect bounds = element.TransformToVisual(container).TransformBounds(new Rect(0.0, 0.0, element.ActualWidth, element.ActualHeight));
             Rect rect = new Rect(0.0, 0.0, container.ActualWidth, container.ActualHeight);
             return rect.Contains(new Point(bounds.Left, bounds.Top)) || rect.Contains(new Point(bounds.Right, bounds.Bottom));
         }
 
         private void tagsList_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
-        {            
+        {
             SceneTag selectedTag = tagsList.SelectedTag;
 
             if (selectedTag != null)
@@ -206,7 +328,7 @@ namespace StoryTeller.Controls
         {
             string guid = Guid.NewGuid().ToString();
             ViewModelCache.Local.Put(guid, DataContext as StoryViewModel);
-            
+
             (Window.Current.Content as Frame).Navigate(typeof(StoryViewer), guid);
         }
     }
