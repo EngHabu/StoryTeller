@@ -179,8 +179,8 @@ namespace StoryTeller.Controls
                 {
                     Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(() =>
                     {
-                        //viewer.ScrollToHorizontalOffset(horizontalItemsOffset);
-                        viewer.ChangeView(horizontalOffset: horizontalItemsOffset + 1, verticalOffset: null, zoomFactor: null);
+                        viewer.ScrollToHorizontalOffset(horizontalItemsOffset + 1);
+                        //viewer.ChangeView(horizontalOffset: horizontalItemsOffset + 1, verticalOffset: null, zoomFactor: null);
                     }));
                     //TimeSpan period = TimeSpan.FromMilliseconds(10);
 
