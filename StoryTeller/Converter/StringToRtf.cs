@@ -26,7 +26,7 @@ namespace StoryTeller.Converter
         private const double InvisibleFontSize = 0.004;
         private const double epsilon = 0.0001;
 
-        private static bool IsInisibleFontSize(double fontSize)
+        private static bool IsInvisibleFontSize(double fontSize)
         {
             return Math.Abs(fontSize - InvisibleFontSize) < epsilon;
         }
@@ -43,7 +43,7 @@ namespace StoryTeller.Converter
         public static string PlainTextToXaml(string plainText)
         {
             return @"<Paragraph TextIndent=""20"">"
-                + ConvertLinksToXamlString(plainText).Replace(Environment.NewLine, @"</Paragraph><Paragraph></Paragraph><Paragraph TextIndent=""20"">")
+                + ConvertLinksToXamlString(plainText).Replace(Environment.NewLine, @"</Paragraph><Paragraph><Run Text="""" FontSize=""" + InvisibleFontSize + @"""/></Paragraph><Paragraph TextIndent=""20"">")
                 + "</Paragraph>";
         }
 
@@ -91,7 +91,7 @@ namespace StoryTeller.Converter
             }
         }
 
-        private static string FixHyperLinks(Paragraph paragraph, Action<Hyperlink, string> clickAction)
+        private static void FixHyperLinks(Paragraph paragraph, Action<Hyperlink, string> clickAction)
         {
             if (null == paragraph)
             {
@@ -115,7 +115,7 @@ namespace StoryTeller.Converter
                         foreach (Inline linkInline in link.Inlines)
                         {
                             Run linkRun = linkInline as Run;
-                            if (IsInisibleFontSize(linkRun.FontSize))
+                            if (IsInvisibleFontSize(linkRun.FontSize))
                             {
                                 linkId = linkRun.Text;
                             }
@@ -126,11 +126,8 @@ namespace StoryTeller.Converter
                     {
                         clickAction(hyperlink, linkId);
                     };
-
-                    return linkId;
                 }
             }
-            return null;
         }
 
 
@@ -243,7 +240,12 @@ namespace StoryTeller.Converter
                     p.Inlines.Insert(runIndex, inline);
                 }
 
-                string linkId = FixHyperLinks(p, link_Click);
+                FixHyperLinks(p, link_Click);
+                string linkId = (from inline in splitted
+                                where inline is Hyperlink
+                                select (from inline2 in (inline as Hyperlink).Inlines
+                                        where IsInvisibleFontSize((inline2 as Run).FontSize)
+                                        select (inline2 as Run).Text).FirstOrDefault()).FirstOrDefault();
                 UpdateOriginalText(textbox);
 
                 return linkId;
@@ -266,25 +268,28 @@ namespace StoryTeller.Converter
             StringBuilder sb = new StringBuilder();
             foreach (Block block in blockCollection)
             {
+                bool isEmptyParagraph = true;
                 Paragraph paragraph = block as Paragraph;
                 foreach (Inline inline in paragraph.Inlines)
                 {
                     Run run = inline as Run;
                     Hyperlink link = inline as Hyperlink;
-                    if (null != run)
+                    if (null != run && !IsInvisibleFontSize(run.FontSize))
                     {
+                        isEmptyParagraph = false;
                         sb.Append(run.Text);
                     }
                     else if (null != link)
                     {
+                        isEmptyParagraph = false;
                         string linkContents = string.Empty;
                         string linkId = string.Empty;
                         foreach (Inline linkInline in link.Inlines)
                         {
                             Run linkRun = linkInline as Run;
-                            if (IsInisibleFontSize(linkRun.FontSize))
+                            if (IsInvisibleFontSize(linkRun.FontSize))
                             {
-                                linkId = linkRun.Text;
+                                linkId = linkRun.Text.Substring(linkRun.Text.IndexOf('#') + 1);
                             }
                             else
                             {
@@ -297,7 +302,10 @@ namespace StoryTeller.Converter
                     }
                 }
 
-                sb.AppendLine();
+                if (!isEmptyParagraph)
+                {
+                    sb.AppendLine();
+                }
             }
 
             string result = sb.ToString();

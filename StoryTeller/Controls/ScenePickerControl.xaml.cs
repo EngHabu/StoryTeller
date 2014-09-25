@@ -57,7 +57,10 @@ namespace StoryTeller.Controls
 
         private void Scenes_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            PickSceneRequest(Scenes.SelectedItem as IScene);            
+            if (null != PickSceneRequest)
+            {
+                PickSceneRequest(Scenes.SelectedItem as IScene);
+            }
         }
     }
 }

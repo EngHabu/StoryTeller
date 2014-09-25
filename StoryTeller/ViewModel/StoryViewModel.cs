@@ -239,6 +239,7 @@ namespace StoryTeller.ViewModel
                     if (firstSceneViewModel.CurrentScene.Id == scene.Id)
                     {
                         SelectStoryline(storyLineViewModel);
+                        SelectedSceneViewModel = firstSceneViewModel;
                         break;
                     }
                 }
