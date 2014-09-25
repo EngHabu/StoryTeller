@@ -70,7 +70,7 @@
                     </Button>
                 </StackPanel>
 
-                <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,3,0,-3" ItemsSource="{Binding Library.Items}">
+                <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,3,0,-3" ItemsSource="{Binding Library.Items}">                    
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapGrid Orientation="Vertical"/>

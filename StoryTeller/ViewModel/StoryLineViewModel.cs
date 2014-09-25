@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 
@@ -20,5 +21,15 @@ namespace StoryTeller.ViewModel
         public StoryViewModel StoryModel { get { return storyViewModel; } }
 
         public StoryLineViewModel Parent { get { return _parent; } }
+
+        public int Depth { get; set; }
+
+        public int DepthWidth
+        {
+            get
+            {
+                return Depth * 200;
+            }
+        }
     }
 }
