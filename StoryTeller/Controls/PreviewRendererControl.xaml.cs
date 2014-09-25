@@ -25,6 +25,7 @@ namespace StoryTeller.Controls
 {
     public sealed partial class PreviewRendererControl : UserControl
     {
+        private Popup popup = new Popup();
         private double _pageWidth = 750;
         private double _pageHeight = 500;
         private const double _pageWidthDiffEpsilon = 0.001;
@@ -176,17 +177,22 @@ namespace StoryTeller.Controls
                 ScrollViewer viewer = GetVisualChild<ScrollViewer>(PagesControl);
                 if (null != viewer)
                 {
-                    TimeSpan period = TimeSpan.FromMilliseconds(10);
-
-                    Windows.System.Threading.ThreadPoolTimer.CreateTimer(async (source) =>
+                    Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(() =>
                     {
-                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                        {
-                            viewer.ScrollToHorizontalOffset(horizontalItemsOffset + 1);
-                            //viewer.ChangeView(horizontalOffset: horizontalItemsOffset + 1, verticalOffset: null, zoomFactor: null);
-                        });
-                    }
-                    , period);
+                        //viewer.ScrollToHorizontalOffset(horizontalItemsOffset);
+                        viewer.ChangeView(horizontalOffset: horizontalItemsOffset + 1, verticalOffset: null, zoomFactor: null);
+                    }));
+                    //TimeSpan period = TimeSpan.FromMilliseconds(10);
+
+                    //Windows.System.Threading.ThreadPoolTimer.CreateTimer(async (source) =>
+                    //{
+                    //    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    //    {
+                    //        viewer.ScrollToHorizontalOffset(horizontalItemsOffset + 1);
+                    //        viewer.ChangeView(horizontalOffset: horizontalItemsOffset + 1, verticalOffset: null, zoomFactor: null);
+                    //    });
+                    //}
+                    //, period);
                 }
             }
         }
@@ -220,9 +226,8 @@ namespace StoryTeller.Controls
         {
             Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(() =>
             {
-                Popup popup = new Popup();
-                //popup.VerticalOffset = rect.Y + rect.Height / 2;
-                //popup.HorizontalOffset = rect.X - 5;
+                popup.VerticalOffset = this.ActualHeight / 2;
+                popup.HorizontalOffset = this.ActualWidth / 2;
                 popup.IsLightDismissEnabled = true;
 
                 SceneViewModel sceneViewModel = args.SenderChain.Where((obj) =>
@@ -238,7 +243,7 @@ namespace StoryTeller.Controls
                         {
                             scenePickerModel.LinkId = args.LinkId;
                             scenePickerModel.SelectedScene = selectedScene;
-                            popup.IsOpen = false;
+                            popup.IsOpen = false;                            
                         };
 
                         scenePicker.DataContext = scenePickerModel;
@@ -273,6 +278,7 @@ namespace StoryTeller.Controls
                     }
                 }
             }
+
             tagsList.DataContext = availableTags;
         }
 
@@ -296,12 +302,12 @@ namespace StoryTeller.Controls
                     return true;
                 }
             }
+
             return false;
         }
 
         private bool IsUserVisible(FrameworkElement element, FrameworkElement container)
         {
-
             Rect bounds = element.TransformToVisual(container).TransformBounds(new Rect(0.0, 0.0, element.ActualWidth, element.ActualHeight));
             Rect rect = new Rect(0.0, 0.0, container.ActualWidth, container.ActualHeight);
             return rect.Contains(new Point(bounds.Left, bounds.Top)) || rect.Contains(new Point(bounds.Right, bounds.Bottom));
