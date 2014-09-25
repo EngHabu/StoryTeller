@@ -59,8 +59,8 @@ namespace StoryTeller.Controls
         {
             if (null != PickSceneRequest)
             {
-                PickSceneRequest(Scenes.SelectedItem as IScene);
-            }
+            PickSceneRequest(Scenes.SelectedItem as IScene);            
         }
     }
+}
 }

@@ -10,6 +10,7 @@ namespace StoryTeller.ViewModel
     public class StoryBuilder
     {
         private StorylineBuilder _storylineBuilder = new StorylineBuilder();
+        private SceneViewModel m_removedItem;
 
         public StorylineBuilder StorylineBuilder { get { return _storylineBuilder; } }
 
@@ -30,11 +31,7 @@ namespace StoryTeller.ViewModel
             IScene currentScene = startScene;
 
             StoryLineViewModel lineScenes = new StoryLineViewModel(storyModel, parent);
-
-            for (int i = 0; i < depth; i++)
-            {
-                lineScenes.Add(new SceneViewModelPad());
-            }
+            lineScenes.Depth = depth;            
 
             storylineAdder.Position(lineScenes);
 
@@ -72,90 +69,118 @@ namespace StoryTeller.ViewModel
             }
 
             StoryViewModel storyModel = storylineModel.StoryModel;
+            Story story = storyModel.Story;
 
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
             {
-                if (storylineModel.Parent == null && storylineModel.Count == 0)
+                SceneViewModel removedSceneModel = e.OldItems[0] as SceneViewModel;
+                m_removedItem = removedSceneModel;
+                InteractiveScene removedScene = removedSceneModel.CurrentScene as InteractiveScene;  
+                IList<IScene> oldSuccessors = removedScene.PossibleScenes;
+
+                if (e.OldStartingIndex > 0)
                 {
-                    storyModel.Story.StartScene = null;
-                    return;
+                    InteractiveScene oldPredecessor = GetPredecessor(e.OldStartingIndex, storylineModel);
+
+                    oldPredecessor.PossibleScenes.Remove(removedScene);
+                    foreach(IScene scene in oldSuccessors)
+                    {
+                        oldPredecessor.PossibleScenes.Add(scene);
+                    }
                 }
-
-                if (storylineModel.Count > 0)
+                else if (removedScene == story.StartScene && oldSuccessors.Count == 1)
                 {
-                    SceneViewModel lastExistingSceneModel = storylineModel.Last();
-                    IScene lastExistingScene = lastExistingSceneModel.CurrentScene;
-                    SceneViewModel removedScene = e.OldItems[0] as SceneViewModel;
-
-                    if (lastExistingSceneModel is SceneViewModelPad)
-                    {
-                        StoryLineViewModel parentStoryline = storylineModel.Parent;
-                        SceneViewModel parentSceneModel = parentStoryline.Last();
-                        if (parentSceneModel.CurrentScene is InteractiveScene)
-                        {
-                            (parentSceneModel.CurrentScene as InteractiveScene).PossibleScenes.Remove(removedScene.CurrentScene);
-                        }
-                    }
-                    else
-                    {
-                        if (lastExistingScene is InteractiveScene)
-                        {
-                            (lastExistingScene as InteractiveScene).PossibleScenes.Remove(removedScene.CurrentScene);
-                        }
-                        else
-                        {
-                            lastExistingScene.FollowingScene = null;
-                        }
-                    }
+                    story.StartScene = oldSuccessors[0];
                 }
             }
 
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
             {
-                SceneViewModel addedScene = storylineModel.Last();
-                if (storyModel.Story.StartScene == null)
+                SceneViewModel addedSceneModel = e.NewItems[0] as SceneViewModel;
+                InteractiveScene addedScene = addedSceneModel.CurrentScene as InteractiveScene;                
+
+                if (story.StartScene == null)
                 {
-                    storyModel.Story.StartScene = addedScene.CurrentScene;
+                    story.StartScene = addedScene;
                     return;
                 }
 
-                SceneViewModel previousScene = null;
-                if (storylineModel.Count > 1)
+                int addedSceneIndex = e.NewStartingIndex;
+
+                InteractiveScene newPredecessor = GetPredecessor(addedSceneIndex, storylineModel);
+                InteractiveScene newSuccessor = GetSuccessor(addedSceneIndex, storylineModel);                
+                if (newPredecessor != null)
                 {
-                    previousScene = storylineModel[storylineModel.Count - 2];
+                    newPredecessor.PossibleScenes.Remove(newSuccessor);
+                    newPredecessor.PossibleScenes.Add(addedScene);                                        
                 }
-
-                if (previousScene is SceneViewModelPad)
+                else
                 {
-                    StoryLineViewModel parentStoryline = storylineModel.Parent;
-                    if (parentStoryline != null)
+                    if (newSuccessor == story.StartScene)
                     {
-                        IScene lastParentScene = parentStoryline.Last().CurrentScene;
-                        if (lastParentScene is InteractiveScene)
-                        {
-                            IList<IScene> possibleScenes = (lastParentScene as InteractiveScene).PossibleScenes;
-
-                            if (possibleScenes.Count > 0)
-                            {
-                                possibleScenes.Insert(0, addedScene.CurrentScene);
-                            }
-                            else
-                            {
-                                possibleScenes.Add(addedScene.CurrentScene);
-                            }
-                        }
+                        story.StartScene = addedScene;
                     }
                 }
-                else if (previousScene != null)
+
+                if (newSuccessor != null)
                 {
-                    IScene currentScene = previousScene.CurrentScene;
-                    InteractiveScene interactiveScene = currentScene as InteractiveScene;
-                    if (null != interactiveScene)
-                    {
-                        interactiveScene.PossibleScenes.Add(addedScene.CurrentScene);
-                    }
+                    addedScene.PossibleScenes.Clear();
+                    addedScene.PossibleScenes.Add(newSuccessor);
+                }
+                else {
+                    addedScene.PossibleScenes.Clear();
+                }
+
+                if (m_removedItem != null && m_removedItem == addedSceneModel)
+                {
+                    m_removedItem = null;
+                    HandleReorder(storyModel);
+                }
+                
+            }
+        }
+
+        private void HandleReorder(StoryViewModel storyModel)
+        {
+            storyModel.Story = storyModel.Story;
+        }
+
+        private InteractiveScene GetSuccessor(int addedSceneIndex, StoryLineViewModel storylineModel)
+        {
+            int successorIndex = addedSceneIndex + 1;
+            if (successorIndex < storylineModel.Count)
+            {
+                SceneViewModel successorSceneModel = storylineModel[successorIndex];
+                return successorSceneModel.CurrentScene as InteractiveScene;
+            }
+
+            return null;
+        }
+
+        private static InteractiveScene GetPredecessor(int index, StoryLineViewModel storylineModel)
+        {
+            if ((index == 0 && storylineModel.Parent == null) || index > storylineModel.Count)
+            {
+                return null;
+            }
+            
+            InteractiveScene oldPredecessor = null;
+
+            if (index == 0 && storylineModel.Parent != null)
+            {
+                StoryLineViewModel parentStoryline = storylineModel.Parent;
+                SceneViewModel parentSceneModel = parentStoryline.Last();
+                if (parentSceneModel.CurrentScene is InteractiveScene)
+                {
+                    oldPredecessor = parentSceneModel.CurrentScene as InteractiveScene;
                 }
             }
+            else{
+                SceneViewModel lastExistingSceneModel = storylineModel[index - 1];
+                oldPredecessor = lastExistingSceneModel.CurrentScene as InteractiveScene;
+            }
+
+            return oldPredecessor;
         }
 
     }

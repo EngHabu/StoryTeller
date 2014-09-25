@@ -349,7 +349,7 @@ namespace StoryTeller.ViewModel
                 if (index > -1)
                 {
                     IStorylinePositioner positioner = new StorylineInserter(StoryLines, index);
-                    _builder.ConstructStoryLines(this, storyline, null, storyline.Count, positioner);
+                    _builder.ConstructStoryLines(this, storyline, null, storyline.Depth + storyline.Count, positioner);
                     SelectStoryline(StoryLines[index + 1]);
                 }
             }

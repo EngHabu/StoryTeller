@@ -21,11 +21,9 @@
             <Rectangle x:Name="selectStoryline" Tapped="selectStoryline_Tapped" Width="5" Fill="Transparent"></Rectangle>
             <Button x:Name="addStoryline" Content="+" FontSize="28" Padding="5,-7,5,5" Tapped="addStoryline_Click" Background="Transparent" VerticalAlignment="Top" VerticalContentAlignment="Center"></Button>
         </StackPanel>
-        <ListBox x:Name="storylineListbox" ItemsSource="{Binding}" ScrollViewer.VerticalScrollBarVisibility="Hidden" DoubleTapped="ListBox_DoubleTapped" AllowDrop="True" Drop="storylineListbox_Drop" BorderBrush="Transparent" ItemContainerStyle="{StaticResource ResourceKey=ListBoxItemStyle}" Padding="0,0,0,0" Margin="0,0,0,0">
-            <ListBox.Style>
-                <StaticResource ResourceKey="ListBoxStyle"/>
-            </ListBox.Style>
-            <ListBox.ItemTemplate>
+        <Rectangle Width="{Binding DepthWidth}"></Rectangle>
+        <ListView x:Name="storylineListbox" ItemsSource="{Binding Mode=TwoWay}" ScrollViewer.VerticalScrollBarVisibility="Hidden" DoubleTapped="ListBox_DoubleTapped" Drop="storylineListbox_Drop" BorderBrush="Transparent" Padding="0,0,0,0" Margin="0,0,0,0" CanReorderItems="True" AllowDrop="True">
+            <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <local:SceneContentMediumControl DataContext="{Binding}" DoubleTapped="Scene_DoubleTapped">
@@ -37,13 +35,13 @@
                         </local:SceneContentMediumControl>
                     </Grid>
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-            <ListBox.ItemsPanel>
+            </ListView.ItemTemplate>
+            <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" Background="Transparent"/>
                 </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
+            </ListView.ItemsPanel>
 
-        </ListBox>
+        </ListView>
     </StackPanel>
 </UserControl>
