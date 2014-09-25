@@ -90,7 +90,7 @@ namespace StoryTeller.ViewModel
                 {
                     OnNavigateRequest(linkedScene);
                 }
-                else
+                else if (interactiveScene.Type == SceneType.Interactive && interactiveScene.PossibleScenes.Count > 0)
                 {
                     OnPickSceneRequest(linkId);
                 }

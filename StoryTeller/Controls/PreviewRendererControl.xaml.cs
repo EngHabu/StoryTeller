@@ -220,31 +220,32 @@ namespace StoryTeller.Controls
         {
             Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, new Windows.UI.Core.DispatchedHandler(() =>
             {
-                FlyoutBase flyoutBase = Flyout.GetAttachedFlyout(PagesControl);
-                Flyout flyout = flyoutBase as Flyout;
-                if (null != flyout)
+                Popup popup = new Popup();
+                //popup.VerticalOffset = rect.Y + rect.Height / 2;
+                //popup.HorizontalOffset = rect.X - 5;
+                popup.IsLightDismissEnabled = true;
+
+                SceneViewModel sceneViewModel = args.SenderChain.Where((obj) =>
+                    (obj is SceneViewModel)).FirstOrDefault() as SceneViewModel;
+                if (null != sceneViewModel)
                 {
-                    ScenePickerControl scenePicker = flyout.Content as ScenePickerControl;
-                    if (null != scenePicker)
+                    InteractiveScene interactiveScene = sceneViewModel.CurrentScene as InteractiveScene;
+                    if (null != interactiveScene)
                     {
-                        SceneViewModel sceneViewModel = args.SenderChain.Where((obj) =>
-                            (obj is SceneViewModel)).FirstOrDefault() as SceneViewModel;
-                        if (null != sceneViewModel)
+                        ScenePickerViewModel scenePickerModel = ScenePickerViewModel.Create(interactiveScene);
+                        ScenePickerControl scenePicker = new ScenePickerControl();
+                        scenePicker.PickSceneRequest += (IScene selectedScene) =>
                         {
-                            InteractiveScene interactiveScene = sceneViewModel.CurrentScene as InteractiveScene;
-                            if (null != interactiveScene)
-                            {
-                                ScenePickerViewModel scenePickerModel = ScenePickerViewModel.Create(interactiveScene);
-                                scenePickerModel.SelectedScene = interactiveScene.LookupSceneByLinkId(args.LinkId);
-                                scenePickerModel.LinkId = args.LinkId;
-                                scenePicker.DataContext = scenePickerModel;
-                            }
-                        }
+                            scenePickerModel.LinkId = args.LinkId;
+                            scenePickerModel.SelectedScene = selectedScene;
+                            popup.IsOpen = false;
+                        };
+
+                        scenePicker.DataContext = scenePickerModel;
+                        popup.Child = scenePicker;
+                        popup.IsOpen = true;
                     }
                 }
-
-                flyoutBase.Placement = FlyoutPlacementMode.Top;
-                flyoutBase.ShowAt(this);
             }));
         }
 
