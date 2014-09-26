@@ -121,7 +121,7 @@ namespace StoryTeller.ViewModel
             {
                 _story = value;
                 StoryLines = _builder.ConstructStoryLines(this);
-                CurrentStoryline = StoryLines.First();
+                CurrentStoryline = StoryLines.FirstOrDefault();
             }
         }
 
@@ -137,7 +137,14 @@ namespace StoryTeller.ViewModel
 
         public ObservableCollection<StoryLineViewModel> StoryLines
         {
-            get { return _storyLines; }
+            get 
+            {
+                if (_storyLines == null)
+                {
+                    _storyLines = new ObservableCollection<StoryLineViewModel>();
+                }
+                return _storyLines; 
+            }
             set
             {
                 _storyLines = value;
@@ -156,14 +163,19 @@ namespace StoryTeller.ViewModel
         {
             _story.StartScene = null;
             StoryLines = _builder.ConstructStoryLines(this);
-            CurrentStoryline = StoryLines.First();
+            CurrentStoryline = StoryLines.FirstOrDefault();
         }
 
         internal void AddScene(IScene scene)
         {
             if (CurrentStoryline == null)
             {
-                return;
+                if (StoryLines.Count > 0)
+                {
+                    return;
+                }
+                StoryLines.Add(_builder.CreateStoryLine(this));
+                CurrentStoryline = StoryLines.First();
             }
 
             InteractiveScene interactiveScene;
@@ -382,6 +394,14 @@ namespace StoryTeller.ViewModel
             {
                 args.SenderChain.Add(this);
                 PossibleScenePickRequest(this, args);
+            }
+        }
+
+        public bool IsEmpty
+        {
+            get
+            {
+                return Story.StartScene == null;
             }
         }
     }

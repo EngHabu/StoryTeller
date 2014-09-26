@@ -59,6 +59,7 @@ namespace StoryTeller
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.navigationHelper.SaveState += navigationHelper_SaveState;
+            fullscreen_Button.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
 
             SetDefaultContext();
 
@@ -91,6 +92,19 @@ namespace StoryTeller
             LibraryItem libraryItem = libraryPanel.SelectedItem as LibraryItem;
             IScene scene = new InteractiveScene(libraryItem);
             projectViewModel.Story.AddScene(scene);
+            UpdateFullscreenButton();
+        }
+
+        private void UpdateFullscreenButton()
+        {
+            if (projectViewModel.Story.Story.StartScene == null)
+            {
+                fullscreen_Button.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
+            }
+            else
+            {
+                fullscreen_Button.Visibility = Windows.UI.Xaml.Visibility.Visible;
+            }
         }
 
 
@@ -186,8 +200,11 @@ namespace StoryTeller
             //FileOpenPicker picker = new FileOpenPicker();
             //picker.FileTypeFilter.Add(".txt");
 
-            IReadOnlyList<StorageFile> files = await folder.GetFilesAsync();  //await picker.PickMultipleFilesAsync();
-            await LoadFiles(FilterFiles(files));
+            if (folder != null)
+            {
+                IReadOnlyList<StorageFile> files = await folder.GetFilesAsync();  //await picker.PickMultipleFilesAsync();
+                await LoadFiles(FilterFiles(files));
+            }
         }
 
         private async System.Threading.Tasks.Task LoadDefaultFiles()
@@ -234,6 +251,7 @@ namespace StoryTeller
         private void Clear_Button_Tapped(object sender, TappedRoutedEventArgs e)
         {
             projectViewModel.Story.Clear();
+            UpdateFullscreenButton();
         }
 
         private void PreviewRendererControl_Tapped(object sender, TappedRoutedEventArgs e)
@@ -259,6 +277,14 @@ namespace StoryTeller
             {
                 projectViewModel.Story.Title = titleTextbox.Text;
             }
+        }
+
+        private void fullscreen_Button_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            string guid = Guid.NewGuid().ToString();
+            ViewModelCache.Local.Put(guid, projectViewModel.Story);
+
+            (Window.Current.Content as Frame).Navigate(typeof(StoryViewer), guid);
         }
     }
 }
