@@ -130,8 +130,20 @@ namespace StoryTeller.ViewModel
             get { return _currentStoryline; }
             set
             {
+                StoryLineViewModel oldValue = _currentStoryline;
                 _currentStoryline = value;
+                UpdateIsCurrent(oldValue);
+                UpdateIsCurrent(_currentStoryline);
                 OnPropertyChanged("CurrentStoryline");
+            }
+        }
+
+        private void UpdateIsCurrent(StoryLineViewModel storyline)
+        {
+            if (storyline != null)
+            {
+                //This value is dummy, just to trigger property notification
+                storyline.IsCurrent = true;
             }
         }
 

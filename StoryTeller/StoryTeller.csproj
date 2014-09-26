@@ -148,6 +148,7 @@
       <DependentUpon>TagsEditorControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converter\BooleanToVisibility.cs" />
+    <Compile Include="Converter\CurrentStorylineToColor.cs" />
     <Compile Include="Converter\SceneContentHeader.cs" />
     <Compile Include="Converter\SceneContentSnippet.cs" />
     <Compile Include="Converter\ScenesViewModelToVisibility.cs" />

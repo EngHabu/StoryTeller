@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using Windows.UI.Xaml;
 
 namespace StoryTeller.ViewModel
 {
-    public class StoryLineViewModel : ObservableCollection<SceneViewModel>
+    public class StoryLineViewModel : ObservableCollection<SceneViewModel>, INotifyPropertyChanged
     {
         private StoryViewModel storyViewModel;
         private StoryLineViewModel _parent;
@@ -29,6 +31,27 @@ namespace StoryTeller.ViewModel
             get
             {
                 return Depth * 200;
+            }
+        }
+
+        public bool IsCurrent
+        {            
+            get
+            {
+                return StoryModel.CurrentStoryline == this;
+            }
+            set
+            {
+                OnPropertyChanged("IsCurrent");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyChanged)
+        {
+            if (null != PropertyChanged)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyChanged));
             }
         }
     }

@@ -59,10 +59,8 @@ namespace StoryTeller
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += navigationHelper_LoadState;
             this.navigationHelper.SaveState += navigationHelper_SaveState;
-            fullscreen_Button.Visibility = Windows.UI.Xaml.Visibility.Collapsed;
-
             SetDefaultContext();
-
+            UpdateFullscreenButton();
             libraryPanel.DoubleTapped += libraryPanel_DoubleTapped;
         }
 
@@ -134,6 +132,7 @@ namespace StoryTeller
             {
                 projectViewModel = DataContext as ProjectViewModel;
                 libraryViewModel = projectViewModel.Library;
+                UpdateFullscreenButton();
             }
         }
 
