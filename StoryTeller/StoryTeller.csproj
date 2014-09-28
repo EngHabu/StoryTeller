@@ -158,6 +158,8 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\DummyScene.cs" />
+    <Compile Include="ViewModel\ImageInline.cs" />
+    <Compile Include="ViewModel\InvisibleRun.cs" />
     <Compile Include="ViewModel\LibraryViewModel.cs" />
     <Compile Include="Pages\StoryViewer.xaml.cs">
       <DependentUpon>StoryViewer.xaml</DependentUpon>

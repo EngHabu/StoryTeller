@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Documents;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace StoryTeller.Converter
 {
@@ -52,6 +53,17 @@ namespace StoryTeller.Converter
             plainText = Regex.Replace(plainText, @"(\{(?<SceneId>[^}]*):(?<LinkText>[^}]*)\})",
                 @"<Hyperlink><Run Text=""#$2"" FontSize=""" + InvisibleFontSize + @"""/><Run Text=""$3""/></Hyperlink>");
             return plainText;
+        }
+
+        private static IEnumerable<Inline> ConvertImagesToXaml(string plainText)
+        {
+            BitmapImage bi = new BitmapImage(new Uri(@"C:\SimpleImage.jpg"));
+            ImageInline image = new ImageInline();
+            image.Source = bi;
+            InlineUIContainer container = new InlineUIContainer();
+            container.Child = image;
+            plainText = Regex.Replace(plainText, "",
+                @"<")
         }
 
         public static IEnumerable<Block> PlainTextToBlocks(string plainText)
