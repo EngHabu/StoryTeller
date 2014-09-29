@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace StoryTeller.ViewModel
     public delegate void SceneBonusChanged();
     public delegate void SceneTagsChanged(SceneViewModel sender);
 
-    public class SceneViewModel : ISceneContentHolder
+    public class SceneViewModel : ISceneContentHolder, INotifyPropertyChanged
     {
         public event SceneNavigateRequest NavigateRequest;
         public event ScenePickerRequest PickSceneRequest;
@@ -76,7 +77,7 @@ namespace StoryTeller.ViewModel
                 {
                     CurrentScene.Tags.Add(newTag);
                 }
-                SceneTagsChanged(this);
+                //SceneTagsChanged(this);
             }
         }
 
@@ -147,6 +148,16 @@ namespace StoryTeller.ViewModel
             set
             {
                 CurrentScene.Content.Content = value;
+                OnPropertyChanged("Content");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyChanged)
+        {
+            if (null != PropertyChanged)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyChanged));
             }
         }
     }

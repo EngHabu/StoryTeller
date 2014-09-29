@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace StoryTeller.DataModel.Model
 {
-    public sealed class TextSceneContent : ISceneContent
+    public sealed class TextSceneContent : ISceneContent, INotifyPropertyChanged
     {
         private string _content;
         private IList<SceneTag> _tags;
@@ -31,6 +32,7 @@ namespace StoryTeller.DataModel.Model
             set
             {
                 _content = value;
+                OnPropertyChanged("Content");
             }
         }
 
@@ -43,6 +45,15 @@ namespace StoryTeller.DataModel.Model
                     _tags = new List<SceneTag>();
                 }
                 return _tags;
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyChanged)
+        {
+            if (null != PropertyChanged)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyChanged));
             }
         }
     }

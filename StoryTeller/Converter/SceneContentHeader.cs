@@ -12,8 +12,8 @@ namespace StoryTeller.Converter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            ISceneContentHolder sceneContent = value as ISceneContentHolder;
-            string stringContent = sceneContent.Content;
+            //ISceneContentHolder sceneContent = value as ISceneContentHolder;
+            string stringContent = value as string;// sceneContent.Content;
             if (stringContent != null)
             {
                 return stringContent.Length > 15 ? stringContent.Substring(0, 15) : stringContent;

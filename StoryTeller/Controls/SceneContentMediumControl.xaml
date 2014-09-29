@@ -26,7 +26,7 @@
         <Grid Grid.Column="0" Margin="5,5,0,0">
             <!--      Rhonda, filled with excitement, hung up the phone. "Mother!" she called out, "I've been invited to Melissa's for dinner tonight. What should I wear?"
 Her mother-->
-            <TextBlock x:Name="contentSnippet" TextWrapping="Wrap" Foreground="LightGray" FontSize="10" FontFamily="Georgia" HorizontalAlignment="Stretch" Text="{Binding Converter={StaticResource ResourceKey=SceneContentSnippet}}">
+            <TextBlock x:Name="contentSnippet" TextWrapping="Wrap" Foreground="LightGray" FontSize="10" FontFamily="Georgia" HorizontalAlignment="Stretch" Text="{Binding Content, Converter={StaticResource ResourceKey=SceneContentSnippet}}">
                 
             </TextBlock>
             <Rectangle x:Name="gradient">
@@ -38,7 +38,7 @@ Her mother-->
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBlock Foreground="CornflowerBlue" Opacity="80" x:Name="contentHeader" Margin="-3,0,0,0" FontSize="24" Text="{Binding Converter={StaticResource ResourceKey=SceneContentHeader}}" VerticalAlignment="Bottom" FontFamily="Segoe UI Light" TextTrimming="CharacterEllipsis" />
+            <TextBlock Foreground="CornflowerBlue" Opacity="80" x:Name="contentHeader" Margin="-3,0,0,0" FontSize="24" Text="{Binding Content, Converter={StaticResource ResourceKey=SceneContentHeader}}" VerticalAlignment="Bottom" FontFamily="Segoe UI Light" TextTrimming="CharacterEllipsis" />
             <!--Rhonda-->
         </Grid>
         <Rectangle Grid.Column="1" Fill="AliceBlue"/>
