@@ -68,7 +68,7 @@ namespace StoryTeller.ViewModel
 
         void _favorites_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            RefreshScenes(CurrentStoryline);
+            RefreshScenes(CurrentStoryline, refreshSelected: false);
         }
 
         public double PageWidth
@@ -207,7 +207,7 @@ namespace StoryTeller.ViewModel
             OnPropertyChanged("Scenes");
         }
 
-        public void RefreshScenes(StoryLineViewModel storyline)
+        public void RefreshScenes(StoryLineViewModel storyline, bool refreshSelected = true)
         {
             ScenesViewModel = new ObservableCollection<SceneViewModel>(BuildPath(storyline));
             SceneViewModel lastSceneViewModel = null;
@@ -221,8 +221,11 @@ namespace StoryTeller.ViewModel
             if (Scenes.Count > 0)
             {
                 CurrentScene = Scenes[0];
-                SelectedSceneViewModel = storyline.FirstOrDefault();
-                SelectedSceneViewModel = null;
+                if (refreshSelected)
+                {
+                    SelectedSceneViewModel = storyline.FirstOrDefault();
+                    SelectedSceneViewModel = null;
+                }
             }
         }
 

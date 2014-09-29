@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace StoryTeller.DataModel.Model
 {
+    [DataContract]
     public sealed class TextSceneContent : ISceneContent, INotifyPropertyChanged
     {
         private string _content;
         private IList<SceneTag> _tags;
+
+        [DataMember]
         public SceneContentType Type
         {
             get
@@ -23,6 +27,7 @@ namespace StoryTeller.DataModel.Model
             }
         }
 
+        [IgnoreDataMember]
         public string Content
         {
             get
@@ -36,6 +41,7 @@ namespace StoryTeller.DataModel.Model
             }
         }
 
+        [DataMember]
         public IList<SceneTag> Tags
         {
             get
@@ -44,7 +50,12 @@ namespace StoryTeller.DataModel.Model
                 {
                     _tags = new List<SceneTag>();
                 }
+
                 return _tags;
+            }
+            set
+            {
+                _tags = value;
             }
         }
 

@@ -90,6 +90,7 @@ namespace StoryTeller.ViewModel
                     InlineUIContainer container = new InlineUIContainer();
                     image.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Center;
                     image.VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Center;
+                    image.Stretch = Stretch.UniformToFill;
                     container.Child = image;
                     paragraph.Inlines[i] = container;
 
