@@ -66,7 +66,7 @@ namespace StoryTeller
 
         private void SetDefaultContext()
         {
-            libraryViewModel.Library = new Library();
+            libraryViewModel.Library = Library.Current = new Library();
             projectViewModel.Library = libraryViewModel;
             Story story = new Story();
             StoryViewModel storyModel = new StoryViewModel(story);

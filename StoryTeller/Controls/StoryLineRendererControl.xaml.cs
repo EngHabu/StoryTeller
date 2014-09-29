@@ -28,7 +28,7 @@ namespace StoryTeller.Controls
 
         private void ListBox_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            
+
         }
 
         private void storylinePanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -36,8 +36,8 @@ namespace StoryTeller.Controls
             StoryLineViewModel storylineModel = storylinePanel.SelectedItem as StoryLineViewModel;
             if (null != storylineModel && null != storylineModel.StoryModel)
             {
-            storylineModel.StoryModel.SelectStoryline(storylineModel);
+                storylineModel.StoryModel.SelectStoryline(storylineModel);
+            }
         }
     }
-}
 }

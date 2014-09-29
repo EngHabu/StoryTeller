@@ -72,6 +72,8 @@ namespace StoryTeller.DataModel
                 Items = items
             };
 
+            Library.Current = lib;
+
             return lib;
         }
 
