@@ -17,7 +17,7 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <ScrollViewer>
-        <TextBox x:Name="contentText" Grid.Row="0" TextWrapping="Wrap" FontFamily="Georgia" Text="{Binding Content}" BorderThickness="0">
+        <TextBox x:Name="contentText" Grid.Row="0" TextWrapping="Wrap" AcceptsReturn="True" FontFamily="Georgia" Text="{Binding Content}" BorderThickness="0">
             
         </TextBox>
         </ScrollViewer>
