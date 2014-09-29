@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Documents;
 
 namespace StoryTeller.ViewModel
 {
@@ -22,6 +24,78 @@ namespace StoryTeller.ViewModel
         private ObservableCollection<SceneTag> _tags;
 
         public IScene CurrentScene { get; set; }
+
+        public bool HasImage
+        {
+            get
+            {
+                bool result = false;
+                if (null != CurrentScene)
+                {
+                    RichTextBlock richBlock = new StoryTeller.Converter.StringToRtf().Convert(CurrentScene.Content.Content, null, null, null) as RichTextBlock;
+                    if (null != richBlock)
+                    {
+                        foreach (Block block in richBlock.Blocks)
+                        {
+                            Paragraph p = block as Paragraph;
+                            if (null != p)
+                            {
+                                foreach (Inline inline in p.Inlines)
+                                {
+                                    Run run;
+                                    if (ImageInline.IsImageInline(inline))
+                                    {
+                                        result = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return result;
+            }
+        }
+
+        public bool HasText
+        {
+            get
+            {
+                bool result = false;
+                if (null != CurrentScene)
+                {
+                    RichTextBlock richBlock = new StoryTeller.Converter.StringToRtf().Convert(CurrentScene.Content.Content, null, null, null) as RichTextBlock;
+                    if (null != richBlock)
+                    {
+                        foreach (Block block in richBlock.Blocks)
+                        {
+                            Paragraph p = block as Paragraph;
+                            if (null != p)
+                            {
+                                foreach (Inline inline in p.Inlines)
+                                {
+                                    Run run;
+                                    if (ImageInline.IsImageInline(inline))
+                                    {
+                                        continue;
+                                    }
+                                    else if (null != (run = inline as Run))
+                                    {
+                                        if (!string.IsNullOrWhiteSpace(run.Text))
+                                        {
+                                            result = true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return result;
+            }
+        }
 
         public ObservableCollection<SceneTag> Tags
         {
