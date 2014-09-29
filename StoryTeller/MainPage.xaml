@@ -13,7 +13,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Page.Resources>        
+    <Page.Resources>
         <converter:BooleanToVisibility x:Key="BooleanToVisibility" />
         <converter:ScenesViewModelToVisibility x:Key="ScenesViewModelToVisibility" />
         <x:String x:Key="ChevronGlyph">&#xE26B;</x:String>
@@ -72,7 +72,7 @@
                     </Button>
                 </StackPanel>
 
-                <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,3,0,-3" ItemsSource="{Binding Library.Items}">                    
+                <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,3,0,-3" ItemsSource="{Binding Library.Items}">
                     <GridView.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapGrid Orientation="Vertical"/>
@@ -106,7 +106,7 @@
 
         </Grid>
         <thirdparty:WatermarkTextBox Margin="30,0,0,0" Grid.Row="2" x:Name="titleTextbox" WatermarkText="Type in story title" Text="{Binding Story.Title}" BorderThickness="0" FontFamily="Georgia" Foreground="CornflowerBlue" KeyUp="titleTextbox_KeyUp"/>
-         
+
         <controls:StoryLineRendererControl DataContext="{Binding Story}" Grid.Row="3" x:Name="StoryLineRenderer">
         </controls:StoryLineRendererControl>
 

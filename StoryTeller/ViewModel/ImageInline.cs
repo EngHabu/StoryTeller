@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace StoryTeller.ViewModel
@@ -85,10 +87,16 @@ namespace StoryTeller.ViewModel
                     Image image = new Image();
                     image.Source = bi;
                     InlineUIContainer container = new InlineUIContainer();
-                    image.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Stretch;
+                    image.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Center;
                     image.VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Center;
                     container.Child = image;
                     paragraph.Inlines[i] = container;
+
+                    // if this is an image only paragraph. Center it
+                    if (paragraph.Inlines.Count == 1)
+                    {
+                        paragraph.TextAlignment = Windows.UI.Xaml.TextAlignment.Center;
+                    }
                 }
             }
         }
