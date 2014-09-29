@@ -44,7 +44,7 @@ namespace StoryTeller.Converter
         public static string PlainTextToXaml(string plainText)
         {
             return @"<Paragraph TextIndent=""20"">"
-                + ConvertLinksToXamlString(plainText).Replace(Environment.NewLine, @"</Paragraph><Paragraph><Run Text="""" FontSize=""" + InvisibleFontSize + @"""/></Paragraph><Paragraph TextIndent=""20"">")
+                + ConvertImagesToXamlString(ConvertLinksToXamlString(plainText)).Replace(Environment.NewLine, @"</Paragraph><Paragraph><Run Text="""" FontSize=""" + InvisibleFontSize + @"""/></Paragraph><Paragraph TextIndent=""20"">")
                 + "</Paragraph>";
         }
 
@@ -55,15 +55,9 @@ namespace StoryTeller.Converter
             return plainText;
         }
 
-        private static IEnumerable<Inline> ConvertImagesToXaml(string plainText)
+        private static string ConvertImagesToXamlString(string plainText)
         {
-            BitmapImage bi = new BitmapImage(new Uri(@"C:\SimpleImage.jpg"));
-            ImageInline image = new ImageInline();
-            image.Source = bi;
-            InlineUIContainer container = new InlineUIContainer();
-            container.Child = image;
-            plainText = Regex.Replace(plainText, "",
-                @"<")
+            return ImageInline.ToXamlString(plainText);
         }
 
         public static IEnumerable<Block> PlainTextToBlocks(string plainText)
@@ -89,6 +83,28 @@ namespace StoryTeller.Converter
             blocksObj.ContextMenuOpening += mainBlock_ContextMenuOpening;
 
             return blocksObj;
+        }
+
+        private void FixImages(RichTextBlock rtbBlock)
+        {
+            foreach (Block block in rtbBlock.Blocks)
+            {
+                Paragraph paragraph = block as Paragraph;
+                if (null != paragraph)
+                {
+                    FixImages(paragraph);
+                }
+            }
+        }
+
+        private void FixImages(Paragraph paragraph)
+        {
+            if (null == paragraph)
+            {
+                throw new ArgumentNullException("paragraph");
+            }
+
+            ImageInline.FixUpXaml(paragraph);
         }
 
         public static void FixHyperLinks(RichTextBlock rtbBlock, Action<Hyperlink, string> clickAction)
@@ -232,7 +248,6 @@ namespace StoryTeller.Converter
             }
         }
 
-
         private static string CreateHyperlink(RichTextBlock textbox)
         {
             TextPointer start = textbox.SelectionStart;
@@ -312,6 +327,11 @@ namespace StoryTeller.Converter
                         sb.AppendFormat("{{{0}:{1}}}",
                             linkId, linkContents);
                     }
+                    else if (ImageInline.IsImageInline(inline))
+                    {
+                        isEmptyParagraph = false;
+                        sb.Append(ImageInline.ToPlainText(inline));
+                    }
                 }
 
                 if (!isEmptyParagraph)
@@ -351,6 +371,7 @@ namespace StoryTeller.Converter
             string rtfText = (string)value;
             RichTextBlock blocksObj = PlainTextToRichTextBlock(rtfText);
             FixHyperLinks(blocksObj, link_Click);
+            FixImages(blocksObj);
             return blocksObj;
         }
 

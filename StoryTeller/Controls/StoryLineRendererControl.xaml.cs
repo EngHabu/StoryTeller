@@ -36,8 +36,8 @@ namespace StoryTeller.Controls
             StoryLineViewModel storylineModel = storylinePanel.SelectedItem as StoryLineViewModel;
             if (null != storylineModel && null != storylineModel.StoryModel)
             {
-                storylineModel.StoryModel.SelectStoryline(storylineModel);
-            }
+            storylineModel.StoryModel.SelectStoryline(storylineModel);
         }
     }
+}
 }

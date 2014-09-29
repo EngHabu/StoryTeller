@@ -23,7 +23,7 @@ namespace StoryTeller.ViewModel
         {
             get
             {
-                return "<Run FontSize=\"" + Run.FontSize + "\">" + Run.Text + "</Run>";
+                return "<Run FontSize=\"" + Run.FontSize + "\" Text=\"" + Run.Text + "\" />";
             }
         }
 

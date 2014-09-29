@@ -16,18 +16,16 @@ namespace StoryTeller.ViewModel
 
         public ObservableCollection<StoryLineViewModel> ConstructStoryLines(StoryViewModel storyModel)
         {
-            if (storyModel.StoryLines == null)
-            {
-                storyModel.StoryLines = new ObservableCollection<StoryLineViewModel>();
-            }
-
             storyModel.StoryLines.Clear();
-            ConstructStoryLines(storyModel, null, storyModel.Story.StartScene, 0, new StorylineAdder(storyModel.StoryLines));
+            if (storyModel.Story.StartScene != null)
+            {
+                ConstructStoryLines(storyModel, null, storyModel.Story.StartScene, 0, new StorylineAdder(storyModel.StoryLines));
+            }
             return storyModel.StoryLines;
         }
 
         public void ConstructStoryLines(StoryViewModel storyModel, StoryLineViewModel parent, IScene startScene, int depth, IStorylinePositioner storylineAdder)
-        {
+        {            
             IScene currentScene = startScene;
 
             StoryLineViewModel lineScenes = new StoryLineViewModel(storyModel, parent);
@@ -78,7 +76,11 @@ namespace StoryTeller.ViewModel
                 InteractiveScene removedScene = removedSceneModel.CurrentScene as InteractiveScene;  
                 IList<IScene> oldSuccessors = removedScene.PossibleScenes;
 
-                if (e.OldStartingIndex > 0)
+                if (removedScene == story.StartScene && oldSuccessors.Count == 1)
+                {
+                    story.StartScene = oldSuccessors[0];
+                }
+                else
                 {
                     InteractiveScene oldPredecessor = GetPredecessor(e.OldStartingIndex, storylineModel);
 
@@ -88,10 +90,7 @@ namespace StoryTeller.ViewModel
                         oldPredecessor.PossibleScenes.Add(scene);
                     }
                 }
-                else if (removedScene == story.StartScene && oldSuccessors.Count == 1)
-                {
-                    story.StartScene = oldSuccessors[0];
-                }
+                
             }
 
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add)
@@ -181,6 +180,14 @@ namespace StoryTeller.ViewModel
             }
 
             return oldPredecessor;
+        }
+
+
+        internal StoryLineViewModel CreateStoryLine(StoryViewModel storyViewModel)
+        {
+            StoryLineViewModel storylineModel = new StoryLineViewModel(storyViewModel, null);
+            storylineModel.CollectionChanged += lineScenes_CollectionChanged;
+            return storylineModel;
         }
 
     }

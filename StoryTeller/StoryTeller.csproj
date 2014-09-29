@@ -147,8 +147,11 @@
     <Compile Include="Controls\TagsEditorControl.xaml.cs">
       <DependentUpon>TagsEditorControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converter\BooleanToVisibility.cs" />
+    <Compile Include="Converter\CurrentStorylineToColor.cs" />
     <Compile Include="Converter\SceneContentHeader.cs" />
     <Compile Include="Converter\SceneContentSnippet.cs" />
+    <Compile Include="Converter\ScenesViewModelToVisibility.cs" />
     <Compile Include="Converter\SceneTagToString.cs" />
     <Compile Include="Converter\StringToSnippet.cs" />
     <Compile Include="Converter\StringToRtf.cs" />
