@@ -72,12 +72,7 @@
                     </Button>
                 </StackPanel>
 
-                <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,3,0,-3" ItemsSource="{Binding Library.Items}">
-                    <GridView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapGrid Orientation="Vertical"/>
-                        </ItemsPanelTemplate>
-                    </GridView.ItemsPanel>
+                <GridView x:Name="libraryPanel" Grid.Row="1" Margin="0,3,0,-3" ItemsSource="{Binding Library.Items}">                    
                     <GridView.ItemTemplate>
                         <DataTemplate>
                             <controls:SceneContentControl x:Name="libraryItemRenderer" DataContext="{Binding}" RightTapped="libraryItemRenderer_RightTapped">

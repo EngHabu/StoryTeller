@@ -86,6 +86,7 @@ namespace StoryTeller.ViewModel
                     BitmapImage bi = new BitmapImage(new Uri(imageInline.FilePath));
                     Image image = new Image();
                     image.Source = bi;
+                    image.Stretch = Stretch.Uniform;
                     InlineUIContainer container = new InlineUIContainer();
                     image.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Center;
                     image.VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Center;

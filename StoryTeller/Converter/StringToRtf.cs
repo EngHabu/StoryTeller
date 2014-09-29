@@ -43,7 +43,7 @@ namespace StoryTeller.Converter
 
         public static string PlainTextToXaml(string plainText)
         {
-            return @"<Paragraph TextIndent=""20"">"
+            return @"<Paragraph TextIndent=""20"" xml:space=""preserve"">"
                 + ConvertImagesToXamlString(ConvertLinksToXamlString(plainText)).Replace(Environment.NewLine, @"</Paragraph><Paragraph><Run Text="""" FontSize=""" + InvisibleFontSize + @"""/></Paragraph><Paragraph TextIndent=""20"">")
                 + "</Paragraph>";
         }

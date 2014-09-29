@@ -14,7 +14,7 @@ namespace StoryTeller.Converter
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             SceneTag sceneTag = value as SceneTag;
-            return sceneTag.Name + "#" + sceneTag.Content;
+            return sceneTag.Name + "" + sceneTag.Content;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
