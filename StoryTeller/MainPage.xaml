@@ -80,7 +80,12 @@
                     </GridView.ItemsPanel>
                     <GridView.ItemTemplate>
                         <DataTemplate>
-                            <controls:SceneContentControl DataContext="{Binding}">
+                            <controls:SceneContentControl x:Name="libraryItemRenderer" DataContext="{Binding}" RightTapped="libraryItemRenderer_RightTapped">
+                                <FlyoutBase.AttachedFlyout>
+                                    <Flyout x:Name="editFlyout" Closed="editFlyout_Closed">
+                                        <controls:SceneContentEditor x:Name="sceneContentEditor" EditComplete="sceneContentEditor_EditComplete" ReplicaCreated="sceneContentEditor_ReplicaCreated"/>
+                                    </Flyout>
+                                </FlyoutBase.AttachedFlyout>
                             </controls:SceneContentControl>
                         </DataTemplate>
                     </GridView.ItemTemplate>

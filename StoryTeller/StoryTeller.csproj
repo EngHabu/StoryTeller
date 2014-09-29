@@ -123,6 +123,9 @@
     <Compile Include="Controls\PreviewRendererControl.xaml.cs">
       <DependentUpon>PreviewRendererControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SceneContentEditor.xaml.cs">
+      <DependentUpon>SceneContentEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SceneContentMediumControl.xaml.cs">
       <DependentUpon>SceneContentMediumControl.xaml</DependentUpon>
     </Compile>
@@ -149,6 +152,7 @@
     </Compile>
     <Compile Include="Converter\BooleanToVisibility.cs" />
     <Compile Include="Converter\CurrentStorylineToColor.cs" />
+    <Compile Include="Converter\ImageFromText.cs" />
     <Compile Include="Converter\SceneContentHeader.cs" />
     <Compile Include="Converter\SceneContentSnippet.cs" />
     <Compile Include="Converter\ScenesViewModelToVisibility.cs" />
@@ -225,6 +229,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\PreviewRendererControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SceneContentEditor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

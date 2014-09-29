@@ -207,12 +207,11 @@ namespace StoryTeller.ViewModel
             OnPropertyChanged("Scenes");
         }
 
-        private void RefreshScenes(StoryLineViewModel storyline)
+        public void RefreshScenes(StoryLineViewModel storyline)
         {
             ScenesViewModel = new ObservableCollection<SceneViewModel>(BuildPath(storyline));
             SceneViewModel lastSceneViewModel = null;
-            Func<SceneViewModel, bool> isNotPad = (sceneViewModel) => !(sceneViewModel is SceneViewModelPad);
-            lastSceneViewModel = storyline.LastOrDefault(isNotPad);
+            lastSceneViewModel = storyline.LastOrDefault();
 
             if (null != lastSceneViewModel)
             {
@@ -222,7 +221,7 @@ namespace StoryTeller.ViewModel
             if (Scenes.Count > 0)
             {
                 CurrentScene = Scenes[0];
-                SelectedSceneViewModel = storyline.FirstOrDefault(isNotPad);
+                SelectedSceneViewModel = storyline.FirstOrDefault();
                 SelectedSceneViewModel = null;
             }
         }

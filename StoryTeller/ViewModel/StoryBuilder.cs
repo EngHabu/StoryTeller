@@ -133,15 +133,16 @@ namespace StoryTeller.ViewModel
                 if (m_removedItem != null && m_removedItem == addedSceneModel)
                 {
                     m_removedItem = null;
-                    HandleReorder(storyModel);
+                    HandleReorder(storyModel, storylineModel);
                 }
                 
             }
         }
 
-        private void HandleReorder(StoryViewModel storyModel)
+        private void HandleReorder(StoryViewModel storyModel, StoryLineViewModel storyline)
         {
-            storyModel.Story = storyModel.Story;
+            //storyModel.Story = storyModel.Story;
+            storyModel.RefreshScenes(storyline);
         }
 
         private InteractiveScene GetSuccessor(int addedSceneIndex, StoryLineViewModel storylineModel)

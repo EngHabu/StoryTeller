@@ -211,14 +211,7 @@ namespace StoryTeller.Controls
             SceneViewModel firstScene = story.ScenesViewModel.FirstOrDefault();
             if (firstScene != null)
             {
-                ObservableCollection<SceneTag> availableTags = new ObservableCollection<SceneTag>();
-                AddUniqueTags(firstScene, availableTags);
-                if (story.ScenesViewModel.Count > 1)
-                {
-                    AddUniqueTags(story.ScenesViewModel[1], availableTags);
-                }
-
-                tagsList.DataContext = availableTags;
+                tagsList.DataContext = firstScene.Tags;
             }
         }
 
@@ -266,7 +259,6 @@ namespace StoryTeller.Controls
 
         private void RecalculateVisibleTags()
         {
-            ObservableCollection<SceneTag> availableTags = new ObservableCollection<SceneTag>();
             foreach (FrameworkElement frameworkElement in PagesControl.Items)
             {
                 if (IsUserVisible(frameworkElement, PagesControl))
@@ -274,12 +266,11 @@ namespace StoryTeller.Controls
                     SceneViewModel sceneModel = frameworkElement.DataContext as SceneViewModel;
                     if (null != sceneModel)
                     {
-                        AddUniqueTags(sceneModel, availableTags);
+                        tagsList.DataContext = sceneModel.Tags;
+                        break;
                     }
                 }
             }
-
-            tagsList.DataContext = availableTags;
         }
 
         private void AddUniqueTags(SceneViewModel sceneModel, ObservableCollection<SceneTag> availableTags)
@@ -325,11 +316,7 @@ namespace StoryTeller.Controls
         }
 
         private void fullscreen_Button_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            string guid = Guid.NewGuid().ToString();
-            ViewModelCache.Local.Put(guid, DataContext as StoryViewModel);
-
-            (Window.Current.Content as Frame).Navigate(typeof(StoryViewer), guid);
+        {            
         }
     }
 }

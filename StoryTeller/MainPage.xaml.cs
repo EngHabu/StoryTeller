@@ -35,6 +35,7 @@ namespace StoryTeller
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
         private LibraryViewModel libraryViewModel = new LibraryViewModel();
         private ProjectViewModel projectViewModel = new ProjectViewModel();
+        private FlyoutBase _flyout;
 
         /// <summary>
         /// NavigationHelper is used on each page to aid in navigation and 
@@ -284,6 +285,31 @@ namespace StoryTeller
             ViewModelCache.Local.Put(guid, projectViewModel.Story);
 
             (Window.Current.Content as Frame).Navigate(typeof(StoryViewer), guid);
+        }
+
+        private void libraryItemRenderer_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            _flyout = FlyoutBase.GetAttachedFlyout((sender as FrameworkElement));
+            _flyout.Placement = FlyoutPlacementMode.Right;
+            _flyout.ShowAt((sender as FrameworkElement));
+        }
+
+        private void sceneContentEditor_EditComplete()
+        {
+            if (_flyout != null) {
+                _flyout.Hide();
+                _flyout = null;
+            }
+        }
+
+        private void editFlyout_Closed(object sender, object e)
+        {
+            _flyout = null;
+        }
+
+        private void sceneContentEditor_ReplicaCreated(ILibraryItem libraryItem)
+        {
+            libraryViewModel.Items.Add((LibraryItem)libraryItem);
         }
     }
 }

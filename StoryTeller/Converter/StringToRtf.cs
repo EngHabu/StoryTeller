@@ -77,7 +77,7 @@ namespace StoryTeller.Converter
         public static RichTextBlock PlainTextToRichTextBlock(string plainText)
         {
             RichTextBlock blocksObj = XamlReader.Load(
-                @"<RichTextBlock TextWrapping=""Wrap"" Padding=""20"" Width=""750"" Height=""700"" CharacterSpacing=""100"" LineHeight=""20"" MaxLines=""31"" FontSize=""20"" FontFamily=""Times New Roman"" xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>"
+                @"<RichTextBlock TextWrapping=""Wrap"" Padding=""20"" Width=""750"" Height=""700"" CharacterSpacing=""100"" LineHeight=""20"" MaxLines=""31"" FontSize=""24"" FontFamily=""Georgia"" xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>"
                 + PlainTextToXaml(plainText)
                 + "</RichTextBlock>") as RichTextBlock;
             blocksObj.ContextMenuOpening += mainBlock_ContextMenuOpening;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 namespace StoryTeller.DataModel.Model
 {
     [DataContract]
-    public sealed class LibraryItem : ILibraryItem, ISceneContentHolder
+    public sealed class LibraryItem : ILibraryItem, ISceneContentHolder, INotifyPropertyChanged
     {
         IList<SceneTag> _tags = new List<SceneTag>();
 
@@ -47,6 +48,16 @@ namespace StoryTeller.DataModel.Model
             set
             {
                 SceneContent.Content = value;
+                OnPropertyChanged("Content");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyChanged)
+        {
+            if (null != PropertyChanged)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyChanged));
             }
         }
     }
