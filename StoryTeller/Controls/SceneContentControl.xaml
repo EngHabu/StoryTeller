@@ -17,6 +17,8 @@
             <converter:SceneContentSnippet x:Key="SceneContentSnippet" />
             <converter:BooleanToVisibility x:Key="BooleanToVisibility" />
             <converter:ImageFromText x:Key="ImageFromText" />
+            <converter:HasImageConverter x:Key="HasImageConverter" />
+            <converter:HasTextConverter x:Key="HasTextConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -28,13 +30,13 @@
         <Grid Grid.Column="0" Margin="5,5,0,0">
             <!--      Rhonda, filled with excitement, hung up the phone. "Mother!" she called out, "I've been invited to Melissa's for dinner tonight. What should I wear?"
 Her mother-->
-            <TextBlock x:Name="contentSnippet" TextWrapping="Wrap" Foreground="LightGray" FontSize="14" FontFamily="Georgia" HorizontalAlignment="Stretch" Text="{Binding Content, Converter={StaticResource ResourceKey=SceneContentSnippet}}">
-                       Visibility="{Binding HasImage, Converter={StaticResource BooleanToVisibility}, ConverterParameter=true}">
+            <TextBlock x:Name="contentSnippet" TextWrapping="Wrap" Foreground="LightGray" FontSize="14" FontFamily="Georgia" HorizontalAlignment="Stretch" Text="{Binding Content, Converter={StaticResource ResourceKey=SceneContentSnippet}}"
+                       Visibility="{Binding Content, Converter={StaticResource HasImageConverter}, ConverterParameter=true}">
             </TextBlock>
             <Image Source="{Binding Content, Converter={StaticResource ImageFromText}}"
                    HorizontalAlignment="Stretch"
                    Stretch="UniformToFill"
-                   Visibility="{Binding HasImage, Converter={StaticResource BooleanToVisibility}}" />
+                   Visibility="{Binding Content, Converter={StaticResource HasImageConverter}}" />
             <Rectangle x:Name="gradient">
                 <Rectangle.Fill>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -46,10 +48,10 @@ Her mother-->
             </Rectangle>
             <TextBlock Foreground="CornflowerBlue" Opacity="80" x:Name="contentHeader" Margin="-3,0,0,0" FontSize="32" Text="{Binding Content, Converter={StaticResource ResourceKey=SceneContentHeader}}" 
                        VerticalAlignment="Bottom" FontFamily="Segoe UI Light" TextTrimming="CharacterEllipsis" 
-                       Visibility="{Binding HasText, Converter={StaticResource BooleanToVisibility}}" />
-            <TextBlock Foreground="CornflowerBlue" Opacity="80" x:Name="fileHeader" Margin="-2,0,0,0" FontSize="32" Text="{Binding CurrentScene.LibraryItem.Id}" 
+                       Visibility="{Binding Content, Converter={StaticResource HasTextConverter}}" />
+            <TextBlock Foreground="CornflowerBlue" Opacity="80" x:Name="fileHeader" Margin="-2,0,0,0" FontSize="32" Text="{Binding Id}" 
                        VerticalAlignment="Bottom" FontFamily="Segoe UI Light" TextTrimming="CharacterEllipsis"
-                       Visibility="{Binding HasText, Converter={StaticResource BooleanToVisibility}, ConverterParameter=true}" />
+                       Visibility="{Binding Content, Converter={StaticResource HasTextConverter}, ConverterParameter=true}" />
             <!--Rhonda-->
         </Grid>
         <Rectangle Grid.Column="1" Fill="AliceBlue"/>
