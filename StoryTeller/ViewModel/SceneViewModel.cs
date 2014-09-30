@@ -42,7 +42,6 @@ namespace StoryTeller.ViewModel
                             {
                                 foreach (Inline inline in p.Inlines)
                                 {
-                                    Run run;
                                     if (ImageInline.IsImageInline(inline))
                                     {
                                         result = true;
