@@ -44,7 +44,8 @@ Her mother-->
                     </LinearGradientBrush>
                 </Rectangle.Fill>
             </Rectangle>
-            <TextBlock Foreground="CornflowerBlue" Opacity="80" x:Name="contentHeader" Margin="-3,0,0,0" FontSize="32" Text="{Binding Content, Converter={StaticResource ResourceKey=SceneContentHeader}}" VerticalAlignment="Bottom" FontFamily="Segoe UI Light" TextTrimming="CharacterEllipsis" 
+            <TextBlock Foreground="CornflowerBlue" Opacity="80" x:Name="contentHeader" Margin="-3,0,0,0" FontSize="32" Text="{Binding Content, Converter={StaticResource ResourceKey=SceneContentHeader}}" 
+                       VerticalAlignment="Bottom" FontFamily="Segoe UI Light" TextTrimming="CharacterEllipsis" 
                        Visibility="{Binding HasText, Converter={StaticResource BooleanToVisibility}}" />
             <TextBlock Foreground="CornflowerBlue" Opacity="80" x:Name="fileHeader" Margin="-2,0,0,0" FontSize="32" Text="{Binding CurrentScene.LibraryItem.Id}" 
                        VerticalAlignment="Bottom" FontFamily="Segoe UI Light" TextTrimming="CharacterEllipsis"
