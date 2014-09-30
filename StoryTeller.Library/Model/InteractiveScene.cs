@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace StoryTeller.DataModel.Model
 {
+    [DataContract]
     public sealed class InteractiveScene : Scene
     {
         private IList<IScene> _possibleScenes = new List<IScene>();
@@ -16,6 +18,7 @@ namespace StoryTeller.DataModel.Model
         {
         }
 
+        [DataMember]
         public override IScene FollowingScene
         {
             get
@@ -33,12 +36,14 @@ namespace StoryTeller.DataModel.Model
             }
         }
 
+        [DataMember]
         public Dictionary<string, string> LinkIdToSceneId
         {
             get { return _linkIdToSceneId; }
             set { _linkIdToSceneId = value; }
         }
 
+        [DataMember]
         public IList<IScene> PossibleScenes
         {
             get { return _possibleScenes; }

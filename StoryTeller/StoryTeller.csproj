@@ -154,6 +154,7 @@
     </Compile>
     <Compile Include="Converter\BooleanToVisibility.cs" />
     <Compile Include="Converter\CurrentStorylineToColor.cs" />
+    <Compile Include="Converter\HasImageConverter.cs" />
     <Compile Include="Converter\ImageFromText.cs" />
     <Compile Include="Converter\SceneContentHeader.cs" />
     <Compile Include="Converter\SceneContentSnippet.cs" />
