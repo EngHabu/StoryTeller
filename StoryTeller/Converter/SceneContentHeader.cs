@@ -16,7 +16,12 @@ namespace StoryTeller.Converter
             string stringContent = value as string;// sceneContent.Content;
             if (stringContent != null)
             {
-                return stringContent.Length > 15 ? stringContent.Substring(0, 15) : stringContent;
+                string header = stringContent.Length > 15 ? stringContent.Substring(0, 15) : stringContent;
+                if(header != null && header.EndsWith(".txt"))
+                {
+                    header = header.Substring(0, header.Length-4);
+                }
+                return header;
             }
             return "";
         }

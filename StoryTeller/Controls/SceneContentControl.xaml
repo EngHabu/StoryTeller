@@ -49,7 +49,7 @@ Her mother-->
             <TextBlock Foreground="CornflowerBlue" Opacity="80" x:Name="contentHeader" Margin="-3,0,0,0" FontSize="32" Text="{Binding Content, Converter={StaticResource ResourceKey=SceneContentHeader}}" 
                        VerticalAlignment="Bottom" FontFamily="Segoe UI Light" TextTrimming="CharacterEllipsis" 
                        Visibility="{Binding Content, Converter={StaticResource HasTextConverter}}" />
-            <TextBlock Foreground="CornflowerBlue" Opacity="80" x:Name="fileHeader" Margin="-2,0,0,0" FontSize="32" Text="{Binding Id}" 
+            <TextBlock Foreground="CornflowerBlue" Opacity="80" x:Name="fileHeader" Margin="-2,0,0,0" FontSize="32" Text="{Binding Id, Converter={StaticResource ResourceKey=SceneContentHeader}}" 
                        VerticalAlignment="Bottom" FontFamily="Segoe UI Light" TextTrimming="CharacterEllipsis"
                        Visibility="{Binding Content, Converter={StaticResource HasTextConverter}, ConverterParameter=true}" />
             <!--Rhonda-->
