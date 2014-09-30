@@ -12,6 +12,6 @@
 /StoryTeller/StoryTeller.csproj.user
 /StoryTeller.suo
 /StoryTeller/Assets/Thumbs.db
-/ThirdParty/WinRTXamlToolkit/obj/Debug
-/ThirdParty/WinRTXamlToolkit/bin/Debug
+/ThirdParty/WinRTXamlToolkit/obj
+/ThirdParty/WinRTXamlToolkit/bin
 /ThirdParty/WinRTXamlToolkit/WinRTXamlToolkit.csproj.vspscc
